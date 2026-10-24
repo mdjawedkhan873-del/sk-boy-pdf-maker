@@ -4,500 +4,771 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1769ff">
-<meta name="description" content="SK Boy Studio - PDF Maker, Photo Editor and Video Tools">
+<meta name="description" content="SK Boy Studio - PDF, Photo and Video Editor">
 <title>SK Boy Studio</title>
+
+<!-- PDF libraries -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <style>
 :root{
-  --bg:#f1f5f9;
-  --card:#ffffff;
-  --text:#172033;
-  --muted:#64748b;
-  --primary:#1769ff;
-  --dark:#0b3d91;
-  --green:#059669;
-  --border:#e2e8f0;
+ --bg:#f3f6fc;--card:#fff;--text:#172033;
+ --muted:#64748b;--blue:#1769ff;--border:#e2e8f0;
+ --navy:#0b2457;--green:#059669;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,textarea,select{font:inherit}
-button{
-  border:0;border-radius:11px;padding:12px 15px;
-  background:var(--primary);color:#fff;cursor:pointer;
-}
-button:active{transform:scale(.98)}
+body{margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,"Noto Sans Devanagari",sans-serif}
+button,input,select,textarea{font:inherit}
+button{border:0;border-radius:12px;padding:12px 14px;
+ background:var(--blue);color:white;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
 .secondary{background:#e2e8f0;color:#172033}
 .green{background:var(--green)}
-header{
-  background:linear-gradient(135deg,#0b3d91,#1769ff);
-  color:white;padding:18px 12px;
-}
-.brand{
-  display:flex;align-items:center;justify-content:center;
-  gap:13px;max-width:600px;margin:auto;
-}
-.brand-logo{
-  width:76px;height:76px;object-fit:contain;
-  border-radius:16px;background:white;padding:2px;
-  border:2px solid #bfdbfe;flex-shrink:0;
-}
-.brand-text h1{margin:0;font-size:25px;font-weight:800}
-.brand-text p{margin:6px 0 0;color:#dbeafe;font-size:12px}
-main{max-width:900px;margin:auto;padding:14px;padding-bottom:100px}
+.danger{background:#dc2626}
+header{background:linear-gradient(135deg,#09285f,#1769ff);
+ color:white;padding:17px 14px}
+.brand{max-width:950px;margin:auto;display:flex;align-items:center;gap:13px}
+.logo{width:57px;height:57px;border-radius:15px;background:white;
+ color:#1769ff;display:grid;place-items:center;font-size:24px;font-weight:900}
+.brand h1{margin:0;font-size:24px}
+.brand p{margin:5px 0 0;color:#dbeafe;font-size:12px}
+main{max-width:950px;margin:auto;padding:14px 12px 105px}
 .page{display:none}
 .page.active{display:block}
-h2{font-size:22px;margin:18px 0 12px}
+h2{font-size:23px;margin:18px 0 12px}
 h3{font-size:17px;margin:4px 0 12px}
 p{line-height:1.55}
-.card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:17px;padding:16px;margin:12px 0;
-  box-shadow:0 4px 14px #0f172a08;
-}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.bigcard{
-  text-align:center;padding:22px 15px;cursor:pointer;
-  border:1px solid var(--border);background:var(--card);border-radius:17px;
-}
-.bigcard .emoji{font-size:40px}
-.bigcard p{color:var(--muted);font-size:13px}
-.bigcard button{width:100%}
+.card{background:var(--card);border:1px solid var(--border);
+ border-radius:17px;padding:15px;margin:12px 0;
+ box-shadow:0 4px 15px #0f172a08}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.tile{background:var(--card);border:1px solid var(--border);
+ border-radius:17px;padding:17px 12px;text-align:left;min-width:0}
+.tile .emoji{font-size:32px}
+.tile h3{margin:12px 0 6px}
+.tile p{font-size:12px;color:var(--muted);margin:0 0 13px}
+.tile button{width:100%;padding:11px 5px}
+label{display:block;font-size:13px;font-weight:bold;margin:11px 0 5px}
+input:not([type=range]):not([type=checkbox]),
+select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;
+ border-radius:10px;background:white;color:#172033;margin:5px 0 10px}
+input[type=range]{width:100%;accent-color:var(--blue)}
+input[type=color]{width:100%;height:43px}
+textarea{min-height:100px;resize:vertical}
 .row{display:flex;gap:8px;flex-wrap:wrap}
-.row button{flex:1}
-label{display:block;font-weight:bold;font-size:13px;margin-top:10px}
-input,textarea,select{
-  width:100%;padding:12px;border:1px solid #cbd5e1;
-  border-radius:10px;margin:7px 0 12px;background:#fff;color:#172033;
-}
-input[type=range]{padding:0;accent-color:#1769ff}
-input[type=checkbox]{width:auto}
-input[type=color]{min-height:45px}
-textarea{min-height:120px;resize:vertical}
+.row>*{flex:1;min-width:95px}
 .small{font-size:12px;color:var(--muted);line-height:1.6}
-.status{padding:11px;border-radius:10px;background:#eff6ff;color:#1d4ed8;font-size:13px;margin:10px 0;overflow-wrap:anywhere}
-.toolbtn{width:100%;text-align:left;margin:5px 0;background:#f8fafc;color:#172033;border:1px solid var(--border)}
-.preview{width:100%;max-height:430px;object-fit:contain;background:#e2e8f0;border-radius:12px;margin:8px 0}
-canvas{display:block;width:100%;height:auto;background:#e2e8f0;border-radius:12px;margin:8px 0}
-nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:10;
-  display:flex;gap:2px;background:white;border-top:1px solid var(--border);
-  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
-}
-nav button{flex:1;background:white;color:#334155;font-size:11px;padding:9px 3px}
-nav button.active{color:#1769ff;font-weight:bold}
+.status{background:#eff6ff;color:#1d4ed8;padding:11px;
+ border-radius:10px;font-size:13px;overflow-wrap:anywhere}
+.preview{display:block;width:100%;max-height:430px;object-fit:contain;
+ background:#0f172a;border-radius:12px;margin:10px 0}
+#photoCanvas{display:block;width:100%;height:auto;
+ background:#e2e8f0;border-radius:12px;margin:10px 0}
+#pdfCanvas{display:block;max-width:100%;height:auto;margin:12px auto;
+ border:1px solid var(--border);background:white}
+nav{position:fixed;z-index:20;bottom:0;left:0;right:0;
+ display:flex;gap:3px;background:white;border-top:1px solid var(--border);
+ padding:7px 4px calc(7px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:white;color:#334155;font-size:11px;padding:10px 2px}
+nav button.active{color:var(--blue);font-weight:bold}
 .hidden{display:none!important}
-.tag{display:inline-block;background:#dcfce7;color:#166534;border-radius:20px;padding:5px 10px;font-size:12px}
-@media(max-width:400px){
-  .brand-logo{width:62px;height:62px}
-  .brand-text h1{font-size:21px}
-  main{padding:10px;padding-bottom:95px}
-  .card{padding:13px}
-  nav button{font-size:10px}
+.hero{padding:21px;border-radius:18px;color:white;
+ background:linear-gradient(135deg,#09285f,#1769ff)}
+.hero h2{margin:10px 0}
+.tag{display:inline-block;background:#dbeafe;color:#1d4ed8;
+ border-radius:30px;padding:5px 10px;font-size:11px}
+@media(max-width:370px){
+ .grid{grid-template-columns:1fr}
+ .brand h1{font-size:21px}
+ nav button{font-size:10px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
-  <div class="brand">
-    <img src="./logo.png" alt="SK Boy Studio Logo" class="brand-logo"
-      onerror="this.style.display='none'">
-    <div class="brand-text">
-      <h1>SK Boy Studio</h1>
-      <p>PDF Maker • Photo Editor • Video Tools</p>
-    </div>
+ <div class="brand">
+  <div class="logo">SK</div>
+  <div>
+   <h1>SK Boy Studio</h1>
+   <p>CREATE • EDIT • EXPORT</p>
   </div>
+ </div>
 </header>
 
 <main>
+
+<!-- HOME -->
 <section id="home" class="page active">
-  <div class="card">
-    <span class="tag">WELCOME</span>
-    <h2>आपका अपना SK Boy Studio</h2>
-    <p>PDF बनाएं, फोटो एडिट करें और वीडियो प्रीव्यू टूल इस्तेमाल करें।</p>
+ <div class="hero">
+  <span class="tag">YOUR CREATIVE STUDIO</span>
+  <h2>क्या बनाना चाहते हो?</h2>
+  <p>PDF, फोटो और वीडियो के लिए अलग-अलग एडिटिंग टूल।</p>
+ </div>
+
+ <h2>अपना Studio चुनें</h2>
+ <div class="grid">
+  <div class="tile">
+   <div class="emoji">📄</div><h3>PDF Studio</h3>
+   <p>PDF बनाओ, पेज जोड़ो और टेक्स्ट लगाओ।</p>
+   <button onclick="showPage('pdf')">PDF Studio खोलें</button>
   </div>
-  <div class="cards">
-    <div class="bigcard" onclick="showPage('pdfHome')">
-      <div class="emoji">📄</div><h3>PDF Maker</h3>
-      <p>Text to PDF और Image to PDF</p>
-      <button>PDF खोलें →</button>
-    </div>
-    <div class="bigcard" onclick="showPage('editorHome')">
-      <div class="emoji">🎨</div><h3>Photo & Video Editor</h3>
-      <p>फिल्टर, क्रॉप, टेक्स्ट और वीडियो प्रीव्यू</p>
-      <button class="green">Editor खोलें →</button>
-    </div>
+  <div class="tile">
+   <div class="emoji">🖼️</div><h3>Photo Editor</h3>
+   <p>फिल्टर, कलर, टेक्स्ट और हाई-रेज़ोल्यूशन सेव।</p>
+   <button onclick="showPage('photo')">Photo Editor खोलें</button>
   </div>
-  <div class="card">
-    <h3>✨ ऐप की सुविधाएँ</h3>
-    <p>📄 टेक्स्ट से PDF</p>
-    <p>🖼️ फोटो फिल्टर, ब्राइटनेस और क्रॉप</p>
-    <p>✍️ फोटो पर टेक्स्ट</p>
-    <p>🎬 वीडियो प्लेबैक, स्पीड और ट्रिम प्रीव्यू</p>
-    <p>🔤 हिंदी, English और Urdu टेक्स्ट</p>
-    <p>❤️ वैकल्पिक QR सपोर्ट</p>
+  <div class="tile">
+   <div class="emoji">🎬</div><h3>Video Editor</h3>
+   <p>वीडियो ट्रिम, स्पीड, टेक्स्ट और WebM एक्सपोर्ट।</p>
+   <button class="green" onclick="showPage('video')">Video Editor खोलें</button>
   </div>
+  <div class="tile">
+   <div class="emoji">🧰</div><h3>My Tools</h3>
+   <p>दूसरे टूल और ऐप की जानकारी।</p>
+   <button class="secondary" onclick="showPage('tools')">मेरे टूल खोलें</button>
+  </div>
+ </div>
 </section>
 
-<section id="pdfHome" class="page">
-  <button class="secondary" onclick="showPage('home')">← Home</button>
-  <h2>📄 PDF Maker</h2>
-  <div class="card">
-    <h3>Text to PDF</h3>
-    <label>PDF का नाम</label>
-    <input id="pdfName" placeholder="मेरी PDF">
-    <label>टेक्स्ट की भाषा</label>
-    <select id="pdfLanguage">
-      <option value="hi">Hindi</option>
-      <option value="en">English</option>
-      <option value="ur">Urdu</option>
-    </select>
-    <label>टेक्स्ट लिखें</label>
-    <textarea id="pdfText" placeholder="यहाँ टेक्स्ट लिखें..."></textarea>
-    <label>टेक्स्ट फॉन्ट</label>
-    <select id="fontChoice">
-      <option value="Arial, sans-serif">Arial / English</option>
-      <option value="'Noto Sans Devanagari', sans-serif">Hindi</option>
-      <option value="'Noto Nastaliq Urdu', serif">Urdu</option>
-      <option value="serif">Serif</option>
-      <option value="monospace">Monospace</option>
-    </select>
-    <div class="row">
-      <button onclick="makeTextPDF()">📄 PDF बनाएं</button>
-      <button class="secondary" onclick="clearTextPDF()">Clear</button>
-    </div>
-    <p class="small">Print विंडो में “Save as PDF” चुनें।</p>
+<!-- PDF -->
+<section id="pdf" class="page">
+ <button class="secondary" onclick="showPage('home')">← Home</button>
+ <h2>📄 PDF Studio</h2>
+
+ <div class="card">
+  <h3>1. Text से PDF बनाओ</h3>
+  <label>PDF का नाम</label>
+  <input id="pdfName" value="SK-Boy-Document">
+  <label>भाषा</label>
+  <select id="pdfLang">
+   <option value="hi">हिंदी</option>
+   <option value="en">English</option>
+   <option value="ur">اردو / Urdu</option>
+  </select>
+  <label>अपना टेक्स्ट लिखो</label>
+  <textarea id="pdfText" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
+  <button onclick="textToPDF()">📥 PDF बनाकर सेव करें</button>
+ </div>
+
+ <div class="card">
+  <h3>2. फोटो से PDF बनाओ</h3>
+  <label>एक या कई फोटो चुनो</label>
+  <input id="pdfImages" type="file" accept="image/*" multiple>
+  <button class="green" onclick="imagesToPDF()">फोटो को PDF बनाओ</button>
+ </div>
+
+ <div class="card">
+  <h3>3. मौजूदा PDF खोलो</h3>
+  <label>PDF फाइल चुनो</label>
+  <input id="pdfFile" type="file" accept="application/pdf">
+  <div id="pdfStatus" class="status">PDF चुनकर शुरू करें।</div>
+  <canvas id="pdfCanvas"></canvas>
+  <div class="row">
+   <button class="secondary" onclick="pdfPrev()">← पिछला पेज</button>
+   <button class="secondary" onclick="pdfNext()">अगला पेज →</button>
   </div>
-  <div class="card">
-    <h3>🖼️ Image to PDF</h3>
-    <label>फोटो चुनें</label>
-    <input id="pdfImages" type="file" accept="image/*" multiple>
-    <button class="green" onclick="makeImagePDF()">Images से PDF बनाएं</button>
-    <p id="imagePdfStatus" class="small">फोटो चुनकर PDF सेव करें।</p>
-  </div>
-  <div class="card">
-    <h3>🧰 Other PDF Tools</h3>
-    <button class="toolbtn" onclick="showNotice('Merge PDF','यह फीचर अभी लागू नहीं है।')">📑 Merge PDF</button>
-    <button class="toolbtn" onclick="showNotice('Split PDF','यह फीचर अभी लागू नहीं है।')">✂️ Split PDF</button>
-    <button class="toolbtn" onclick="showNotice('Compress PDF','यह फीचर अभी लागू नहीं है।')">📦 Compress PDF</button>
-    <button class="toolbtn" onclick="showNotice('Protect PDF','यह फीचर अभी लागू नहीं है।')">🔒 Protect PDF</button>
-    <button class="toolbtn" onclick="showNotice('PDF to Images','यह फीचर अभी लागू नहीं है।')">🖼️ PDF to Images</button>
-  </div>
-  <div class="card">
-    <h3>⚙️ Settings</h3>
-    <label>ऐप का डिस्प्ले</label>
-    <select id="displayMode" onchange="setDisplayMode()">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-    <button class="secondary" onclick="showNotice('About SK Boy Studio','PDF Maker and Media Tools')">About App</button>
-  </div>
+  <p id="pdfPageInfo" class="small">कोई PDF खुली नहीं है।</p>
+ </div>
+
+ <div class="card">
+  <h3>4. PDF में टेक्स्ट जोड़ो</h3>
+  <p class="small">यह मौजूदा टेक्स्ट को बदलने के बजाय चुने हुए पेज पर नया टेक्स्ट ऊपर से जोड़ता है।</p>
+  <label>नया टेक्स्ट</label>
+  <input id="pdfOverlayText" placeholder="यह टेक्स्ट PDF पर जोड़ा जाएगा">
+  <label>पेज पर नीचे से दूरी</label>
+  <input id="pdfTextY" type="number" value="80" min="10">
+  <button onclick="addPDFText()">इस पेज पर टेक्स्ट जोड़ो</button>
+  <button class="green" onclick="saveEditedPDF()">Edited PDF डाउनलोड करें</button>
+ </div>
+
+ <div class="card">
+  <h3>5. PDF Merge — कई PDF जोड़ो</h3>
+  <label>PDF फाइलें चुनो</label>
+  <input id="mergeFiles" type="file" accept="application/pdf" multiple>
+  <button onclick="mergePDFs()">PDF जोड़कर डाउनलोड करें</button>
+ </div>
+
+ <div class="card">
+  <h3>6. PDF Split — पेज निकालो</h3>
+  <label>शुरुआती पेज</label>
+  <input id="splitStart" type="number" value="1" min="1">
+  <label>आखिरी पेज</label>
+  <input id="splitEnd" type="number" value="1" min="1">
+  <button onclick="splitPDF()">चुने पेज की PDF डाउनलोड करें</button>
+ </div>
 </section>
 
-<section id="editorHome" class="page">
-  <button class="secondary" onclick="showPage('home')">← Home</button>
-  <h2>🎨 Photo & Video Editor</h2>
-  <div class="cards">
-    <div class="bigcard" onclick="showPage('photoEditor')">
-      <div class="emoji">🖼️</div><h3>Photo Editor</h3>
-      <p>Filters, brightness, contrast, text, crop and rotate</p>
-      <button>Photo Editor खोलें →</button>
-    </div>
-    <div class="bigcard" onclick="showPage('videoEditor')">
-      <div class="emoji">🎬</div><h3>Video Editor</h3>
-      <p>Video preview, trim selection and speed</p>
-      <button class="green">Video Editor खोलें →</button>
-    </div>
+<!-- PHOTO -->
+<section id="photo" class="page">
+ <button class="secondary" onclick="showPage('home')">← Home</button>
+ <h2>🖼️ Photo Studio</h2>
+ <div class="card">
+  <label>फोटो चुनो</label>
+  <input id="photoInput" type="file" accept="image/*">
+  <canvas id="photoCanvas" width="1000" height="700"></canvas>
+  <div class="row">
+   <button class="secondary" onclick="rotatePhoto()">↻ Rotate</button>
+   <button class="secondary" onclick="flipPhoto()">↔ Flip</button>
+   <button class="secondary" onclick="cropPhoto()">Square Crop</button>
   </div>
+ </div>
+
+ <div class="card">
+  <h3>🎨 Filters</h3>
+  <div class="grid">
+   <button onclick="setFilter('none')">Normal</button>
+   <button onclick="setFilter('grayscale(1)')">B&W</button>
+   <button onclick="setFilter('sepia(0.8)')">Vintage</button>
+   <button onclick="setFilter('saturate(1.8)')">Vivid</button>
+   <button onclick="setFilter('sepia(.25) saturate(1.3)')">Warm</button>
+   <button onclick="setFilter('contrast(1.35)')">Dramatic</button>
+  </div>
+ </div>
+
+ <div class="card">
+  <h3>⚙️ Adjustments</h3>
+  <label>Brightness</label>
+  <input id="brightness" type="range" min="30" max="180" value="100" oninput="drawPhoto()">
+  <label>Contrast</label>
+  <input id="contrast" type="range" min="30" max="200" value="100" oninput="drawPhoto()">
+  <label>Saturation</label>
+  <input id="saturation" type="range" min="0" max="200" value="100" oninput="drawPhoto()">
+  <label>Grayscale</label>
+  <input id="grayscale" type="range" min="0" max="100" value="0" oninput="drawPhoto()">
+ </div>
+
+ <div class="card">
+  <h3>✍️ Text on Photo</h3>
+  <label>टेक्स्ट</label>
+  <input id="photoText" placeholder="अपना टेक्स्ट लिखो" oninput="drawPhoto()">
+  <label>Text Color</label>
+  <input id="photoColor" type="color" value="#ffffff" oninput="drawPhoto()">
+  <label>Text Size</label>
+  <input id="photoSize" type="range" min="18" max="100" value="40" oninput="drawPhoto()">
+  <label>Text Position</label>
+  <input id="photoPosition" type="range" min="10" max="95" value="85" oninput="drawPhoto()">
+  <div class="row">
+   <button class="green" onclick="downloadPhoto()">⬇️ HD PNG सेव करें</button>
+   <button class="secondary" onclick="resetPhoto()">Reset</button>
+  </div>
+ </div>
 </section>
 
-<section id="photoEditor" class="page">
-  <button class="secondary" onclick="showPage('editorHome')">← Editor Home</button>
-  <h2>🖼️ Photo Editor</h2>
-  <div class="card">
-    <label>फोन से फोटो चुनें</label>
-    <input type="file" id="photoInput" accept="image/*">
-    <canvas id="photoCanvas" width="1000" height="700"></canvas>
-    <div class="row">
-      <button class="secondary" onclick="rotatePhoto()">↻ Rotate</button>
-      <button class="secondary" onclick="flipPhoto()">↔ Flip</button>
-      <button class="secondary" onclick="cropPhoto()">Center Crop</button>
-    </div>
+<!-- VIDEO -->
+<section id="video" class="page">
+ <button class="secondary" onclick="showPage('home')">← Home</button>
+ <h2>🎬 Video Studio</h2>
+
+ <div class="card">
+  <label>फोन से वीडियो चुनो</label>
+  <input id="videoInput" type="file" accept="video/*">
+  <video id="videoPreview" class="preview" controls playsinline></video>
+  <div id="videoStatus" class="status">पहले वीडियो चुनें।</div>
+ </div>
+
+ <div class="card">
+  <h3>✂️ Trim & Timeline</h3>
+  <label>Start Time (सेकंड)</label>
+  <input id="trimStart" type="number" min="0" value="0" step=".1">
+  <label>End Time (सेकंड)</label>
+  <input id="trimEnd" type="number" min="0" value="10" step=".1">
+  <div class="row">
+   <button onclick="previewTrim()">चुना हिस्सा देखें</button>
+   <button class="secondary" onclick="stopTrim()">Stop</button>
   </div>
-  <div class="card">
-    <h3>🎨 Free Filters</h3>
-    <div class="row">
-      <button onclick="setFilter('normal')">Normal</button>
-      <button onclick="setFilter('bw')">B&W</button>
-      <button onclick="setFilter('vintage')">Vintage</button>
-    </div>
-    <div class="row">
-      <button onclick="setFilter('vivid')">Vivid</button>
-      <button onclick="setFilter('warm')">Warm</button>
-      <button onclick="setFilter('cool')">Cool</button>
-    </div>
-    <div class="row">
-      <button onclick="setFilter('fade')">Fade</button>
-      <button onclick="setFilter('dramatic')">Dramatic</button>
-      <button onclick="setFilter('soft')">Soft</button>
-    </div>
-  </div>
-  <div class="card">
-    <h3>⚙️ Adjustments</h3>
-    <label>Brightness</label><input id="brightness" type="range" min="30" max="180" value="100" oninput="drawPhoto()">
-    <label>Contrast</label><input id="contrast" type="range" min="30" max="200" value="100" oninput="drawPhoto()">
-    <label>Saturation</label><input id="saturation" type="range" min="0" max="200" value="100" oninput="drawPhoto()">
-    <label>Grayscale</label><input id="grayscale" type="range" min="0" max="100" value="0" oninput="drawPhoto()">
-    <label>Sepia</label><input id="sepia" type="range" min="0" max="100" value="0" oninput="drawPhoto()">
-  </div>
-  <div class="card">
-    <h3>✍️ Add Text</h3>
-    <label>फोटो पर टेक्स्ट</label><input id="photoText" placeholder="यहाँ टेक्स्ट लिखें" oninput="drawPhoto()">
-    <label>Text Font</label>
-    <select id="photoFont" onchange="drawPhoto()">
-      <option value="Arial">Arial / English</option>
-      <option value="sans-serif">Hindi / Sans Serif</option>
-      <option value="serif">Serif</option>
-      <option value="monospace">Monospace</option>
-    </select>
-    <label>Text Color</label><input id="textColor" type="color" value="#ffffff" oninput="drawPhoto()">
-    <label>Text Size</label><input id="textSize" type="range" min="18" max="90" value="38" oninput="drawPhoto()">
-    <label>Text Position</label><input id="textPosition" type="range" min="10" max="95" value="85" oninput="drawPhoto()">
-  </div>
-  <div class="card">
-    <div class="row">
-      <button class="green" onclick="downloadPhoto()">⬇️ Download PNG</button>
-      <button class="secondary" onclick="resetPhoto()">Reset Edits</button>
-    </div>
-  </div>
+  <p class="small">ये समय वीडियो ट्रिम करने और एक्सपोर्ट करने में इस्तेमाल होंगे।</p>
+ </div>
+
+ <div class="card">
+  <h3>⏩ Speed & Sound</h3>
+  <label>Playback Speed</label>
+  <select id="videoSpeed" onchange="changeSpeed()">
+   <option value=".5">0.5x Slow</option>
+   <option value=".75">0.75x</option>
+   <option value="1" selected>1x Normal</option>
+   <option value="1.25">1.25x</option>
+   <option value="1.5">1.5x</option>
+   <option value="2">2x Fast</option>
+  </select>
+  <button class="secondary" onclick="toggleMute()">Mute / Unmute</button>
+ </div>
+
+ <div class="card">
+  <h3>✍️ वीडियो पर टेक्स्ट</h3>
+  <label>Text Overlay</label>
+  <input id="videoText" placeholder="वीडियो पर दिखने वाला टेक्स्ट">
+  <label>Text Color</label>
+  <input id="videoTextColor" type="color" value="#ffffff">
+  <label>Text Size</label>
+  <input id="videoTextSize" type="range" min="18" max="80" value="38">
+ </div>
+
+ <div class="card">
+  <h3>📤 Export Video</h3>
+  <p class="small">यह समर्थित ब्राउज़र में वीडियो और टेक्स्ट को रिकॉर्ड करके WebM फ़ाइल बनाता है। यह MP4 नहीं है। रिकॉर्डिंग के दौरान पेज खुला रखें।</p>
+  <button class="green" id="exportVideoBtn" onclick="exportVideo()">वीडियो एक्सपोर्ट करें</button>
+  <div id="exportStatus" class="status">वीडियो चुनने के बाद एक्सपोर्ट करें।</div>
+ </div>
 </section>
 
-<section id="videoEditor" class="page">
-  <button class="secondary" onclick="showPage('editorHome')">← Editor Home</button>
-  <h2>🎬 Video Editor</h2>
-  <div class="card">
-    <label>फोन से वीडियो चुनें</label>
-    <input type="file" id="videoInput" accept="video/*">
-    <video id="videoPreview" class="preview" controls playsinline></video>
-    <div id="videoStatus" class="status">पहले वीडियो चुनें।</div>
-  </div>
-  <div class="card">
-    <h3>✂️ Trim Preview</h3>
-    <label>Start Time (seconds)</label><input id="trimStart" type="number" min="0" value="0" step="0.1">
-    <label>End Time (seconds)</label><input id="trimEnd" type="number" min="0" value="10" step="0.1">
-    <div class="row">
-      <button onclick="previewTrim()">Preview Selected Part</button>
-      <button class="secondary" onclick="stopTrim()">Stop</button>
-    </div>
-    <p class="small">यह चयनित हिस्से का प्रीव्यू है, असली MP4 एक्सपोर्ट नहीं।</p>
-  </div>
-  <div class="card">
-    <h3>⏩ Playback Speed</h3>
-    <select id="videoSpeed" onchange="changeSpeed()">
-      <option value="0.5">0.5x Slow</option>
-      <option value="0.75">0.75x</option>
-      <option value="1" selected>1x Normal</option>
-      <option value="1.25">1.25x</option>
-      <option value="1.5">1.5x</option>
-      <option value="2">2x Fast</option>
-    </select>
-    <div class="row">
-      <button onclick="toggleMute()">🔇 / 🔊 Mute</button>
-      <button class="secondary" onclick="resetVideo()">Reset Video</button>
-    </div>
-  </div>
+<!-- OTHER TOOLS -->
+<section id="tools" class="page">
+ <button class="secondary" onclick="showPage('home')">← Home</button>
+ <h2>🧰 My Tools</h2>
+ <div class="card">
+  <h3>SK Boy Studio</h3>
+  <p>तुम्हारी बाकी सुविधाएँ इसी जगह जोड़ी जा सकती हैं।</p>
+  <button onclick="showPage('pdf')">PDF Studio</button>
+  <button onclick="showPage('photo')">Photo Editor</button>
+  <button onclick="showPage('video')">Video Editor</button>
+ </div>
+ <div class="card">
+  <h3>⚙️ Display Settings</h3>
+  <label>Theme</label>
+  <select id="themeSelect" onchange="setTheme()">
+   <option value="light">Light</option>
+   <option value="dark">Dark</option>
+  </select>
+ </div>
 </section>
 
-<section id="support" class="page">
-  <h2>❤️ Support SK Boy</h2>
-  <div class="card" style="text-align:center">
-    <h3>Support by UPI QR</h3>
-    <img src="./qr.png" alt="UPI QR Code" style="width:230px;max-width:100%;border-radius:12px" onerror="this.style.display='none'">
-    <p class="small">सहयोग करना वैकल्पिक है। QR किसी फीचर को अनलॉक नहीं करता।</p>
-  </div>
-</section>
 </main>
 
 <nav>
-  <button id="nav-home" class="active" onclick="showPage('home')">🏠 Home</button>
-  <button id="nav-pdfHome" onclick="showPage('pdfHome')">📄 PDF</button>
-  <button id="nav-editorHome" onclick="showPage('editorHome')">🎨 Editor</button>
-  <button id="nav-support" onclick="showPage('support')">❤️ Support</button>
+ <button id="nav-home" class="active" onclick="showPage('home')">🏠 Home</button>
+ <button id="nav-pdf" onclick="showPage('pdf')">📄 PDF</button>
+ <button id="nav-photo" onclick="showPage('photo')">🖼️ Photo</button>
+ <button id="nav-video" onclick="showPage('video')">🎬 Video</button>
+ <button id="nav-tools" onclick="showPage('tools')">🧰 Tools</button>
 </nav>
 
 <script>
+/* NAVIGATION */
 function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const page=document.getElementById(id);
-  if(!page)return;
-  page.classList.add('active');
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  let navId=(id==='photoEditor'||id==='videoEditor')?'editorHome':id;
-  const nav=document.getElementById('nav-'+navId);
-  if(nav)nav.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(id==='photoEditor')drawPhoto();
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ const nav=document.getElementById('nav-'+id);
+ if(nav)nav.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+ if(id==='photo')drawPhoto();
 }
-function showNotice(title,message){alert(title+'\n\n'+message)}
-function escapeHTML(v){
-  return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* HELPERS */
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;a.download=name;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),3000);
 }
-function makeTextPDF(){
-  const text=document.getElementById('pdfText').value;
-  const name=document.getElementById('pdfName').value.trim()||'SK Boy Studio PDF';
-  const lang=document.getElementById('pdfLanguage').value;
-  const font=document.getElementById('fontChoice').value;
-  if(!text.trim()){alert('पहले टेक्स्ट लिखें।');return}
-  const w=window.open('','_blank');
-  if(!w){alert('ब्राउज़र में pop-ups की अनुमति दें।');return}
-  const dir=lang==='ur'?'rtl':'ltr';
-  const align=lang==='ur'?'right':'left';
-  w.document.open();
-  w.document.write('<!DOCTYPE html><html lang="'+lang+'"><head><meta charset="UTF-8"><title>'+escapeHTML(name)+'</title><style>body{font-family:'+font+';padding:25px;line-height:1.8;overflow-wrap:anywhere}.content{white-space:pre-wrap;direction:'+dir+';text-align:'+align+'}@media print{body{padding:0}}</style></head><body><h2>'+escapeHTML(name)+'</h2><div class="content">'+escapeHTML(text)+'</div><script>window.onload=function(){setTimeout(function(){window.print()},300)};<\/script></body></html>');
-  w.document.close();
+function safeName(s){
+ return (s||'SK-Boy-Studio').replace(/[\\/:*?"<>|]/g,'-').slice(0,90);
 }
-function clearTextPDF(){
-  document.getElementById('pdfName').value='';
-  document.getElementById('pdfText').value='';
+function requirePDFLib(){
+ if(!window.PDFLib){
+  alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके पेज रिफ्रेश करें।');
+  return false;
+ }
+ return true;
 }
-function makeImagePDF(){
-  const files=Array.from(document.getElementById('pdfImages').files||[]);
-  const status=document.getElementById('imagePdfStatus');
-  if(!files.length){status.textContent='पहले फोटो चुनें।';return}
-  const w=window.open('','_blank');
-  if(!w){status.textContent='Pop-ups की अनुमति दें।';return}
-  Promise.all(files.filter(f=>f.type.startsWith('image/')).map(f=>new Promise((resolve,reject)=>{
-    const r=new FileReader();r.onload=()=>resolve({name:f.name,data:r.result});r.onerror=reject;r.readAsDataURL(f);
-  }))).then(images=>{
-    let html='<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0}.sheet{height:96vh;display:flex;align-items:center;justify-content:center;page-break-after:always;padding:10px;box-sizing:border-box}img{max-width:100%;max-height:100%;object-fit:contain}@media print{.sheet{height:98vh}}</style></head><body>';
-    images.forEach(i=>html+='<div class="sheet"><img alt="'+escapeHTML(i.name)+'" src="'+i.data+'"></div>');
-    html+='<script>window.onload=function(){Promise.all(Array.from(document.images).map(i=>i.decode().catch(()=>{}))).then(()=>setTimeout(()=>window.print(),300))};<\/script></body></html>';
-    w.document.open();w.document.write(html);w.document.close();status.textContent='“Save as PDF” चुनें।';
-  }).catch(()=>{status.textContent='फोटो तैयार नहीं हुईं।'});
+
+/* PDF: TEXT TO PDF */
+async function textToPDF(){
+ if(!requirePDFLib())return;
+ const {PDFDocument,StandardFonts,rgb}=PDFLib;
+ const text=document.getElementById('pdfText').value;
+ if(!text.trim()){alert('पहले टेक्स्ट लिखें।');return}
+ const lang=document.getElementById('pdfLang').value;
+ if(lang==='hi'||lang==='ur'){
+  alert('ध्यान दें: PDF में हिंदी/उर्दू के सही अक्षरों के लिए embedded Unicode font चाहिए। इस साधारण संस्करण में इन लिपियों का आउटपुट ठीक न भी दिखे।');
+ }
+ try{
+  const pdf=await PDFDocument.create();
+  const font=await pdf.embedFont(StandardFonts.Helvetica);
+  const page=pdf.addPage([595.28,841.89]);
+  const margin=42,size=12,lineHeight=19;
+  page.drawText(safeName(document.getElementById('pdfName').value),{
+   x:margin,y:800,size:18,font,color:rgb(.08,.25,.6)
+  });
+  let y=765;
+  const maxWidth=510;
+  for(const paragraph of text.split('\n')){
+   const words=paragraph.split(' ');
+   let line='';
+   for(const word of words){
+    const next=line?line+' '+word:word;
+    if(font.widthOfTextAtSize(next,size)>maxWidth&&line){
+     if(y<45){page.addPage([595.28,841.89]);y=790}
+     const current=pdf.getPages()[pdf.getPageCount()-1];
+     current.drawText(line,{x:margin,y,size,font,color:rgb(.1,.1,.1)});
+     y-=lineHeight;line=word;
+    }else line=next;
+   }
+   if(y<45){pdf.addPage([595.28,841.89]);y=790}
+   pdf.getPages()[pdf.getPageCount()-1].drawText(line,{x:margin,y,size,font});
+   y-=lineHeight;
+  }
+  const bytes=await pdf.save();
+  downloadBlob(new Blob([bytes],{type:'application/pdf'}),safeName(document.getElementById('pdfName').value)+'.pdf');
+ }catch(e){alert('PDF नहीं बन सकी: '+e.message)}
 }
-function setDisplayMode(){
-  const dark=document.getElementById('displayMode').value==='dark';
-  document.documentElement.style.setProperty('--bg',dark?'#0f172a':'#f1f5f9');
-  document.documentElement.style.setProperty('--card',dark?'#1e293b':'#ffffff');
-  document.documentElement.style.setProperty('--text',dark?'#f8fafc':'#172033');
-  document.documentElement.style.setProperty('--muted',dark?'#cbd5e1':'#64748b');
-  document.documentElement.style.setProperty('--border',dark?'#334155':'#e2e8f0');
+
+/* PDF: IMAGES TO PDF */
+async function imagesToPDF(){
+ if(!requirePDFLib())return;
+ const files=[...document.getElementById('pdfImages').files];
+ if(!files.length){alert('पहले फोटो चुनें।');return}
+ try{
+  const pdf=await PDFLib.PDFDocument.create();
+  for(const file of files){
+   const bytes=await file.arrayBuffer();
+   let img;
+   if(file.type==='image/png')img=await pdf.embedPng(bytes);
+   else if(file.type==='image/jpeg'||file.type==='image/jpg')img=await pdf.embedJpg(bytes);
+   else{
+    const data=await readAsDataURL(file);
+    const image=await loadImage(data);
+    const canvas=document.createElement('canvas');
+    canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+    canvas.getContext('2d').drawImage(image,0,0);
+    const jpeg=await new Promise(r=>canvas.toBlob(r,'image/jpeg',.92));
+    img=await pdf.embedJpg(await jpeg.arrayBuffer());
+   }
+   const scale=Math.min(550/img.width,780/img.height,1);
+   const page=pdf.addPage([595.28,841.89]);
+   page.drawImage(img,{x:(595.28-img.width*scale)/2,
+    y:(841.89-img.height*scale)/2,width:img.width*scale,height:img.height*scale});
+  }
+  downloadBlob(new Blob([await pdf.save()],{type:'application/pdf'}),'SK-Boy-Images.pdf');
+ }catch(e){alert('फोटो PDF नहीं बनी: '+e.message)}
 }
-const photoCanvas=document.getElementById('photoCanvas');
-const ctx=photoCanvas.getContext('2d');
-let photoImage=null,photoRotation=0,photoFlip=false,photoFilter='normal';
-const filterSettings={
- normal:{contrast:1,saturation:1,brightness:1,grayscale:0,sepia:0},
- bw:{contrast:1.12,saturation:0,brightness:1,grayscale:1,sepia:0},
- vintage:{contrast:1.05,saturation:.8,brightness:1.05,grayscale:0,sepia:.45},
- vivid:{contrast:1.2,saturation:1.55,brightness:1.03,grayscale:0,sepia:0},
- warm:{contrast:1.03,saturation:1.15,brightness:1.05,grayscale:0,sepia:.18},
- cool:{contrast:1.08,saturation:1.15,brightness:1,grayscale:0,sepia:0},
- fade:{contrast:.85,saturation:.8,brightness:1.1,grayscale:0,sepia:.08},
- dramatic:{contrast:1.45,saturation:1.15,brightness:.96,grayscale:0,sepia:0},
- soft:{contrast:.9,saturation:1.05,brightness:1.08,grayscale:0,sepia:0}
-};
-document.getElementById('photoInput').addEventListener('change',function(){
- const file=this.files&&this.files[0];if(!file)return;
- if(!file.type.startsWith('image/')){alert('इमेज फाइल चुनें।');return}
- const url=URL.createObjectURL(file),img=new Image();
- img.onload=()=>{
-  photoImage=img;photoRotation=0;photoFlip=false;photoFilter='normal';
-  ['brightness','contrast','saturation'].forEach(id=>document.getElementById(id).value=100);
-  ['grayscale','sepia'].forEach(id=>document.getElementById(id).value=0);
-  document.getElementById('photoText').value='';drawPhoto();URL.revokeObjectURL(url);
- };
- img.onerror=()=>{URL.revokeObjectURL(url);alert('फोटो नहीं खुली।')};
- img.src=url;
+function readAsDataURL(file){
+ return new Promise((resolve,reject)=>{
+  const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
+ });
+}
+function loadImage(src){
+ return new Promise((resolve,reject)=>{
+  const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;
+ });
+}
+
+/* PDF: OPEN AND PREVIEW */
+let pdfBytes=null,pdfDoc=null,pdfPage=1;
+const pdfCanvas=document.getElementById('pdfCanvas');
+document.getElementById('pdfFile').addEventListener('change',async function(){
+ const file=this.files[0];if(!file)return;
+ try{
+  pdfBytes=await file.arrayBuffer();
+  pdfDoc=await PDFLib.PDFDocument.load(pdfBytes);
+  pdfPage=1;
+  await renderPDFPage();
+  document.getElementById('pdfStatus').textContent='PDF खुल गई। कुल पेज: '+pdfDoc.getPageCount();
+ }catch(e){
+  pdfDoc=null;
+  document.getElementById('pdfStatus').textContent='PDF नहीं खुली। फाइल सुरक्षित या सही PDF होनी चाहिए।';
+ }
 });
-function setFilter(name){photoFilter=name;drawPhoto()}
-function drawPhoto(){
- const w=photoCanvas.width,h=photoCanvas.height;
- ctx.clearRect(0,0,w,h);ctx.fillStyle='#e2e8f0';ctx.fillRect(0,0,w,h);
- if(!photoImage){ctx.fillStyle='#475569';ctx.font='bold 28px Arial';ctx.textAlign='center';ctx.fillText('Select a Photo',w/2,h/2);return}
- const f=filterSettings[photoFilter]||filterSettings.normal;
- const b=Number(document.getElementById('brightness').value)/100*f.brightness;
- const c=Number(document.getElementById('contrast').value)/100*f.contrast;
- const s=Number(document.getElementById('saturation').value)/100*f.saturation;
- const g=Math.min(1,Number(document.getElementById('grayscale').value)/100+f.grayscale);
- const sep=Math.min(1,Number(document.getElementById('sepia').value)/100+f.sepia);
- ctx.save();ctx.translate(w/2,h/2);ctx.rotate(photoRotation*Math.PI/180);if(photoFlip)ctx.scale(-1,1);
- const iw=photoImage.naturalWidth,ih=photoImage.naturalHeight;
- let scale=Math.min(w/iw,h/ih);if(photoRotation%180!==0)scale=Math.min(w/ih,h/iw);
- ctx.filter='brightness('+b+') contrast('+c+') saturate('+s+') grayscale('+g+') sepia('+sep+')';
- ctx.drawImage(photoImage,-iw*scale/2,-ih*scale/2,iw*scale,ih*scale);ctx.restore();ctx.filter='none';
- const text=document.getElementById('photoText').value;
- if(text){
-  const size=Number(document.getElementById('textSize').value),pos=Number(document.getElementById('textPosition').value)/100;
-  ctx.save();ctx.fillStyle=document.getElementById('textColor').value;
-  ctx.font='bold '+size+'px "'+document.getElementById('photoFont').value+'", sans-serif';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='rgba(0,0,0,.75)';ctx.shadowBlur=5;
-  const lines=text.split('\n'),lh=size*1.25,total=lines.length*lh;
-  const y=Math.min(h-20-total/2,Math.max(20+total/2,h*pos));
-  lines.forEach((line,i)=>ctx.fillText(line,w/2,y+(i-(lines.length-1)/2)*lh,w-40));
-  ctx.restore();
+async function renderPDFPage(){
+ if(!pdfDoc)return;
+ document.getElementById('pdfPageInfo').textContent=
+  'Page '+pdfPage+' / '+pdfDoc.getPageCount();
+ try{
+  if(window.pdfjsLib){
+   pdfjsLib.GlobalWorkerOptions.workerSrc=
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+   const task=pdfjsLib.getDocument({data:pdfBytes.slice(0)});
+   const viewer=await task.promise;
+   const page=await viewer.getPage(pdfPage);
+   const viewport=page.getViewport({scale:1.25});
+   pdfCanvas.width=viewport.width;pdfCanvas.height=viewport.height;
+   await page.render({canvasContext:pdfCanvas.getContext('2d'),viewport}).promise;
+   await viewer.destroy();
+  }
+ }catch(e){
+  document.getElementById('pdfStatus').textContent='PDF खुल गई, लेकिन प्रीव्यू लोड नहीं हुआ।';
  }
 }
-function rotatePhoto(){if(!photoImage){alert('पहले फोटो चुनें।');return}photoRotation=(photoRotation+90)%360;drawPhoto()}
-function flipPhoto(){if(!photoImage){alert('पहले फोटो चुनें।');return}photoFlip=!photoFlip;drawPhoto()}
+function pdfPrev(){
+ if(!pdfDoc)return alert('पहले PDF खोलें।');
+ if(pdfPage>1){pdfPage--;renderPDFPage()}
+}
+function pdfNext(){
+ if(!pdfDoc)return alert('पहले PDF खोलें।');
+ if(pdfPage<pdfDoc.getPageCount()){pdfPage++;renderPDFPage()}
+}
+
+/* PDF: ADD TEXT OVERLAY AND SAVE */
+async function addPDFText(){
+ if(!pdfDoc)return alert('पहले PDF खोलें।');
+ const text=document.getElementById('pdfOverlayText').value;
+ if(!text.trim())return alert('टेक्स्ट लिखें।');
+ const {StandardFonts,rgb}=PDFLib;
+ try{
+  const page=pdfDoc.getPages()[pdfPage-1];
+  const font=await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const y=Math.max(10,Math.min(Number(document.getElementById('pdfTextY').value)||80,page.getHeight()-30));
+  page.drawText(text,{x:40,y,size:14,font,color:rgb(.08,.25,.8),maxWidth:page.getWidth()-80});
+  pdfBytes=await pdfDoc.save();
+  document.getElementById('pdfStatus').textContent='टेक्स्ट जोड़ा गया। डाउनलोड बटन दबाकर सेव करें।';
+ }catch(e){alert('टेक्स्ट नहीं जुड़ा: '+e.message)}
+}
+async function saveEditedPDF(){
+ if(!pdfDoc)return alert('पहले PDF खोलें।');
+ try{
+  const bytes=await pdfDoc.save();
+  downloadBlob(new Blob([bytes],{type:'application/pdf'}),'SK-Boy-Edited.pdf');
+ }catch(e){alert('PDF सेव नहीं हुई: '+e.message)}
+}
+
+/* PDF: MERGE */
+async function mergePDFs(){
+ if(!requirePDFLib())return;
+ const files=[...document.getElementById('mergeFiles').files];
+ if(files.length<2)return alert('कम से कम 2 PDF चुनें।');
+ try{
+  const out=await PDFLib.PDFDocument.create();
+  for(const f of files){
+   const source=await PDFLib.PDFDocument.load(await f.arrayBuffer());
+   const pages=await out.copyPages(source,source.getPageIndices());
+   pages.forEach(p=>out.addPage(p));
+  }
+  downloadBlob(new Blob([await out.save()],{type:'application/pdf'}),'SK-Boy-Merged.pdf');
+ }catch(e){alert('PDF Merge नहीं हुआ: '+e.message)}
+}
+
+/* PDF: SPLIT */
+async function splitPDF(){
+ if(!pdfDoc)return alert('पहले ऊपर PDF खोलें।');
+ try{
+  const start=Number(document.getElementById('splitStart').value);
+  const end=Number(document.getElementById('splitEnd').value);
+  if(start<1||end<start||end>pdfDoc.getPageCount())return alert('पेज नंबर सही दर्ज करें।');
+  const out=await PDFLib.PDFDocument.create();
+  const indices=Array.from({length:end-start+1},(_,i)=>start-1+i);
+  const pages=await out.copyPages(pdfDoc,indices);
+  pages.forEach(p=>out.addPage(p));
+  downloadBlob(new Blob([await out.save()],{type:'application/pdf'}),'SK-Boy-Split.pdf');
+ }catch(e){alert('PDF Split नहीं हुआ: '+e.message)}
+}
+
+/* PHOTO EDITOR */
+const photoCanvas=document.getElementById('photoCanvas');
+const pctx=photoCanvas.getContext('2d');
+let photoImage=null,photoRotation=0,photoFlip=false,photoFilter='none';
+let cropRect=null;
+document.getElementById('photoInput').addEventListener('change',async function(){
+ const file=this.files[0];if(!file)return;
+ try{
+  photoImage=await loadImage(URL.createObjectURL(file));
+  photoRotation=0;photoFlip=false;photoFilter='none';cropRect=null;
+  ['brightness','contrast','saturation'].forEach(id=>document.getElementById(id).value=100);
+  document.getElementById('grayscale').value=0;
+  document.getElementById('photoText').value='';
+  drawPhoto();
+ }catch(e){alert('फोटो नहीं खुली।')}
+});
+function setFilter(f){photoFilter=f;drawPhoto()}
+function drawPhoto(){
+ if(!photoImage){
+  photoCanvas.width=1000;photoCanvas.height=700;
+  pctx.clearRect(0,0,1000,700);pctx.fillStyle='#dbeafe';pctx.fillRect(0,0,1000,700);
+  pctx.fillStyle='#1d4ed8';pctx.font='bold 32px Arial';pctx.textAlign='center';
+  pctx.fillText('Choose a Photo',500,350);return;
+ }
+ const sw=photoImage.naturalWidth,sh=photoImage.naturalHeight;
+ const rotated=photoRotation%180!==0;
+ photoCanvas.width=rotated?sh:sw;
+ photoCanvas.height=rotated?sw:sh;
+ pctx.save();
+ pctx.translate(photoCanvas.width/2,photoCanvas.height/2);
+ pctx.rotate(photoRotation*Math.PI/180);
+ if(photoFlip)pctx.scale(-1,1);
+ pctx.filter='brightness('+(Number(brightness.value)/100)+') '+
+ 'contrast('+(Number(contrast.value)/100)+') '+
+ 'saturate('+(Number(saturation.value)/100)+') '+
+ 'grayscale('+(Number(grayscale.value)/100)+') '+photoFilter;
+ pctx.drawImage(photoImage,-sw/2,-sh/2,sw,sh);
+ pctx.restore();pctx.filter='none';
+ const text=document.getElementById('photoText').value;
+ if(text){
+  const size=Number(document.getElementById('photoSize').value);
+  pctx.font='bold '+size+'px Arial,sans-serif';
+  pctx.textAlign='center';pctx.textBaseline='middle';
+  pctx.fillStyle=document.getElementById('photoColor').value;
+  pctx.strokeStyle='rgba(0,0,0,.65)';pctx.lineWidth=Math.max(2,size/12);
+  const lines=text.split('\n'),lh=size*1.25;
+  let y=photoCanvas.height*Number(document.getElementById('photoPosition').value)/100;
+  y=Math.max(size,Math.min(photoCanvas.height-size,y));
+  lines.forEach((line,i)=>{
+   const yy=y+(i-(lines.length-1)/2)*lh;
+   pctx.strokeText(line,photoCanvas.width/2,yy,photoCanvas.width-30);
+   pctx.fillText(line,photoCanvas.width/2,yy,photoCanvas.width-30);
+  });
+ }
+}
+function rotatePhoto(){if(!photoImage)return alert('फोटो चुनें।');photoRotation=(photoRotation+90)%360;drawPhoto()}
+function flipPhoto(){if(!photoImage)return alert('फोटो चुनें।');photoFlip=!photoFlip;drawPhoto()}
 function cropPhoto(){
- if(!photoImage){alert('पहले फोटो चुनें।');return}
- const width=photoImage.naturalWidth,height=photoImage.naturalHeight,side=Math.min(width,height);
+ if(!photoImage)return alert('फोटो चुनें।');
+ const side=Math.min(photoCanvas.width,photoCanvas.height);
  const temp=document.createElement('canvas');temp.width=side;temp.height=side;
- temp.getContext('2d').drawImage(photoImage,(width-side)/2,(height-side)/2,side,side,0,0,side,side);
- const img=new Image();img.onload=()=>{photoImage=img;photoRotation=0;photoFlip=false;drawPhoto()};img.src=temp.toDataURL('image/png');
+ temp.getContext('2d').drawImage(photoCanvas,
+  (photoCanvas.width-side)/2,(photoCanvas.height-side)/2,side,side,0,0,side,side);
+ const img=new Image();
+ img.onload=()=>{photoImage=img;photoRotation=0;photoFlip=false;photoFilter='none';drawPhoto()};
+ img.src=temp.toDataURL('image/png');
 }
 function resetPhoto(){
- photoRotation=0;photoFlip=false;photoFilter='normal';
- document.getElementById('brightness').value=100;document.getElementById('contrast').value=100;
- document.getElementById('saturation').value=100;document.getElementById('grayscale').value=0;
- document.getElementById('sepia').value=0;document.getElementById('photoText').value='';
- document.getElementById('textColor').value='#ffffff';document.getElementById('textSize').value=38;
- document.getElementById('textPosition').value=85;drawPhoto();
+ photoRotation=0;photoFlip=false;photoFilter='none';
+ ['brightness','contrast','saturation'].forEach(id=>document.getElementById(id).value=100);
+ document.getElementById('grayscale').value=0;
+ document.getElementById('photoText').value='';
+ drawPhoto();
 }
 function downloadPhoto(){
- if(!photoImage){alert('पहले फोटो चुनें।');return}
- try{const a=document.createElement('a');a.download='SK-Boy-Edited-Photo.png';a.href=photoCanvas.toDataURL('image/png');a.click()}
- catch(e){alert('फोटो सेव नहीं हुई। छोटी फोटो आजमाएँ।')}
+ if(!photoImage)return alert('पहले फोटो चुनें।');
+ photoCanvas.toBlob(blob=>{
+  if(blob)downloadBlob(blob,'SK-Boy-Edited-Photo.png');
+  else alert('फोटो सेव नहीं हो सकी।');
+ },'image/png');
 }
+
+/* VIDEO EDITOR */
 const video=document.getElementById('videoPreview');
-let videoUrl=null,trimPreviewActive=false;
+let videoUrl=null,trimActive=false,exporting=false;
 document.getElementById('videoInput').addEventListener('change',function(){
- const file=this.files&&this.files[0];if(!file)return;
- if(!file.type.startsWith('video/')){alert('वीडियो फाइल चुनें।');return}
- stopTrim();if(videoUrl)URL.revokeObjectURL(videoUrl);
- videoUrl=URL.createObjectURL(file);video.src=videoUrl;video.load();
- document.getElementById('videoStatus').textContent='वीडियो लोड हो रहा है...';
+ const file=this.files[0];if(!file)return;
+ if(videoUrl)URL.revokeObjectURL(videoUrl);
+ videoUrl=URL.createObjectURL(file);
+ video.src=videoUrl;video.load();
+ document.getElementById('videoStatus').textContent='वीडियो लोड हो रही है...';
  video.onloadedmetadata=()=>{
-  document.getElementById('trimStart').value=0;
-  document.getElementById('trimEnd').value=video.duration.toFixed(1);
-  document.getElementById('videoStatus').textContent='वीडियो तैयार है। अवधि: '+video.duration.toFixed(1)+' सेकंड';
+  trimStart.value=0;trimEnd.value=video.duration.toFixed(1);
+  document.getElementById('videoStatus').textContent=
+   'वीडियो तैयार। अवधि: '+video.duration.toFixed(1)+' सेकंड';
  };
- video.onerror=()=>document.getElementById('videoStatus').textContent='वीडियो नहीं खुल सकी। दूसरी फाइल आजमाएँ।';
 });
 function previewTrim(){
- if(!video.src||!Number.isFinite(video.duration)){alert('पहले वीडियो चुनें।');return}
- const start=Number(document.getElementById('trimStart').value),end=Number(document.getElementById('trimEnd').value);
- if(!Number.isFinite(start)||!Number.isFinite(end)||start<0||end<=start||end>video.duration){alert('Start और End समय सही दर्ज करें।');return}
- stopTrim();video.currentTime=start;video.playbackRate=Number(document.getElementById('videoSpeed').value);
- trimPreviewActive=true;video.addEventListener('timeupdate',handleTrimTime);
- video.play().catch(()=>document.getElementById('videoStatus').textContent='वीडियो पर Play दबाएँ।');
+ if(!videoUrl||!Number.isFinite(video.duration))return alert('पहले वीडियो चुनें।');
+ const s=Number(trimStart.value),e=Number(trimEnd.value);
+ if(s<0||e<=s||e>video.duration)return alert('Start और End सही दर्ज करें।');
+ stopTrim();video.currentTime=s;video.playbackRate=Number(videoSpeed.value);
+ trimActive=true;
+ video.addEventListener('timeupdate',trimWatcher);
+ video.play().catch(()=>alert('वीडियो पर Play दबाएँ।'));
 }
-function handleTrimTime(){
- if(trimPreviewActive&&video.currentTime>=Number(document.getElementById('trimEnd').value)){video.pause();trimPreviewActive=false;video.removeEventListener('timeupdate',handleTrimTime)}
+function trimWatcher(){
+ if(trimActive&&video.currentTime>=Number(trimEnd.value)){
+  video.pause();trimActive=false;video.removeEventListener('timeupdate',trimWatcher);
+ }
 }
-function stopTrim(){trimPreviewActive=false;video.pause();video.removeEventListener('timeupdate',handleTrimTime)}
-function changeSpeed(){video.playbackRate=Number(document.getElementById('videoSpeed').value)}
+function stopTrim(){
+ trimActive=false;video.pause();video.removeEventListener('timeupdate',trimWatcher);
+}
+function changeSpeed(){video.playbackRate=Number(videoSpeed.value)}
 function toggleMute(){video.muted=!video.muted}
-function resetVideo(){
- stopTrim();if(Number.isFinite(video.duration))video.currentTime=0;
- video.playbackRate=1;video.muted=false;document.getElementById('videoSpeed').value='1';
- document.getElementById('trimStart').value='0';
- if(Number.isFinite(video.duration))document.getElementById('trimEnd').value=video.duration.toFixed(1);
+
+/* VIDEO EXPORT: REAL-TIME CANVAS RECORDING TO WEBM */
+async function exportVideo(){
+ if(exporting)return;
+ if(!videoUrl||!Number.isFinite(video.duration))return alert('पहले वीडियो चुनें।');
+ if(!HTMLCanvasElement.prototype.captureStream||!window.MediaRecorder){
+  alert('इस ब्राउज़र में वीडियो एक्सपोर्ट सपोर्ट नहीं है। Chrome का नया संस्करण आजमाएँ।');return;
+ }
+ const start=Number(trimStart.value),end=Number(trimEnd.value);
+ if(start<0||end<=start||end>video.duration)return alert('Trim का समय सही दर्ज करें।');
+ const btn=document.getElementById('exportVideoBtn');
+ const status=document.getElementById('exportStatus');
+ exporting=true;btn.disabled=true;
+ status.textContent='वीडियो तैयार हो रही है। पेज खुला रखें...';
+ const canvas=document.createElement('canvas');
+ canvas.width=Math.min(video.videoWidth||1280,1280);
+ canvas.height=Math.round(canvas.width*(video.videoHeight||720)/(video.videoWidth||1280));
+ const ctx=canvas.getContext('2d');
+ const stream=canvas.captureStream(25);
+ let sourceStream=null;
+ try{
+  if(video.captureStream)sourceStream=video.captureStream();
+  else if(video.mozCaptureStream)sourceStream=video.mozCaptureStream();
+  if(sourceStream){
+   sourceStream.getAudioTracks().forEach(t=>stream.addTrack(t));
+  }
+  const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']
+   .find(t=>MediaRecorder.isTypeSupported(t));
+  if(!mime)throw new Error('WebM एक्सपोर्ट इस ब्राउज़र में उपलब्ध नहीं है।');
+  const recorder=new MediaRecorder(stream,{mimeType:mime});
+  const chunks=[];
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+  recorder.onerror=()=>{status.textContent='वीडियो रिकॉर्डिंग में त्रुटि हुई।';finish()};
+  recorder.onstop=()=>{
+   if(chunks.length){
+    downloadBlob(new Blob(chunks,{type:mime}),'SK-Boy-Edited-Video.webm');
+    status.textContent='एक्सपोर्ट पूरा हुआ। WebM वीडियो डाउनलोड हो गई।';
+   }else status.textContent='वीडियो डेटा नहीं बना।';
+   finish();
+  };
+  function drawFrame(){
+   if(!exporting)return;
+   try{
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    const text=document.getElementById('videoText').value;
+    if(text){
+     const size=Number(document.getElementById('videoTextSize').value);
+     ctx.font='bold '+size+'px Arial,sans-serif';
+     ctx.textAlign='center';ctx.textBaseline='middle';
+     ctx.lineWidth=4;ctx.strokeStyle='rgba(0,0,0,.8)';
+     ctx.fillStyle=document.getElementById('videoTextColor').value;
+     ctx.strokeText(text,canvas.width/2,canvas.height*.85,canvas.width-30);
+     ctx.fillText(text,canvas.width/2,canvas.height*.85,canvas.width-30);
+    }
+   }catch(e){}
+   if(exporting)requestAnimationFrame(drawFrame);
+  }
+  function onTime(){
+   status.textContent='रिकॉर्डिंग... '+Math.max(0,video.currentTime-start).toFixed(1)+
+    ' / '+(end-start).toFixed(1)+' सेकंड';
+   if(video.currentTime>=end&&exporting){
+    video.pause();exporting=false;
+    video.removeEventListener('timeupdate',onTime);
+    if(recorder.state!=='inactive')recorder.stop();
+   }
+  }
+  function finish(){
+   exporting=false;btn.disabled=false;
+   stream.getTracks().forEach(t=>t.stop());
+   if(sourceStream)sourceStream.getTracks().forEach(t=>t.stop());
+  }
+  recorder.start(250);
+  video.pause();video.currentTime=start;video.playbackRate=Number(videoSpeed.value);
+  drawFrame();
+  await new Promise(resolve=>{
+   if(video.readyState>=2)resolve();
+   else video.addEventListener('loadeddata',resolve,{once:true});
+  });
+  video.currentTime=start;
+  await video.play();
+  video.addEventListener('timeupdate',onTime);
+  status.textContent='रिकॉर्डिंग शुरू हुई...';
+ }catch(e){
+  status.textContent='एक्सपोर्ट नहीं हो सका: '+e.message;
+  exporting=false;btn.disabled=false;
+  stream.getTracks().forEach(t=>t.stop());
+ }
+}
+
+/* THEME */
+function setTheme(){
+ const dark=document.getElementById('themeSelect').value==='dark';
+ document.documentElement.style.setProperty('--bg',dark?'#0f172a':'#f3f6fc');
+ document.documentElement.style.setProperty('--card',dark?'#1e293b':'#ffffff');
+ document.documentElement.style.setProperty('--text',dark?'#f8fafc':'#172033');
+ document.documentElement.style.setProperty('--muted',dark?'#cbd5e1':'#64748b');
+ document.documentElement.style.setProperty('--border',dark?'#334155':'#e2e8f0');
 }
 drawPhoto();
 </script>
