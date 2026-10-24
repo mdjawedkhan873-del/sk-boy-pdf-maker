@@ -6,67 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0755e9">
 <title>SK BOY PDF Maker</title>
-
 <style>
 *{box-sizing:border-box}
 :root{--blue:#0755e9;--light:#eef4ff;--text:#14264b}
-body{
-  margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  color:var(--text);background:#edf3ff;
-}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;color:var(--text);background:#edf3ff}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
-.header{
-  background:linear-gradient(135deg,#0645d9,#1684ff);
-  color:white;padding:20px 16px 24px;
-  border-radius:0 0 28px 28px;
-  box-shadow:0 8px 24px #0755e926;
-}
+.header{background:linear-gradient(135deg,#0645d9,#1684ff);color:white;padding:20px 16px 24px;border-radius:0 0 28px 28px}
 .brand{display:flex;align-items:center;gap:12px}
-.logo{
-  width:54px;height:54px;border-radius:16px;
-  background:white;color:#0755e9;display:grid;
-  place-items:center;font-size:27px;font-weight:bold;
-}
+.logo{width:54px;height:54px;border-radius:16px;background:white;color:#0755e9;display:grid;place-items:center;font-size:27px;font-weight:bold}
 .brand h1{font-size:22px;margin:0 0 4px}
 .brand p{margin:0;color:#dceaff;font-size:14px}
-.menu{
-  margin-left:auto;border:1px solid #ffffff80;
-  background:#ffffff16;color:white;border-radius:12px;
-  padding:10px 13px;font-size:21px;
-}
-.search{
-  margin-top:20px;background:white;border-radius:15px;
-  padding:13px 15px;color:#65738f;
-  display:flex;gap:10px;align-items:center;
-}
+.menu{margin-left:auto;border:1px solid #ffffff80;background:#ffffff16;color:white;border-radius:12px;padding:10px 13px;font-size:21px}
+.search{margin-top:20px;background:white;border-radius:15px;padding:13px 15px;color:#65738f;display:flex;gap:10px;align-items:center}
 .search input{border:0;outline:0;width:100%;color:#14264b}
 main{max-width:760px;margin:auto;padding:16px 14px 100px}
-.welcome{
-  margin-top:4px;padding:20px;border-radius:22px;
-  background:linear-gradient(120deg,#fff,#e0edff);
-  border:1px solid #d8e6ff;
-}
+.welcome{margin-top:4px;padding:20px;border-radius:22px;background:linear-gradient(120deg,#fff,#e0edff);border:1px solid #d8e6ff}
 .welcome h2{font-size:25px;margin:0 0 10px}
 .welcome p{line-height:1.65;margin:0 0 15px}
 .tags{display:flex;gap:8px;flex-wrap:wrap}
-.tag{
-  padding:8px 10px;background:white;border-radius:30px;
-  font-size:12px;border:1px solid #e3eaff;
-}
-.section-title{
-  display:flex;align-items:center;justify-content:space-between;
-  margin:25px 2px 14px;
-}
+.tag{padding:8px 10px;background:white;border-radius:30px;font-size:12px;border:1px solid #e3eaff}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:25px 2px 14px}
 .section-title h2{margin:0;font-size:21px}
 .section-title span{font-size:13px;color:var(--blue)}
 .tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.tool{
-  border:0;border-radius:20px;padding:20px 10px;
-  min-height:150px;color:white;text-align:center;
-  box-shadow:0 7px 15px #182e5112;
-  transition:transform .15s;
-}
+.tool{border:0;border-radius:20px;padding:20px 10px;min-height:150px;color:white;text-align:center;box-shadow:0 7px 15px #182e5112}
 .tool:active,.support-btn:active{transform:scale(.98)}
 .tool .ico{font-size:34px;display:block;margin-bottom:12px}
 .tool strong{display:block;font-size:16px;margin-bottom:7px}
@@ -77,228 +41,218 @@ main{max-width:760px;margin:auto;padding:16px 14px 100px}
 .orange{background:linear-gradient(145deg,#ffae35,#f46b0c)}
 .indigo{background:linear-gradient(145deg,#7773ff,#4540e7)}
 .slate{background:linear-gradient(145deg,#779bbd,#41668e)}
-.support{
-  margin-top:24px;padding:19px;border-radius:23px;
-  border:1px solid #edcaff;
-  background:linear-gradient(135deg,#fff4ff,#f1eaff);
-}
+.pink{background:linear-gradient(145deg,#ff69a6,#df2778)}
+.green{background:linear-gradient(145deg,#22c98b,#087f65)}
+.support{margin-top:24px;padding:19px;border-radius:23px;border:1px solid #edcaff;background:linear-gradient(135deg,#fff4ff,#f1eaff)}
 .support-top{display:flex;gap:13px;align-items:flex-start}
-.support-icon{
-  flex-shrink:0;width:55px;height:55px;background:white;
-  color:#0755e9;border-radius:17px;display:grid;
-  place-items:center;font-size:29px;
-}
+.support-icon{flex-shrink:0;width:55px;height:55px;background:white;color:#0755e9;border-radius:17px;display:grid;place-items:center;font-size:29px}
 .support h2{font-size:18px;margin:3px 0 10px}
 .support p{font-size:14px;line-height:1.7;margin:0}
-.support-btn{
-  width:100%;border:0;border-radius:30px;
-  padding:15px;margin-top:18px;
-  color:white;font-weight:bold;font-size:16px;
-  background:linear-gradient(100deg,#0755e9,#087cff);
-  box-shadow:0 7px 16px #0755e925;
-}
+.support-btn{width:100%;border:0;border-radius:30px;padding:15px;margin-top:18px;color:white;font-weight:bold;font-size:16px;background:linear-gradient(100deg,#0755e9,#087cff)}
 .note{text-align:center;font-size:11px;color:#64748b;margin:10px 0 0}
-.features{
-  margin-top:20px;background:white;border-radius:20px;
-  padding:17px;border:1px solid #e3eaff;
-}
+.features{margin-top:20px;background:white;border-radius:20px;padding:17px;border:1px solid #e3eaff}
 .features h3{margin:0 0 12px}
 .features p{font-size:14px;margin:10px 0}
-.bottom{
-  position:fixed;bottom:0;left:0;right:0;z-index:5;
-  background:#ffffffed;backdrop-filter:blur(12px);
-  border-top:1px solid #dce6f6;
-  display:flex;justify-content:space-around;
-  padding:10px 4px calc(10px + env(safe-area-inset-bottom));
-}
-.bottom button{
-  border:0;background:transparent;color:#60799d;
-  font-size:12px;min-width:55px;
-}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid #dce6f6;display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom))}
+.bottom button{border:0;background:transparent;color:#60799d;font-size:12px;min-width:55px}
 .bottom button span{display:block;font-size:22px;margin-bottom:4px}
 .bottom button.active{color:var(--blue);font-weight:bold}
 .page{display:none}
 .page.active{display:block}
-.back{
-  border:0;background:#e4edff;color:#0755e9;
-  padding:10px 14px;border-radius:12px;margin-bottom:16px;
-}
-.panel{
-  background:white;border:1px solid #e0e9fa;
-  border-radius:20px;padding:18px;margin-top:14px;
-}
+.back{border:0;background:#e4edff;color:#0755e9;padding:10px 14px;border-radius:12px;margin-bottom:16px}
+.panel{background:white;border:1px solid #e0e9fa;border-radius:20px;padding:18px;margin-top:14px}
 .panel h2{margin-top:0}
-.field{
-  display:block;width:100%;border:1px solid #d6e1f4;
-  border-radius:12px;padding:12px;margin:10px 0;
-  background:white;color:#14264b;
-}
-.primary{
-  background:var(--blue);color:white;border:0;
-  border-radius:12px;padding:13px 16px;font-weight:bold;
-}
+.field{display:block;width:100%;border:1px solid #d6e1f4;border-radius:12px;padding:12px;margin:10px 0;background:white;color:#14264b}
+.primary{background:var(--blue);color:white;border:0;border-radius:12px;padding:13px 16px;font-weight:bold}
+.secondary{background:#e7efff;color:#0755e9;border:0;border-radius:12px;padding:11px;margin:4px}
 .full{width:100%}
-.qr-image{
-  display:block;width:min(100%,300px);height:auto;
-  margin:18px auto;border-radius:12px;
-  border:1px solid #e1e7f0;padding:8px;background:white;
-}
+.qr-image{display:block;width:min(100%,300px);height:auto;margin:18px auto;border-radius:12px;border:1px solid #e1e7f0;padding:8px;background:white}
 .qr-fallback{display:none;text-align:center;color:#b42318}
-@media(min-width:600px){
-  .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .welcome h2{font-size:29px}
-}
+.preview{width:100%;max-height:380px;object-fit:contain;background:#101827;border-radius:14px;margin:10px 0}
+.canvas-wrap{width:100%;overflow:auto;background:#e8edf5;border-radius:14px;text-align:center;margin:12px 0}
+#photoCanvas{max-width:100%;height:auto;max-height:520px;object-fit:contain}
+.control-label{display:block;font-weight:bold;font-size:14px;margin-top:15px}
+.range{width:100%;margin:10px 0}
+.button-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.small-note{font-size:12px;line-height:1.6;color:#60708b}
+.tool-hidden{display:none!important}
+@media(min-width:600px){.tools{grid-template-columns:repeat(3,minmax(0,1fr))}.welcome h2{font-size:29px}}
 </style>
 </head>
-
 <body>
+
 <header class="header">
   <div class="brand">
     <div class="logo">▤</div>
-    <div>
-      <h1>SK BOY</h1>
-      <p>PDF Maker · आसान PDF बनाएँ</p>
-    </div>
+    <div><h1>SK BOY</h1><p>PDF Maker · Photo & Video Editor</p></div>
     <button class="menu" onclick="showPage('settings')" aria-label="सेटिंग्स">☰</button>
   </div>
-  <label class="search">
-    🔎 <input id="search" type="search" placeholder="अपना टूल खोजें..." oninput="filterTools()">
-  </label>
+  <label class="search">🔎 <input id="search" type="search" placeholder="अपना टूल खोजें..." oninput="filterTools()"></label>
 </header>
 
 <main>
-  <section id="home" class="page active">
-    <div class="welcome">
-      <h2>नमस्ते! 👋</h2>
-      <p>आसानी से PDF बनाएँ, अपने काम को बनाएँ और भी आसान।</p>
-      <div class="tags">
-        <span class="tag">✅ आसान इस्तेमाल</span>
-        <span class="tag">🌐 कई भाषाएँ</span>
-        <span class="tag">⚡ मोबाइल के लिए</span>
-      </div>
-    </div>
+<section id="home" class="page active">
+  <div class="welcome">
+    <h2>नमस्ते! 👋</h2>
+    <p>PDF बनाएँ, फोटो एडिट करें और वीडियो एडिटिंग के टूल एक ही जगह इस्तेमाल करें।</p>
+    <div class="tags"><span class="tag">✅ मोबाइल के लिए</span><span class="tag">🎨 फोटो एडिटिंग</span><span class="tag">🎬 वीडियो टूल</span></div>
+  </div>
 
-    <div class="section-title">
-      <h2>PDF टूल्स</h2>
-      <span>आपके लिए ✨</span>
-    </div>
+  <div class="section-title"><h2>PDF टूल्स</h2><span>✨</span></div>
+  <div class="tools" id="toolGrid">
+    <button class="tool blue" data-search="pdf बनाएँ text" onclick="showPage('create')"><span class="ico">📄</span><strong>PDF बनाएँ</strong><small>टेक्स्ट से PDF</small></button>
+    <button class="tool purple" data-search="image photo तस्वीर pdf" onclick="showPage('image')"><span class="ico">🖼️</span><strong>Image to PDF</strong><small>फोटो से PDF</small></button>
+    <button class="tool teal" data-search="दस्तावेज़ documents files" onclick="showPage('docs')"><span class="ico">📁</span><strong>मेरे दस्तावेज़</strong><small>दस्तावेज़ विकल्प</small></button>
+    <button class="tool orange" data-search="भाषा font फ़ॉन्ट hindi urdu english" onclick="showPage('fonts')"><span class="ico">🔤</span><strong>भाषा और फ़ॉन्ट</strong><small>हिंदी, उर्दू, English</small></button>
+    <button class="tool indigo" data-search="tools अन्य टूल्स" onclick="showPage('tools')"><span class="ico">🛠️</span><strong>अन्य टूल्स</strong><small>PDF विकल्प</small></button>
+    <button class="tool slate" data-search="settings सेटिंग्स" onclick="showPage('settings')"><span class="ico">⚙️</span><strong>सेटिंग्स</strong><small>ऐप सेटिंग</small></button>
+    <button class="tool pink" data-search="photo editor फोटो editing filter crop" onclick="showPage('photo')"><span class="ico">🎨</span><strong>Photo Editor</strong><small>Filter, Crop, Text</small></button>
+    <button class="tool green" data-search="video editor वीडियो trim cut speed music" onclick="showPage('video')"><span class="ico">🎬</span><strong>Video Editor</strong><small>Preview, Trim, Speed</small></button>
+  </div>
 
-    <div class="tools" id="toolGrid">
-      <button class="tool blue" data-search="pdf बनाएँ text" onclick="showPage('create')">
-        <span class="ico">📄</span>
-        <strong>PDF बनाएँ</strong><small>टेक्स्ट से PDF</small>
-      </button>
-      <button class="tool purple" data-search="image photo तस्वीर" onclick="showPage('image')">
-        <span class="ico">🖼️</span>
-        <strong>Image to PDF</strong><small>फोटो से PDF</small>
-      </button>
-      <button class="tool teal" data-search="दस्तावेज़ documents files" onclick="showPage('docs')">
-        <span class="ico">📁</span>
-        <strong>मेरे दस्तावेज़</strong><small>सेव की हुई फाइलें</small>
-      </button>
-      <button class="tool orange" data-search="भाषा font फ़ॉन्ट hindi urdu english" onclick="showPage('fonts')">
-        <span class="ico">🔤</span>
-        <strong>भाषा और फ़ॉन्ट</strong><small>हिंदी, उर्दू, English</small>
-      </button>
-      <button class="tool indigo" data-search="tools अन्य टूल्स" onclick="showPage('tools')">
-        <span class="ico">🛠️</span>
-        <strong>अन्य टूल्स</strong><small>PDF के विकल्प</small>
-      </button>
-      <button class="tool slate" data-search="settings सेटिंग्स" onclick="showPage('settings')">
-        <span class="ico">⚙️</span>
-        <strong>सेटिंग्स</strong><small>ऐप की सेटिंग</small>
-      </button>
-    </div>
-
-    <section class="support">
-      <div class="support-top">
-        <div class="support-icon">🤝</div>
-        <div>
-          <h2>❤️ अपना प्यार और सहयोग दें</h2>
-          <p>अगर आपको हमारा PDF Maker पसंद आया हो, तो अपने छोटे-से सहयोग से हमें प्रोत्साहित करें। धन्यवाद! 🙏</p>
-        </div>
-      </div>
-      <button class="support-btn" onclick="showPage('qr')">❤️ अपना सहयोग दें</button>
-      <p class="note">आपका सहयोग पूरी तरह आपकी इच्छा पर निर्भर है।</p>
-    </section>
-
-    <section class="features">
-      <h3>✨ ऐप की सुविधाएँ</h3>
-      <p>✅ टेक्स्ट से PDF बनाना</p>
-      <p>✅ फोटो से PDF बनाने का विकल्प</p>
-      <p>✅ अलग-अलग भाषाओं का समर्थन</p>
-      <p>✅ दस्तावेज़ और फ़ॉन्ट के विकल्प</p>
-    </section>
+  <section class="support">
+    <div class="support-top"><div class="support-icon">🤝</div><div><h2>❤️ अपना प्यार और सहयोग दें</h2><p>अगर आपको हमारा PDF Maker पसंद आया हो, तो अपने छोटे-से सहयोग से हमें प्रोत्साहित करें। धन्यवाद! 🙏</p></div></div>
+    <button class="support-btn" onclick="showPage('qr')">❤️ अपना सहयोग दें</button>
+    <p class="note">आपका सहयोग पूरी तरह आपकी इच्छा पर निर्भर है।</p>
   </section>
 
-  <section id="qr" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel" style="text-align:center">
-      <div style="font-size:42px">❤️</div>
-      <h2>अपना प्यार और सहयोग दें</h2>
-      <p>QR कोड को UPI ऐप से स्कैन करके अपनी इच्छा से सहयोग कर सकते हैं। धन्यवाद! 🙏</p>
-      <img class="qr-image" src="./qr.png" alt="UPI भुगतान QR कोड"
-           onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
-      <p id="qrError" class="qr-fallback">QR कोड नहीं मिला। जाँचें कि qr.png फ़ाइल index.html के साथ उसी फ़ोल्डर में है।</p>
-      <p class="note">भुगतान करने से पहले UPI ऐप में प्राप्तकर्ता का नाम जाँच लें।</p>
-    </div>
+  <section class="features">
+    <h3>✨ ऐप की सुविधाएँ</h3>
+    <p>✅ टेक्स्ट से PDF बनाने का विकल्प</p>
+    <p>✅ फोटो एडिटर: फ़िल्टर, क्रॉप, टेक्स्ट और सेव</p>
+    <p>✅ वीडियो प्रीव्यू, ट्रिम कंट्रोल और स्पीड</p>
+    <p>✅ हिंदी, उर्दू और English के विकल्प</p>
   </section>
+</section>
 
-  <section id="create" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>📄 PDF बनाने के लिए टेक्स्ट</h2>
-      <p>अपना टेक्स्ट लिखें और प्रिंट विकल्प से PDF के रूप में सेव करें।</p>
-      <textarea id="pdfText" class="field" rows="8" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
-      <button class="primary full" onclick="printText()">PDF बनाएँ / प्रिंट करें</button>
-    </div>
-  </section>
+<section id="photo" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel">
+    <h2>🎨 Photo Editor</h2>
+    <p class="small-note">फोटो चुनें। फिर फ़िल्टर, ब्राइटनेस, क्रॉप, रोटेट या टेक्स्ट का इस्तेमाल करें।</p>
+    <input id="photoFile" class="field" type="file" accept="image/*">
+    <div class="canvas-wrap"><canvas id="photoCanvas"></canvas></div>
 
-  <section id="image" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>🖼️ Image to PDF</h2>
-      <p>यहाँ फोटो चुन सकते हैं। इस नए नमूने में फोटो से PDF कन्वर्ज़न अभी जोड़ना बाकी है।</p>
-      <input class="field" type="file" accept="image/*" multiple>
-    </div>
-  </section>
+    <label class="control-label">फ़िल्टर</label>
+    <select id="photoFilter" class="field" onchange="drawPhoto()">
+      <option value="none">Original</option>
+      <option value="grayscale(1)">Black & White</option>
+      <option value="sepia(1)">Sepia</option>
+      <option value="contrast(1.3) saturate(1.3)">Vivid</option>
+      <option value="saturate(1.8)">Color Boost</option>
+      <option value="brightness(1.15)">Bright</option>
+      <option value="contrast(1.5)">High Contrast</option>
+      <option value="hue-rotate(35deg) saturate(1.4)">Color Effect</option>
+    </select>
 
-  <section id="docs" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>📁 मेरे दस्तावेज़</h2>
-      <p>इस नए नमूने में दस्तावेज़ों को सेव और दोबारा खोलने की सुविधा अभी जोड़नी बाकी है।</p>
-    </div>
-  </section>
+    <label class="control-label">Brightness: <span id="brightValue">100%</span></label>
+    <input class="range" id="brightness" type="range" min="30" max="180" value="100" oninput="updateValues();drawPhoto()">
 
-  <section id="fonts" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>🔤 भाषा और फ़ॉन्ट</h2>
-      <label for="fontLanguage">भाषा चुनें</label>
-      <select id="fontLanguage" class="field">
-        <option>हिंदी</option><option>English</option><option>اردو</option>
-      </select>
-      <p>इस नमूने में भाषा चयन का डिज़ाइन है। सभी फ़ॉन्ट को PDF में सही दिखाने के लिए अतिरिक्त कार्य करना होगा।</p>
-    </div>
-  </section>
+    <label class="control-label">Contrast: <span id="contrastValue">100%</span></label>
+    <input class="range" id="contrast" type="range" min="30" max="180" value="100" oninput="updateValues();drawPhoto()">
 
-  <section id="tools" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>🛠️ अन्य टूल्स</h2>
-      <p>PDF मर्ज, स्प्लिट और अन्य टूल्स के विकल्प यहाँ जोड़े जा सकते हैं।</p>
-    </div>
-  </section>
+    <label class="control-label">Saturation: <span id="saturationValue">100%</span></label>
+    <input class="range" id="saturation" type="range" min="0" max="200" value="100" oninput="updateValues();drawPhoto()">
 
-  <section id="settings" class="page">
-    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
-    <div class="panel">
-      <h2>⚙️ सेटिंग्स</h2>
-      <p>SK BOY PDF Maker</p>
-      <p>मोबाइल के लिए बनाया गया PDF टूल इंटरफ़ेस।</p>
+    <label class="control-label">फोटो पर टेक्स्ट</label>
+    <input id="photoText" class="field" placeholder="अपना टेक्स्ट लिखें" oninput="drawPhoto()">
+    <input id="textColor" class="field" type="color" value="#ffffff" onchange="drawPhoto()" aria-label="टेक्स्ट का रंग">
+
+    <div class="button-row">
+      <button class="secondary" onclick="rotatePhoto(-90)">↶ बाएँ घुमाएँ</button>
+      <button class="secondary" onclick="rotatePhoto(90)">↷ दाएँ घुमाएँ</button>
+      <button class="secondary" onclick="flipPhoto()">↔ Flip</button>
+      <button class="secondary" onclick="cropPhoto()">✂️ Crop</button>
+      <button class="secondary" onclick="resetPhoto()">Reset</button>
     </div>
-  </section>
+    <button class="primary full" onclick="downloadPhoto()">⬇️ एडिट की फोटो सेव करें</button>
+    <p id="photoMessage" class="small-note">शुरू करने के लिए फोटो चुनें।</p>
+    <p class="small-note">Crop बटन बीच का हिस्सा काटता है। फिलहाल स्टिकर, बैकग्राउंड हटाना और कई लेयर उपलब्ध नहीं हैं।</p>
+  </div>
+</section>
+
+<section id="video" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel">
+    <h2>🎬 Video Editor</h2>
+    <p class="small-note">वीडियो चुनकर प्रीव्यू करें और ट्रिम की शुरुआत/अंत, स्पीड तथा आवाज़ सेट करें।</p>
+    <input id="videoFile" class="field" type="file" accept="video/*">
+    <video id="videoPreview" class="preview" controls playsinline></video>
+
+    <label class="control-label">शुरुआत (सेकंड)</label>
+    <input id="trimStart" class="field" type="number" min="0" step="0.1" value="0">
+    <label class="control-label">अंत (सेकंड)</label>
+    <input id="trimEnd" class="field" type="number" min="0" step="0.1" value="0">
+
+    <div class="button-row">
+      <button class="secondary" onclick="setTrimStart()">शुरुआत यहाँ सेट करें</button>
+      <button class="secondary" onclick="setTrimEnd()">अंत यहाँ सेट करें</button>
+      <button class="secondary" onclick="playTrim()">✂️ चुना हिस्सा चलाएँ</button>
+    </div>
+
+    <label class="control-label">वीडियो स्पीड</label>
+    <select id="videoSpeed" class="field" onchange="changeVideoSpeed()">
+      <option value="0.25">0.25× Slow</option>
+      <option value="0.5">0.5× Slow</option>
+      <option value="0.75">0.75×</option>
+      <option value="1" selected>1× Normal</option>
+      <option value="1.25">1.25×</option>
+      <option value="1.5">1.5× Fast</option>
+      <option value="2">2× Fast</option>
+    </select>
+
+    <label class="control-label"><input id="videoMuted" type="checkbox" onchange="toggleMute()"> वीडियो म्यूट करें</label>
+    <label class="control-label">वीडियो पर टेक्स्ट का प्रीव्यू</label>
+    <input id="videoText" class="field" placeholder="यहाँ टेक्स्ट लिखें">
+    <p class="small-note">टेक्स्ट अभी वीडियो पर बर्न नहीं होता। इस चरण में ट्रिम की सीमा और स्पीड प्रीव्यू के लिए हैं; एडिट की हुई नई वीडियो फ़ाइल एक्सपोर्ट करना अभी उपलब्ध नहीं है। मूल वीडियो आपके फोन में ही रहता है।</p>
+    <p id="videoMessage" class="small-note">वीडियो चुनने के बाद उसकी अवधि दिखाई देगी।</p>
+  </div>
+</section>
+
+<section id="qr" class="page">
+  <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+  <div class="panel" style="text-align:center">
+    <div style="font-size:42px">❤️</div><h2>अपना प्यार और सहयोग दें</h2>
+    <p>QR कोड को UPI ऐप से स्कैन करके अपनी इच्छा से सहयोग कर सकते हैं। धन्यवाद! 🙏</p>
+    <img class="qr-image" src="./qr.png" alt="UPI QR कोड" onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
+    <p id="qrError" class="qr-fallback">QR कोड नहीं मिला। जाँचें कि qr.png फ़ाइल index.html के साथ उसी फ़ोल्डर में है।</p>
+    <p class="note">भुगतान से पहले UPI ऐप में प्राप्तकर्ता का नाम जाँचें।</p>
+  </div>
+</section>
+
+<section id="create" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel">
+    <h2>📄 PDF बनाने के लिए टेक्स्ट</h2>
+    <textarea id="pdfText" class="field" rows="8" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
+    <button class="primary full" onclick="printText()">PDF बनाएँ / प्रिंट करें</button>
+  </div>
+</section>
+
+<section id="image" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel"><h2>🖼️ Image to PDF</h2><p>इस सुविधा का वास्तविक फोटो से PDF कन्वर्ज़न अभी लागू नहीं है।</p><input class="field" type="file" accept="image/*" multiple></div>
+</section>
+
+<section id="docs" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel"><h2>📁 मेरे दस्तावेज़</h2><p>दस्तावेज़ सेव और दोबारा खोलने की सुविधा अगले चरण में जोड़ी जा सकती है।</p></div>
+</section>
+
+<section id="fonts" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel"><h2>🔤 भाषा और फ़ॉन्ट</h2><select class="field"><option>हिंदी</option><option>English</option><option>اردو</option></select><p>यह भाषा चयन का विकल्प है। PDF में सभी फ़ॉन्ट सही दिखाने के लिए अतिरिक्त काम चाहिए।</p></div>
+</section>
+
+<section id="tools" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel"><h2>🛠️ अन्य टूल्स</h2><p>PDF मर्ज, स्प्लिट और दूसरे टूल आगे जोड़े जा सकते हैं।</p></div>
+</section>
+
+<section id="settings" class="page">
+  <button class="back" onclick="showPage('home')">← होम</button>
+  <div class="panel"><h2>⚙️ सेटिंग्स</h2><p>SK BOY PDF Maker</p><p>PDF, फोटो और वीडियो टूल का मोबाइल इंटरफ़ेस।</p></div>
+</section>
 </main>
 
 <nav class="bottom">
@@ -312,35 +266,141 @@ main{max-width:760px;margin:auto;padding:16px 14px 100px}
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const page=document.getElementById(id);
-  if(page) page.classList.add('active');
-  document.querySelectorAll('.bottom button').forEach(b=>{
-    b.classList.toggle('active',b.dataset.page===id);
-  });
+  if(page)page.classList.add('active');
+  document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function filterTools(){
   const q=document.getElementById('search').value.trim().toLowerCase();
   document.querySelectorAll('#toolGrid .tool').forEach(card=>{
-    const words=(card.innerText+' '+card.dataset.search).toLowerCase();
-    card.style.display=words.includes(q)?'':'none';
+    card.style.display=(card.innerText+' '+card.dataset.search).toLowerCase().includes(q)?'':'none';
   });
 }
-
 function printText(){
   const text=document.getElementById('pdfText').value.trim();
   if(!text){alert('पहले अपना टेक्स्ट लिखें।');return;}
   const w=window.open('','_blank');
-  if(!w){
-    alert('पॉप-अप ब्लॉक हुआ है। ब्राउज़र में पॉप-अप की अनुमति दें।');
-    return;
-  }
-  const safe=text.replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
+  if(!w){alert('पॉप-अप ब्लॉक हुआ है। ब्राउज़र में पॉप-अप की अनुमति दें।');return;}
+  const safe=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   w.document.write('<!doctype html><html lang="hi"><meta charset="UTF-8"><title>PDF</title><style>body{font-family:Arial,sans-serif;padding:28px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}</style><body>'+safe+'</body></html>');
-  w.document.close();
-  w.onload=()=>{w.focus();w.print();};
+  w.document.close();w.onload=()=>{w.focus();w.print();};
 }
+
+/* PHOTO EDITOR */
+const photoFile=document.getElementById('photoFile');
+const photoCanvas=document.getElementById('photoCanvas');
+const photoCtx=photoCanvas.getContext('2d');
+let photoImage=new Image(),photoLoaded=false,photoRotation=0,photoFlip=false,photoCrop=false;
+photoFile.addEventListener('change',()=>{
+  const file=photoFile.files[0];if(!file)return;
+  if(!file.type.startsWith('image/')){alert('कृपया फोटो फ़ाइल चुनें।');return;}
+  const url=URL.createObjectURL(file);
+  photoImage.onload=()=>{
+    photoLoaded=true;photoRotation=0;photoFlip=false;photoCrop=false;
+    document.getElementById('photoMessage').textContent='फोटो लोड हो गई। अब एडिट करें।';
+    drawPhoto();URL.revokeObjectURL(url);
+  };
+  photoImage.onerror=()=>alert('फोटो नहीं खुल सकी। दूसरी फोटो चुनें।');
+  photoImage.src=url;
+});
+function getPhotoFilter(){
+  return `brightness(${document.getElementById('brightness').value}%) contrast(${document.getElementById('contrast').value}%) saturate(${document.getElementById('saturation').value}%) ${document.getElementById('photoFilter').value}`;
+}
+function updateValues(){
+  ['brightness','contrast','saturation'].forEach(id=>{
+    document.getElementById(id+'Value').textContent=document.getElementById(id).value+'%';
+  });
+}
+function drawPhoto(){
+  if(!photoLoaded)return;
+  const sw=photoImage.naturalWidth,sh=photoImage.naturalHeight;
+  let sx=0,sy=0,cw=sw,ch=sh;
+  if(photoCrop){const side=Math.min(sw,sh)*0.8; sx=(sw-side)/2;sy=(sh-side)/2;cw=side;ch=side;}
+  const rotated=Math.abs(photoRotation%180)===90;
+  photoCanvas.width=Math.round(rotated?ch:cw);
+  photoCanvas.height=Math.round(rotated?cw:ch);
+  photoCtx.save();
+  photoCtx.clearRect(0,0,photoCanvas.width,photoCanvas.height);
+  photoCtx.translate(photoCanvas.width/2,photoCanvas.height/2);
+  photoCtx.rotate(photoRotation*Math.PI/180);
+  photoCtx.scale(photoFlip?-1:1,1);
+  photoCtx.filter=getPhotoFilter();
+  photoCtx.drawImage(photoImage,sx,sy,cw,ch,-cw/2,-ch/2,cw,ch);
+  photoCtx.filter='none';
+  const text=document.getElementById('photoText').value.trim();
+  if(text){
+    const size=Math.max(20,Math.round(photoCanvas.width/18));
+    photoCtx.font='bold '+size+'px Arial, sans-serif';
+    photoCtx.textAlign='center';photoCtx.textBaseline='middle';
+    photoCtx.lineWidth=Math.max(2,size/12);photoCtx.strokeStyle='#111827';
+    photoCtx.fillStyle=document.getElementById('textColor').value;
+    photoCtx.strokeText(text,0,photoCanvas.height*0.38);
+    photoCtx.fillText(text,0,photoCanvas.height*0.38);
+  }
+  photoCtx.restore();
+}
+function rotatePhoto(deg){if(!photoLoaded){alert('पहले फोटो चुनें।');return;}photoRotation=(photoRotation+deg+360)%360;drawPhoto();}
+function flipPhoto(){if(!photoLoaded){alert('पहले फोटो चुनें।');return;}photoFlip=!photoFlip;drawPhoto();}
+function cropPhoto(){if(!photoLoaded){alert('पहले फोटो चुनें।');return;}photoCrop=!photoCrop;drawPhoto();document.getElementById('photoMessage').textContent=photoCrop?'बीच का हिस्सा चुना गया है।':'पूरा फोटो वापस दिख रहा है।';}
+function resetPhoto(){
+  document.getElementById('photoFilter').value='none';
+  document.getElementById('brightness').value=100;
+  document.getElementById('contrast').value=100;
+  document.getElementById('saturation').value=100;
+  document.getElementById('photoText').value='';
+  photoRotation=0;photoFlip=false;photoCrop=false;updateValues();drawPhoto();
+}
+function downloadPhoto(){
+  if(!photoLoaded){alert('पहले फोटो चुनें।');return;}
+  drawPhoto();
+  photoCanvas.toBlob(blob=>{
+    if(!blob){alert('फोटो सेव नहीं हो सकी।');return;}
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SK-BOY-edited-photo.png';a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+    document.getElementById('photoMessage').textContent='एडिट की हुई फोटो डाउनलोड हो गई।';
+  },'image/png');
+}
+
+/* VIDEO PREVIEW / TRIM CONTROLS */
+const video=document.getElementById('videoPreview');
+const videoFile=document.getElementById('videoFile');
+const trimStart=document.getElementById('trimStart');
+const trimEnd=document.getElementById('trimEnd');
+let videoURL='';
+videoFile.addEventListener('change',()=>{
+  const file=videoFile.files[0];if(!file)return;
+  if(!file.type.startsWith('video/')){alert('कृपया वीडियो फ़ाइल चुनें।');return;}
+  if(videoURL)URL.revokeObjectURL(videoURL);
+  videoURL=URL.createObjectURL(file);
+  video.src=videoURL;video.load();
+  document.getElementById('videoMessage').textContent='वीडियो लोड हो रहा है...';
+});
+video.addEventListener('loadedmetadata',()=>{
+  trimStart.value=0;trimEnd.value=video.duration.toFixed(1);
+  document.getElementById('videoMessage').textContent='वीडियो अवधि: '+video.duration.toFixed(1)+' सेकंड।';
+});
+function setTrimStart(){
+  if(!video.src){alert('पहले वीडियो चुनें।');return;}
+  trimStart.value=video.currentTime.toFixed(1);
+}
+function setTrimEnd(){
+  if(!video.src){alert('पहले वीडियो चुनें।');return;}
+  trimEnd.value=video.currentTime.toFixed(1);
+}
+function playTrim(){
+  if(!video.src){alert('पहले वीडियो चुनें।');return;}
+  const start=Number(trimStart.value),end=Number(trimEnd.value);
+  if(start<0||end<=start||end>video.duration){alert('ट्रिम की शुरुआत और अंत सही भरें।');return;}
+  video.currentTime=start;
+  video.play().catch(()=>{});
+  document.getElementById('videoMessage').textContent='चुना हिस्सा प्रीव्यू हो रहा है।';
+}
+video.addEventListener('timeupdate',()=>{
+  const end=Number(trimEnd.value);
+  if(!video.paused&&end>0&&video.currentTime>=end)video.pause();
+});
+function changeVideoSpeed(){video.playbackRate=Number(document.getElementById('videoSpeed').value);}
+function toggleMute(){video.muted=document.getElementById('videoMuted').checked;}
 </script>
 </body>
 </html>
