@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+  <link rel="manifest" href="./manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SK BOY Professional PDF Editor</title>
@@ -51,6 +52,16 @@ function setTemplate(type){const paper=document.getElementById("paper");paper.st
 function addImage(){const input=document.createElement("input");input.type="file";input.accept="image/*";input.onchange=()=>{const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{restore();const img=document.createElement("img");img.src=reader.result;img.alt="Document image";img.style.maxWidth="100%";img.style.height="auto";const s=window.getSelection();if(s.rangeCount&&editor.contains(s.anchorNode)){const range=s.getRangeAt(0);range.insertNode(img);range.setStartAfter(img);range.collapse(true);s.removeAllRanges();s.addRange(range)}else editor.appendChild(img);remember()};reader.readAsDataURL(file)};input.click()}
 function clearDoc(){if(confirm("पुराना टेक्स्ट हटाकर नया डॉक्यूमेंट बनाएँ?"))editor.innerHTML="<h2>My Document</h2><p>यहाँ लिखना शुरू करें...</p>"}
 function savePDF(){document.title="SK-BOY-Document";window.print()}
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js");
+  });
+}
+</script>
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
