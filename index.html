@@ -10,31 +10,122 @@
   <title>SK BOY PDF Maker</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; background: #eaf0f8; color: #18243a; font-family: Arial, sans-serif; }
-    header { background: #142b55; color: white; padding: 18px; text-align: center; }
+    body {
+      margin: 0;
+      background: #eaf0f8;
+      color: #18243a;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background: #142b55;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
     header h1 { margin: 0; font-size: 25px; }
     header p { margin-bottom: 0; color: #dbe7ff; }
-    .toolbar { background: white; padding: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-    button, select, input { padding: 10px; border: 1px solid #cbd5e1; border-radius: 7px; background: white; font-size: 14px; }
+    .toolbar {
+      background: white;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    button, select, input {
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      background: white;
+      font-size: 14px;
+    }
     button { cursor: pointer; }
-    button.primary { background: #185adb; color: white; border: 0; }
-    .workspace { max-width: 900px; margin: 20px auto; padding: 12px; }
-    .settings { background: white; padding: 12px; border-radius: 10px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
-    #paper { background: white; max-width: 794px; min-height: 1050px; margin: auto; padding: 40px 30px; box-shadow: 0 3px 18px #0001; overflow-wrap: anywhere; line-height: 1.7; }
-    #editor { min-height: 850px; outline: none; white-space: pre-wrap; }
-    #editor:empty:before { content: attr(data-placeholder); color: #999; }
+    button.primary {
+      background: #185adb;
+      color: white;
+      border: 0;
+    }
+    .workspace {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 12px;
+    }
+    .settings {
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    #payment {
+      background: white;
+      padding: 22px 16px;
+      margin: 14px auto;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 3px 18px #0001;
+    }
+    #payment h2 { color: #142b55; }
+    #payment img {
+      display: block;
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      margin: 16px auto;
+    }
+    #paper {
+      background: white;
+      max-width: 794px;
+      min-height: 1050px;
+      margin: auto;
+      padding: 40px 30px;
+      box-shadow: 0 3px 18px #0001;
+      overflow-wrap: anywhere;
+      line-height: 1.7;
+    }
+    #editor {
+      min-height: 850px;
+      outline: none;
+      white-space: pre-wrap;
+    }
+    #editor:empty:before {
+      content: attr(data-placeholder);
+      color: #999;
+    }
     #editor img { max-width: 100%; height: auto; }
-    footer { text-align: center; padding: 20px; color: #64748b; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #64748b;
+    }
     @media(max-width:600px) {
-      #paper { padding: 25px 18px; min-height: 750px; }
+      #paper {
+        padding: 25px 18px;
+        min-height: 750px;
+      }
       #editor { min-height: 650px; }
     }
     @media print {
       @page { size: A4; margin: 0; }
       body { background: white; }
-      header, .toolbar, .settings, footer { display: none !important; }
-      .workspace { margin: 0; padding: 0; max-width: none; }
-      #paper { width: 210mm; max-width: none; min-height: 297mm; margin: 0; padding: 20mm 18mm; box-shadow: none; }
+      header, .toolbar, .settings, footer, #payment {
+        display: none !important;
+      }
+      .workspace {
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      #paper {
+        width: 210mm;
+        max-width: none;
+        min-height: 297mm;
+        margin: 0;
+        padding: 20mm 18mm;
+        box-shadow: none;
+      }
       #editor { min-height: 0; }
     }
   </style>
@@ -75,7 +166,8 @@
       <option value="6">Big heading</option>
     </select>
 
-    <input type="color" title="Text color" onchange="format('foreColor', this.value)">
+    <input type="color" title="Text color"
+      onchange="format('foreColor', this.value)">
     <button type="button" onclick="addImage()">Add Photo</button>
   </div>
 
@@ -106,6 +198,19 @@
       <button type="button" onclick="clearDoc()">New document</button>
       <button type="button" class="primary" onclick="savePDF()">Save as PDF</button>
     </div>
+
+    <!-- Paytm QR section -->
+    <section id="payment">
+      <h2>SK BOY PDF Maker</h2>
+      <h3>₹10 भुगतान करें</h3>
+      <p>नीचे दिए गए Paytm QR को स्कैन करके ₹10 भेजें।</p>
+
+      <img src="./paytm-qr.png"
+           alt="Paytm QR Code">
+
+      <p>भुगतान करने के बाद उसकी पुष्टि करवाएँ।</p>
+      <p>सहायता: SK BOY PDF Maker</p>
+    </section>
 
     <div id="paper">
       <div id="editor" contenteditable="true" lang="hi" dir="auto"
@@ -166,21 +271,27 @@
       const lang = document.getElementById("language").value;
       editor.lang = lang;
       editor.dir = (lang === "ur" || lang === "ar") ? "rtl" : "auto";
-      editor.style.textAlign = (lang === "ur" || lang === "ar") ? "right" : "left";
+      editor.style.textAlign =
+        (lang === "ur" || lang === "ar") ? "right" : "left";
     }
 
     function setTemplate(type) {
       const paper = document.getElementById("paper");
       paper.style.borderTop = "";
       paper.style.borderLeft = "";
-      if (type === "report") paper.style.borderTop = "8px solid #185adb";
-      if (type === "letter") paper.style.borderLeft = "5px solid #64748b";
+      if (type === "report") {
+        paper.style.borderTop = "8px solid #185adb";
+      }
+      if (type === "letter") {
+        paper.style.borderLeft = "5px solid #64748b";
+      }
     }
 
     function addImage() {
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "image/*";
+
       input.onchange = () => {
         const file = input.files[0];
         if (!file) return;
@@ -215,7 +326,8 @@
 
     function clearDoc() {
       if (confirm("पुराना टेक्स्ट हटाकर नया डॉक्यूमेंट बनाएँ?")) {
-        editor.innerHTML = "<h2>My Document</h2><p>यहाँ लिखना शुरू करें...</p>";
+        editor.innerHTML =
+          "<h2>My Document</h2><p>यहाँ लिखना शुरू करें...</p>";
         savedRange = null;
       }
     }
