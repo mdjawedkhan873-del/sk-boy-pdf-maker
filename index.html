@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK BOY Professional PDF Editor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eaf0f8;color:#18243a;font-family:Arial,sans-serif}
+header{background:#142b55;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:25px}header p{margin-bottom:0;color:#dbe7ff}
+.toolbar{background:white;padding:12px;display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0001}
+button,select,input{padding:10px;border:1px solid #cbd5e1;border-radius:7px;background:white;font-size:14px}button{cursor:pointer}button.primary{background:#185adb;color:white;border:0}
+.workspace{max-width:900px;margin:20px auto;padding:12px}.settings{background:white;padding:12px;border-radius:10px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px}
+#paper{background:white;max-width:794px;min-height:1050px;margin:auto;padding:65px 55px;box-shadow:0 3px 18px #0001;overflow-wrap:anywhere;line-height:1.7}
+#editor{min-height:850px;outline:none;white-space:pre-wrap}#editor:empty:before{content:attr(data-placeholder);color:#999}
+footer{text-align:center;padding:20px;color:#64748b}
+@media(max-width:600px){#paper{padding:25px 18px;min-height:750px}#editor{min-height:650px}.toolbar{position:static}}
+@media print{@page{size:A4;margin:0}body{background:white}header,.toolbar,.settings,footer,.no-print{display:none!important}.workspace{margin:0;padding:0;max-width:none}#paper{width:210mm;max-width:none;min-height:297mm;margin:0;padding:20mm 18mm;box-shadow:none}#editor{min-height:0}}
+</style>
+</head>
+<body>
+<header><h1>SK BOY PDF Maker</h1><p>Write • Design • Create PDF</p></header>
+<div class="toolbar no-print">
+<button onclick="format('bold')"><b>B</b></button><button onclick="format('italic')"><i>I</i></button><button onclick="format('underline')"><u>U</u></button>
+<button onclick="format('justifyLeft')">Left</button><button onclick="format('justifyCenter')">Center</button><button onclick="format('justifyRight')">Right</button>
+<button onclick="format('insertUnorderedList')">• List</button><button onclick="format('undo')">Undo</button><button onclick="format('redo')">Redo</button>
+<select id="font" onchange="setFont(this.value)">
+<option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Courier New">Courier New</option><option value="Noto Sans Devanagari">Hindi - Noto Sans</option><option value="Noto Nastaliq Urdu">Urdu - Nastaliq</option>
+</select>
+<select onchange="setSize(this.value)"><option value="3">Normal size</option><option value="2">Small</option><option value="4">Large</option><option value="5">Heading</option><option value="6">Big heading</option></select>
+<input type="color" title="Text color" oninput="format('foreColor',this.value)"><button onclick="addImage()">Add Photo</button>
+</div>
+<div class="workspace">
+<div class="settings no-print">
+<select id="language" onchange="setLanguage()"><option value="hi">हिंदी</option><option value="en">English</option><option value="ur">اردو</option><option value="ar">العربية</option><option value="bn">বাংলা</option><option value="ne">नेपाली</option><option value="pa">ਪੰਜਾਬੀ</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="mr">मराठी</option><option value="gu">ગુજરાતી</option><option value="other">Other</option></select>
+<select onchange="setTemplate(this.value)"><option value="classic">Classic document</option><option value="report">Professional report</option><option value="letter">Formal letter</option><option value="simple">Simple clean page</option></select>
+<button onclick="clearDoc()">New document</button><button class="primary" onclick="savePDF()">Save as PDF</button>
+</div>
+<div id="paper"><div id="editor" contenteditable="true" lang="hi" dir="auto" data-placeholder="यहाँ अपना डॉक्यूमेंट लिखना शुरू करें..."><h2>My Document</h2><p>यहाँ अपना टेक्स्ट लिखें। टेक्स्ट चुनकर ऊपर दिए टूल से उसका फॉन्ट, आकार, रंग और स्टाइल बदलें।</p></div></div>
+</div>
+<footer>SK BOY PDF Maker · Your documents, your style</footer>
+<script>
+const editor=document.getElementById("editor");let savedRange=null;
+editor.addEventListener("keyup",remember);editor.addEventListener("mouseup",remember);editor.addEventListener("focus",remember);
+function remember(){const s=window.getSelection();if(s.rangeCount&&editor.contains(s.anchorNode))savedRange=s.getRangeAt(0).cloneRange()}
+function restore(){editor.focus();if(savedRange){const s=window.getSelection();s.removeAllRanges();s.addRange(savedRange)}}
+function format(command,value=null){restore();document.execCommand(command,false,value);remember()}
+function setFont(font){restore();document.execCommand("fontName",false,font);remember()}
+function setSize(size){restore();document.execCommand("fontSize",false,size);remember()}
+function setLanguage(){const lang=document.getElementById("language").value;editor.lang=lang;editor.dir=(lang==="ur"||lang==="ar")?"rtl":"auto";editor.style.textAlign=(lang==="ur"||lang==="ar")?"right":"left"}
+function setTemplate(type){const paper=document.getElementById("paper");paper.style.borderTop="";paper.style.borderLeft="";if(type==="report")paper.style.borderTop="8px solid #185adb";else if(type==="letter")paper.style.borderLeft="5px solid #64748b"}
+function addImage(){const input=document.createElement("input");input.type="file";input.accept="image/*";input.onchange=()=>{const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{restore();const img=document.createElement("img");img.src=reader.result;img.alt="Document image";img.style.maxWidth="100%";img.style.height="auto";const s=window.getSelection();if(s.rangeCount&&editor.contains(s.anchorNode)){const range=s.getRangeAt(0);range.insertNode(img);range.setStartAfter(img);range.collapse(true);s.removeAllRanges();s.addRange(range)}else editor.appendChild(img);remember()};reader.readAsDataURL(file)};input.click()}
+function clearDoc(){if(confirm("पुराना टेक्स्ट हटाकर नया डॉक्यूमेंट बनाएँ?"))editor.innerHTML="<h2>My Document</h2><p>यहाँ लिखना शुरू करें...</p>"}
+function savePDF(){document.title="SK-BOY-Document";window.print()}
+</script>
+</body>
+</html>
