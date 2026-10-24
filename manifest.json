@@ -1,0 +1,12 @@
+
+{
+  "name": "SK BOY PDF Maker",
+  "short_name": "SK PDF",
+  "description": "Create PDFs in multiple languages",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait"
+}
