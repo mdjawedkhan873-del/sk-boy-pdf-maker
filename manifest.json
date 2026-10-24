@@ -1,23 +1,14 @@
 {
-  "name": "SK BOY PDF Maker",
-  "short_name": "SK BOY",
-  "description": "Create PDFs in multiple languages",
+  "name": "SK Boy Studio",
+  "short_name": "SK Studio",
+  "description": "PDF Maker, Photo Editor and Video Tools",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
-  "orientation": "portrait",
+  "background_color": "#f1f6ff",
+  "theme_color": "#1769ff",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
