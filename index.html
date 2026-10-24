@@ -2,12 +2,13 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <link rel="icon" type="image/png" href="./icon-192.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./icon-192.png">
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#2563eb">
   <title>SK BOY PDF Maker</title>
+
   <style>
     * { box-sizing: border-box; }
     body {
@@ -24,6 +25,7 @@
     }
     header h1 { margin: 0; font-size: 25px; }
     header p { margin-bottom: 0; color: #dbe7ff; }
+
     .toolbar {
       background: white;
       padding: 12px;
@@ -44,6 +46,7 @@
       color: white;
       border: 0;
     }
+
     .workspace {
       max-width: 900px;
       margin: 20px auto;
@@ -58,6 +61,7 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+
     #payment {
       background: white;
       padding: 22px 16px;
@@ -75,10 +79,8 @@
       height: auto;
       margin: 16px auto;
     }
-    #payment .qr-error {
-      color: #b91c1c;
-      font-size: 14px;
-    }
+    #qr-error { color: #b91c1c; }
+
     #paper {
       background: white;
       max-width: 794px;
@@ -99,11 +101,13 @@
       color: #999;
     }
     #editor img { max-width: 100%; height: auto; }
+
     footer {
       text-align: center;
       padding: 20px;
       color: #64748b;
     }
+
     @media(max-width:600px) {
       #paper {
         padding: 25px 18px;
@@ -111,6 +115,7 @@
       }
       #editor { min-height: 650px; }
     }
+
     @media print {
       @page { size: A4; margin: 0; }
       body { background: white; }
@@ -134,6 +139,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>SK BOY PDF Maker</h1>
@@ -151,7 +157,7 @@
     <button type="button" onclick="format('undo')">Undo</button>
     <button type="button" onclick="format('redo')">Redo</button>
 
-    <select id="font" onchange="setFont(this.value)">
+    <select onchange="setFont(this.value)">
       <option value="Arial">Arial</option>
       <option value="Georgia">Georgia</option>
       <option value="Times New Roman">Times New Roman</option>
@@ -203,23 +209,20 @@
       <button type="button" class="primary" onclick="savePDF()">Save as PDF</button>
     </div>
 
-    <!-- Payment QR section -->
+    <!-- PAYMENT SECTION -->
     <section id="payment">
-      <h2>SK BOY PDF Maker</h2>
-      <h3>₹10 भुगतान करें</h3>
-      <p>नीचे दिए गए QR कोड को स्कैन करके ₹10 भेजें।</p>
+      <h2 id="payment-title">SK BOY PDF Maker</h2>
+      <h3 id="payment-amount">₹10 भुगतान करें</h3>
+      <p id="payment-name">प्राप्तकर्ता का नाम यहाँ दिखेगा</p>
+      <p>नीचे QR कोड स्कैन करके भुगतान करें।</p>
 
-      <img
-        src="./qr.png"
-        alt="Payment QR Code"
-        onerror="this.style.display='none'; document.getElementById('qr-error').hidden=false;"
-      >
-      <p id="qr-error" class="qr-error" hidden>
-        QR इमेज नहीं मिली। GitHub में जाँचें कि इमेज का नाम qr.png है।
+      <img id="payment-qr" src="./qr.png" alt="Payment QR Code">
+
+      <p id="qr-error" hidden>
+        QR इमेज नहीं मिली। नीचे PAYMENT SETTINGS में फ़ाइल का नाम जाँचें।
       </p>
 
       <p>भुगतान करने के बाद उसकी पुष्टि करवाएँ।</p>
-      <p>सहायता: SK BOY PDF Maker</p>
     </section>
 
     <div id="paper">
@@ -234,6 +237,41 @@
   <footer>SK BOY PDF Maker · Your documents, your style</footer>
 
   <script>
+    // =====================================
+    // PAYMENT SETTINGS: सिर्फ यहाँ बदलाव करें
+    // =====================================
+
+    const PAYMENT_NAME = "अपना नाम यहाँ लिखें";
+
+    // GitHub पर QR इमेज का असली फ़ाइल नाम लिखें।
+    // अगर फ़ाइल qr.png है तो इसे न बदलें।
+    const QR_IMAGE_FILE = "qr.png";
+
+    const PAYMENT_AMOUNT = "₹10";
+
+    // =====================================
+    // नीचे का कोड अपने आप सेटिंग लागू करेगा
+    // =====================================
+
+    document.getElementById("payment-name").textContent =
+      "प्राप्तकर्ता: " + PAYMENT_NAME;
+
+    document.getElementById("payment-amount").textContent =
+      PAYMENT_AMOUNT + " भुगतान करें";
+
+    const paymentQR = document.getElementById("payment-qr");
+    paymentQR.src = "./" + QR_IMAGE_FILE;
+
+    paymentQR.onerror = function() {
+      this.style.display = "none";
+      document.getElementById("qr-error").hidden = false;
+    };
+
+    paymentQR.onload = function() {
+      this.style.display = "block";
+      document.getElementById("qr-error").hidden = true;
+    };
+
     const editor = document.getElementById("editor");
     let savedRange = null;
 
@@ -289,6 +327,7 @@
       const paper = document.getElementById("paper");
       paper.style.borderTop = "";
       paper.style.borderLeft = "";
+
       if (type === "report") {
         paper.style.borderTop = "8px solid #185adb";
       }
