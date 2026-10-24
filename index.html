@@ -4,377 +4,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2563eb">
-<meta name="description" content="SK BOY PDF Maker - मुफ्त PDF एडिटर">
+<meta name="theme-color" content="#0755e9">
 <title>SK BOY PDF Maker</title>
-<link rel="icon" href="./icon-192.png">
-<link rel="manifest" href="./manifest.json">
 
 <style>
 *{box-sizing:border-box}
-:root{--blue:#2563eb;--bg:#f1f5f9;--border:#dbe3ef}
-body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:#172033}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:11px 13px;background:#e8eefb;color:#17336b;font-weight:600}
-.primary{background:var(--blue);color:white}
-.app-header{background:linear-gradient(135deg,#1d4ed8,#4338ca);color:white;padding:20px 16px}
-.header-inner,.container{width:min(100% - 20px,1000px);margin:auto}
-.brand{margin:0;font-size:25px;font-weight:800}
-.subtitle{font-size:14px;opacity:.92;margin-bottom:0}
-.container{margin-top:16px;margin-bottom:30px}
-.card{background:white;border:1px solid var(--border);border-radius:16px;padding:15px;margin-bottom:14px;box-shadow:0 3px 12px #0f172a08}
-.section-title{font-size:18px;margin:0 0 12px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.row input{flex:1;min-width:140px;padding:12px;border:1px solid var(--border);border-radius:10px}
-.full-select{width:100%;padding:12px;margin-top:8px;border:1px solid var(--border);border-radius:10px;background:white}
-.toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:10px;border:1px solid var(--border);border-radius:12px 12px 0 0;background:#f8fafc}
-.toolbar button,.toolbar select{background:white;border:1px solid var(--border);border-radius:9px;padding:9px}
-.toolbar select{max-width:100%}
-.toolbar input[type=color]{width:30px;height:30px;padding:0;border:0;background:white}
-.editor{min-height:380px;padding:20px 17px;border:1px solid var(--border);border-top:0;border-radius:0 0 12px 12px;background:white;outline:none;overflow-wrap:anywhere;line-height:1.85;font-size:17px}
-.editor:focus{box-shadow:inset 0 0 0 2px #93c5fd}
-.editor:empty:before{content:"यहाँ अपना टेक्स्ट लिखना शुरू करें...";color:#94a3b8;pointer-events:none}
-.editor img{max-width:100%;height:auto}
-.note,.small{font-size:12px;color:#64748b}
-.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
-.actions button{min-height:45px}
-.color-control{display:flex;align-items:center;gap:5px;background:white;border:1px solid var(--border);border-radius:9px;padding:4px 7px;font-size:12px}
-.donation{text-align:center;background:linear-gradient(180deg,#fff,#eff6ff)}
-.donation p{color:#475569;line-height:1.6;font-size:14px}
-.qr-image{display:block;width:min(250px,100%);height:auto;margin:15px auto;padding:8px;background:white;border:1px solid var(--border);border-radius:12px}
-#qrPanel[hidden]{display:none!important}
-.footer{text-align:center;color:#64748b;padding:12px 0 25px;font-size:12px}
-@media(min-width:700px){.container{margin-top:24px}.editor{min-height:500px;padding:28px}.actions{grid-template-columns:repeat(4,1fr)}}
-@media print{
-@page{size:A4;margin:18mm}
-body{background:white;color:black}
-.no-print,.app-header,.donation,.footer{display:none!important}
-.container{width:100%;max-width:none;margin:0}
-.card{border:0;box-shadow:none;padding:0;margin:0}
-.editor{min-height:0;border:0;border-radius:0;padding:0;overflow:visible;font-size:12pt;line-height:1.6}
-.editor:empty:before{content:""}
-.editor img{max-width:100%!important}
+:root{--blue:#0755e9;--light:#eef4ff;--text:#14264b}
+body{
+  margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  color:var(--text);background:#edf3ff;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.header{
+  background:linear-gradient(135deg,#0645d9,#1684ff);
+  color:white;padding:20px 16px 24px;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 8px 24px #0755e926;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:54px;height:54px;border-radius:16px;
+  background:white;color:#0755e9;display:grid;
+  place-items:center;font-size:27px;font-weight:bold;
+}
+.brand h1{font-size:22px;margin:0 0 4px}
+.brand p{margin:0;color:#dceaff;font-size:14px}
+.menu{
+  margin-left:auto;border:1px solid #ffffff80;
+  background:#ffffff16;color:white;border-radius:12px;
+  padding:10px 13px;font-size:21px;
+}
+.search{
+  margin-top:20px;background:white;border-radius:15px;
+  padding:13px 15px;color:#65738f;
+  display:flex;gap:10px;align-items:center;
+}
+.search input{border:0;outline:0;width:100%;color:#14264b}
+main{max-width:760px;margin:auto;padding:16px 14px 100px}
+.welcome{
+  margin-top:4px;padding:20px;border-radius:22px;
+  background:linear-gradient(120deg,#fff,#e0edff);
+  border:1px solid #d8e6ff;
+}
+.welcome h2{font-size:25px;margin:0 0 10px}
+.welcome p{line-height:1.65;margin:0 0 15px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{
+  padding:8px 10px;background:white;border-radius:30px;
+  font-size:12px;border:1px solid #e3eaff;
+}
+.section-title{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:25px 2px 14px;
+}
+.section-title h2{margin:0;font-size:21px}
+.section-title span{font-size:13px;color:var(--blue)}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tool{
+  border:0;border-radius:20px;padding:20px 10px;
+  min-height:150px;color:white;text-align:center;
+  box-shadow:0 7px 15px #182e5112;
+  transition:transform .15s;
+}
+.tool:active,.support-btn:active{transform:scale(.98)}
+.tool .ico{font-size:34px;display:block;margin-bottom:12px}
+.tool strong{display:block;font-size:16px;margin-bottom:7px}
+.tool small{font-size:12px;opacity:.95}
+.blue{background:linear-gradient(145deg,#2688ff,#0755e9)}
+.purple{background:linear-gradient(145deg,#c04cff,#7b22e8)}
+.teal{background:linear-gradient(145deg,#10b8bd,#07858e)}
+.orange{background:linear-gradient(145deg,#ffae35,#f46b0c)}
+.indigo{background:linear-gradient(145deg,#7773ff,#4540e7)}
+.slate{background:linear-gradient(145deg,#779bbd,#41668e)}
+.support{
+  margin-top:24px;padding:19px;border-radius:23px;
+  border:1px solid #edcaff;
+  background:linear-gradient(135deg,#fff4ff,#f1eaff);
+}
+.support-top{display:flex;gap:13px;align-items:flex-start}
+.support-icon{
+  flex-shrink:0;width:55px;height:55px;background:white;
+  color:#0755e9;border-radius:17px;display:grid;
+  place-items:center;font-size:29px;
+}
+.support h2{font-size:18px;margin:3px 0 10px}
+.support p{font-size:14px;line-height:1.7;margin:0}
+.support-btn{
+  width:100%;border:0;border-radius:30px;
+  padding:15px;margin-top:18px;
+  color:white;font-weight:bold;font-size:16px;
+  background:linear-gradient(100deg,#0755e9,#087cff);
+  box-shadow:0 7px 16px #0755e925;
+}
+.note{text-align:center;font-size:11px;color:#64748b;margin:10px 0 0}
+.features{
+  margin-top:20px;background:white;border-radius:20px;
+  padding:17px;border:1px solid #e3eaff;
+}
+.features h3{margin:0 0 12px}
+.features p{font-size:14px;margin:10px 0}
+.bottom{
+  position:fixed;bottom:0;left:0;right:0;z-index:5;
+  background:#ffffffed;backdrop-filter:blur(12px);
+  border-top:1px solid #dce6f6;
+  display:flex;justify-content:space-around;
+  padding:10px 4px calc(10px + env(safe-area-inset-bottom));
+}
+.bottom button{
+  border:0;background:transparent;color:#60799d;
+  font-size:12px;min-width:55px;
+}
+.bottom button span{display:block;font-size:22px;margin-bottom:4px}
+.bottom button.active{color:var(--blue);font-weight:bold}
+.page{display:none}
+.page.active{display:block}
+.back{
+  border:0;background:#e4edff;color:#0755e9;
+  padding:10px 14px;border-radius:12px;margin-bottom:16px;
+}
+.panel{
+  background:white;border:1px solid #e0e9fa;
+  border-radius:20px;padding:18px;margin-top:14px;
+}
+.panel h2{margin-top:0}
+.field{
+  display:block;width:100%;border:1px solid #d6e1f4;
+  border-radius:12px;padding:12px;margin:10px 0;
+  background:white;color:#14264b;
+}
+.primary{
+  background:var(--blue);color:white;border:0;
+  border-radius:12px;padding:13px 16px;font-weight:bold;
+}
+.full{width:100%}
+.qr-image{
+  display:block;width:min(100%,300px);height:auto;
+  margin:18px auto;border-radius:12px;
+  border:1px solid #e1e7f0;padding:8px;background:white;
+}
+.qr-fallback{display:none;text-align:center;color:#b42318}
+@media(min-width:600px){
+  .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .welcome h2{font-size:29px}
 }
 </style>
 </head>
 
 <body>
-<header class="app-header no-print">
-<div class="header-inner">
-<h1 class="brand">📄 SK BOY PDF Maker</h1>
-<p class="subtitle">लिखें • एडिट करें • फोटो जोड़ें • PDF सेव करें</p>
-</div>
+<header class="header">
+  <div class="brand">
+    <div class="logo">▤</div>
+    <div>
+      <h1>SK BOY</h1>
+      <p>PDF Maker · आसान PDF बनाएँ</p>
+    </div>
+    <button class="menu" onclick="showPage('settings')" aria-label="सेटिंग्स">☰</button>
+  </div>
+  <label class="search">
+    🔎 <input id="search" type="search" placeholder="अपना टूल खोजें..." oninput="filterTools()">
+  </label>
 </header>
 
-<main class="container">
-<section class="card no-print">
-<h2 class="section-title">📐 PDF पेज साइज़</h2>
-<label for="pageSize">अपना पेज साइज़ चुनें:</label>
-<select id="pageSize" class="full-select">
-<option value="A4">A4 — सामान्य दस्तावेज़</option>
-<option value="A3">A3 — बड़ा पेज</option>
-<option value="A5">A5 — छोटा पेज</option>
-<option value="Letter">Letter</option>
-<option value="Legal">Legal — लंबा पेज</option>
-</select>
-<p class="small">PDF सेव करते समय चुना गया पेज साइज़ इस्तेमाल होगा, यदि ब्राउज़र सपोर्ट करे।</p>
-</section>
+<main>
+  <section id="home" class="page active">
+    <div class="welcome">
+      <h2>नमस्ते! 👋</h2>
+      <p>आसानी से PDF बनाएँ, अपने काम को बनाएँ और भी आसान।</p>
+      <div class="tags">
+        <span class="tag">✅ आसान इस्तेमाल</span>
+        <span class="tag">🌐 कई भाषाएँ</span>
+        <span class="tag">⚡ मोबाइल के लिए</span>
+      </div>
+    </div>
 
-<section class="card no-print">
-<h2 class="section-title">📝 डॉक्यूमेंट</h2>
-<div class="row">
-<input id="fileName" type="text" value="My Document" placeholder="डॉक्यूमेंट का नाम">
-<button id="newBtn">＋ नया</button>
-<button id="saveBtn">💾 सेव</button>
-</div>
-<p class="small">डॉक्यूमेंट इसी ब्राउज़र में सेव किया जाएगा।</p>
-</section>
+    <div class="section-title">
+      <h2>PDF टूल्स</h2>
+      <span>आपके लिए ✨</span>
+    </div>
 
-<section class="card">
-<h2 class="section-title no-print">✍️ टेक्स्ट एडिटर</h2>
+    <div class="tools" id="toolGrid">
+      <button class="tool blue" data-search="pdf बनाएँ text" onclick="showPage('create')">
+        <span class="ico">📄</span>
+        <strong>PDF बनाएँ</strong><small>टेक्स्ट से PDF</small>
+      </button>
+      <button class="tool purple" data-search="image photo तस्वीर" onclick="showPage('image')">
+        <span class="ico">🖼️</span>
+        <strong>Image to PDF</strong><small>फोटो से PDF</small>
+      </button>
+      <button class="tool teal" data-search="दस्तावेज़ documents files" onclick="showPage('docs')">
+        <span class="ico">📁</span>
+        <strong>मेरे दस्तावेज़</strong><small>सेव की हुई फाइलें</small>
+      </button>
+      <button class="tool orange" data-search="भाषा font फ़ॉन्ट hindi urdu english" onclick="showPage('fonts')">
+        <span class="ico">🔤</span>
+        <strong>भाषा और फ़ॉन्ट</strong><small>हिंदी, उर्दू, English</small>
+      </button>
+      <button class="tool indigo" data-search="tools अन्य टूल्स" onclick="showPage('tools')">
+        <span class="ico">🛠️</span>
+        <strong>अन्य टूल्स</strong><small>PDF के विकल्प</small>
+      </button>
+      <button class="tool slate" data-search="settings सेटिंग्स" onclick="showPage('settings')">
+        <span class="ico">⚙️</span>
+        <strong>सेटिंग्स</strong><small>ऐप की सेटिंग</small>
+      </button>
+    </div>
 
-<div class="toolbar no-print">
-<button type="button" data-cmd="bold" title="बोल्ड"><b>B</b></button>
-<button type="button" data-cmd="italic" title="इटैलिक"><i>I</i></button>
-<button type="button" data-cmd="underline" title="अंडरलाइन"><u>U</u></button>
-<button type="button" data-cmd="justifyLeft" title="बाएँ">☰←</button>
-<button type="button" data-cmd="justifyCenter" title="बीच में">☰</button>
-<button type="button" data-cmd="justifyRight" title="दाएँ">→☰</button>
-<button type="button" data-cmd="insertUnorderedList">• सूची</button>
-<button type="button" data-cmd="insertOrderedList">1. सूची</button>
-<button type="button" data-cmd="undo">↶</button>
-<button type="button" data-cmd="redo">↷</button>
+    <section class="support">
+      <div class="support-top">
+        <div class="support-icon">🤝</div>
+        <div>
+          <h2>❤️ अपना प्यार और सहयोग दें</h2>
+          <p>अगर आपको हमारा PDF Maker पसंद आया हो, तो अपने छोटे-से सहयोग से हमें प्रोत्साहित करें। धन्यवाद! 🙏</p>
+        </div>
+      </div>
+      <button class="support-btn" onclick="showPage('qr')">❤️ अपना सहयोग दें</button>
+      <p class="note">आपका सहयोग पूरी तरह आपकी इच्छा पर निर्भर है।</p>
+    </section>
 
-<select id="fontName" aria-label="फ़ॉन्ट">
-<option value="Arial">Arial</option>
-<option value="Georgia">Georgia</option>
-<option value="Times New Roman">Times New Roman</option>
-<option value="Verdana">Verdana</option>
-<option value="Noto Sans Devanagari">देवनागरी</option>
-<option value="Noto Sans Urdu">Urdu</option>
-</select>
+    <section class="features">
+      <h3>✨ ऐप की सुविधाएँ</h3>
+      <p>✅ टेक्स्ट से PDF बनाना</p>
+      <p>✅ फोटो से PDF बनाने का विकल्प</p>
+      <p>✅ अलग-अलग भाषाओं का समर्थन</p>
+      <p>✅ दस्तावेज़ और फ़ॉन्ट के विकल्प</p>
+    </section>
+  </section>
 
-<select id="fontSize" aria-label="फ़ॉन्ट साइज़">
-<option value="3">सामान्य साइज़</option>
-<option value="1">बहुत छोटा</option>
-<option value="2">छोटा</option>
-<option value="4">बड़ा</option>
-<option value="5">और बड़ा</option>
-<option value="6">हेडिंग</option>
-<option value="7">बहुत बड़ा</option>
-</select>
+  <section id="qr" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel" style="text-align:center">
+      <div style="font-size:42px">❤️</div>
+      <h2>अपना प्यार और सहयोग दें</h2>
+      <p>QR कोड को UPI ऐप से स्कैन करके अपनी इच्छा से सहयोग कर सकते हैं। धन्यवाद! 🙏</p>
+      <img class="qr-image" src="./qr.png" alt="UPI भुगतान QR कोड"
+           onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
+      <p id="qrError" class="qr-fallback">QR कोड नहीं मिला। जाँचें कि qr.png फ़ाइल index.html के साथ उसी फ़ोल्डर में है।</p>
+      <p class="note">भुगतान करने से पहले UPI ऐप में प्राप्तकर्ता का नाम जाँच लें।</p>
+    </div>
+  </section>
 
-<label class="color-control">रंग <input id="textColor" type="color" value="#172033"></label>
-<label class="color-control">हाइलाइट <input id="highlightColor" type="color" value="#fff59d"></label>
+  <section id="create" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>📄 PDF बनाने के लिए टेक्स्ट</h2>
+      <p>अपना टेक्स्ट लिखें और प्रिंट विकल्प से PDF के रूप में सेव करें।</p>
+      <textarea id="pdfText" class="field" rows="8" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
+      <button class="primary full" onclick="printText()">PDF बनाएँ / प्रिंट करें</button>
+    </div>
+  </section>
 
-<button type="button" id="photoBtn">🖼️ फोटो</button>
-<input type="file" id="photoInput" accept="image/*" hidden>
+  <section id="image" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🖼️ Image to PDF</h2>
+      <p>यहाँ फोटो चुन सकते हैं। इस नए नमूने में फोटो से PDF कन्वर्ज़न अभी जोड़ना बाकी है।</p>
+      <input class="field" type="file" accept="image/*" multiple>
+    </div>
+  </section>
 
-<select id="language" aria-label="भाषा">
-<option value="hi">हिंदी</option>
-<option value="en">English</option>
-<option value="ur">اردو</option>
-<option value="ar">العربية</option>
-<option value="bn">বাংলা</option>
-<option value="ne">नेपाली</option>
-<option value="pa">ਪੰਜਾਬੀ</option>
-<option value="ta">தமிழ்</option>
-<option value="te">తెలుగు</option>
-<option value="mr">मराठी</option>
-<option value="gu">ગુજરાતી</option>
-<option value="other">अन्य</option>
-</select>
-</div>
+  <section id="docs" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>📁 मेरे दस्तावेज़</h2>
+      <p>इस नए नमूने में दस्तावेज़ों को सेव और दोबारा खोलने की सुविधा अभी जोड़नी बाकी है।</p>
+    </div>
+  </section>
 
-<div id="editor" class="editor" contenteditable="true" role="textbox" aria-label="अपना टेक्स्ट लिखें" aria-multiline="true" lang="hi" spellcheck="true"></div>
-<p class="note no-print">सफेद जगह पर टैप करके लिखें। टेक्स्ट चुनकर एडिटिंग टूल इस्तेमाल करें।</p>
+  <section id="fonts" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🔤 भाषा और फ़ॉन्ट</h2>
+      <label for="fontLanguage">भाषा चुनें</label>
+      <select id="fontLanguage" class="field">
+        <option>हिंदी</option><option>English</option><option>اردو</option>
+      </select>
+      <p>इस नमूने में भाषा चयन का डिज़ाइन है। सभी फ़ॉन्ट को PDF में सही दिखाने के लिए अतिरिक्त कार्य करना होगा।</p>
+    </div>
+  </section>
 
-<div class="actions no-print">
-<button class="primary" id="pdfBtn">📄 PDF बनाएँ / सेव करें</button>
-<button id="copyBtn">📋 टेक्स्ट कॉपी</button>
-<button id="clearBtn">🗑️ साफ़ करें</button>
-<button id="downloadBtn">⬇️ HTML डाउनलोड</button>
-</div>
-<p id="status" class="small no-print" aria-live="polite"></p>
-</section>
+  <section id="tools" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🛠️ अन्य टूल्स</h2>
+      <p>PDF मर्ज, स्प्लिट और अन्य टूल्स के विकल्प यहाँ जोड़े जा सकते हैं।</p>
+    </div>
+  </section>
 
-<section class="card donation no-print">
-<h2 class="section-title">💙 ऐप पसंद आया?</h2>
-<p>ऐप का इस्तेमाल मुफ्त करें। अगर आप चाहें, तो अपनी मर्ज़ी से सहयोग कर सकते हैं। भुगतान करना ज़रूरी नहीं है।</p>
-<button id="toggleQR" class="primary" style="width:100%;padding:14px" aria-expanded="false" aria-controls="qrPanel">💙 सहयोग करें — QR कोड देखें</button>
-<div id="qrPanel" hidden>
-<img class="qr-image" src="./qr.png" alt="स्वैच्छिक सहयोग के लिए UPI QR कोड">
-<p class="small">अपने UPI ऐप से QR स्कैन करें। सहयोग पूरी तरह स्वैच्छिक है।</p>
-</div>
-</section>
-
-<footer class="footer no-print">SK BOY PDF Maker · मुफ्त डॉक्यूमेंट एडिटर</footer>
+  <section id="settings" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>⚙️ सेटिंग्स</h2>
+      <p>SK BOY PDF Maker</p>
+      <p>मोबाइल के लिए बनाया गया PDF टूल इंटरफ़ेस।</p>
+    </div>
+  </section>
 </main>
 
+<nav class="bottom">
+  <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>होम</button>
+  <button data-page="docs" onclick="showPage('docs')"><span>▣</span>दस्तावेज़</button>
+  <button data-page="qr" onclick="showPage('qr')"><span>♡</span>सहयोग</button>
+  <button data-page="settings" onclick="showPage('settings')"><span>⚙</span>सेटिंग्स</button>
+</nav>
+
 <script>
-const editor=document.getElementById("editor");
-const fileName=document.getElementById("fileName");
-const statusBox=document.getElementById("status");
-let savedRange=null;
-
-function status(message){statusBox.textContent=message}
-
-function rememberSelection(){
-const selection=window.getSelection();
-if(selection&&selection.rangeCount){
-const range=selection.getRangeAt(0);
-if(editor.contains(range.commonAncestorContainer))savedRange=range.cloneRange();
-}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById(id);
+  if(page) page.classList.add('active');
+  document.querySelectorAll('.bottom button').forEach(b=>{
+    b.classList.toggle('active',b.dataset.page===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function restoreSelection(){
-editor.focus();
-const selection=window.getSelection();
-if(savedRange){
-selection.removeAllRanges();
-selection.addRange(savedRange);
+function filterTools(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('#toolGrid .tool').forEach(card=>{
+    const words=(card.innerText+' '+card.dataset.search).toLowerCase();
+    card.style.display=words.includes(q)?'':'none';
+  });
 }
-}
 
-editor.addEventListener("keyup",rememberSelection);
-editor.addEventListener("mouseup",rememberSelection);
-editor.addEventListener("input",rememberSelection);
-
-document.querySelectorAll("[data-cmd]").forEach(button=>{
-button.addEventListener("mousedown",event=>event.preventDefault());
-button.addEventListener("click",()=>{
-restoreSelection();
-document.execCommand(button.dataset.cmd,false,null);
-rememberSelection();
-});
-});
-
-document.getElementById("fontName").addEventListener("change",event=>{
-restoreSelection();
-document.execCommand("fontName",false,event.target.value);
-rememberSelection();
-});
-
-document.getElementById("fontSize").addEventListener("change",event=>{
-restoreSelection();
-document.execCommand("fontSize",false,event.target.value);
-rememberSelection();
-});
-
-document.getElementById("textColor").addEventListener("input",event=>{
-restoreSelection();
-document.execCommand("foreColor",false,event.target.value);
-rememberSelection();
-});
-
-document.getElementById("highlightColor").addEventListener("input",event=>{
-restoreSelection();
-document.execCommand("hiliteColor",false,event.target.value);
-rememberSelection();
-});
-
-document.getElementById("language").addEventListener("change",event=>{
-const lang=event.target.value;
-editor.lang=lang==="other"?"":lang;
-editor.dir=["ur","ar"].includes(lang)?"rtl":"ltr";
-status("भाषा और लिखने की दिशा बदल दी गई।");
-editor.focus();
-});
-
-document.getElementById("photoBtn").addEventListener("click",()=>{
-rememberSelection();
-document.getElementById("photoInput").click();
-});
-
-document.getElementById("photoInput").addEventListener("change",event=>{
-const file=event.target.files[0];
-if(!file)return;
-if(!file.type.startsWith("image/")){status("कृपया फोटो चुनें।");return}
-
-const reader=new FileReader();
-reader.onload=()=>{
-restoreSelection();
-const img=document.createElement("img");
-img.src=reader.result;
-img.alt="जोड़ी गई फोटो";
-img.style.maxWidth="100%";
-
-const selection=window.getSelection();
-if(selection&&selection.rangeCount&&editor.contains(selection.getRangeAt(0).commonAncestorContainer)){
-const range=selection.getRangeAt(0);
-range.deleteContents();
-range.insertNode(img);
-const spacer=document.createElement("p");
-spacer.appendChild(document.createElement("br"));
-img.after(spacer);
-range.setStartAfter(spacer);
-range.collapse(true);
-selection.removeAllRanges();
-selection.addRange(range);
-savedRange=range.cloneRange();
-}else{
-editor.appendChild(img);
-editor.appendChild(document.createElement("p"));
-}
-status("फोटो जोड़ दी गई।");
-};
-reader.readAsDataURL(file);
-event.target.value="";
-});
-
-document.getElementById("newBtn").addEventListener("click",()=>{
-if(editor.innerText.trim()&&!confirm("नया डॉक्यूमेंट बनाएँ? पहले अपना काम सेव कर लें।"))return;
-editor.innerHTML="";
-fileName.value="My Document";
-status("नया डॉक्यूमेंट तैयार है।");
-editor.focus();
-});
-
-document.getElementById("clearBtn").addEventListener("click",()=>{
-if(confirm("क्या पूरा टेक्स्ट साफ़ करना चाहते हैं?")){
-editor.innerHTML="";
-status("टेक्स्ट साफ़ कर दिया गया।");
-}
-});
-
-document.getElementById("saveBtn").addEventListener("click",()=>{
-try{
-const data={name:fileName.value,content:editor.innerHTML,language:editor.lang,direction:editor.dir};
-localStorage.setItem("skBoyPdfMakerDocument",JSON.stringify(data));
-status("डॉक्यूमेंट ब्राउज़र में सेव हो गया।");
-}catch(error){status("सेव नहीं हुआ। ब्राउज़र स्टोरेज जाँचें।")}
-});
-
-document.getElementById("pdfBtn").addEventListener("click",()=>{
-if(!editor.innerText.trim()&&!editor.querySelector("img")){
-status("पहले टेक्स्ट लिखें या फोटो जोड़ें।");
-editor.focus();
-return;
-}
-const selectedSize=document.getElementById("pageSize").value;
-let pageStyle=document.getElementById("dynamicPageStyle");
-if(!pageStyle){
-pageStyle=document.createElement("style");
-pageStyle.id="dynamicPageStyle";
-document.head.appendChild(pageStyle);
-}
-pageStyle.textContent="@page { size: "+selectedSize+"; margin: 18mm; }";
-document.title=(fileName.value.trim()||"My Document").replace(/[\\/:*?"<>|]/g,"-");
-status("प्रिंट स्क्रीन में Save as PDF चुनें।");
-window.print();
-});
-
-document.getElementById("copyBtn").addEventListener("click",async()=>{
-try{
-await navigator.clipboard.writeText(editor.innerText);
-status("टेक्स्ट कॉपी हो गया।");
-}catch(error){status("टेक्स्ट चुनकर Copy विकल्प इस्तेमाल करें।")}
-});
-
-document.getElementById("downloadBtn").addEventListener("click",()=>{
-const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const html='<!DOCTYPE html><html lang="'+(editor.lang||"hi")+'" dir="'+editor.dir+'"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escapeHTML(fileName.value||"My Document")+'</title><style>body{font-family:Arial,sans-serif;line-height:1.8;padding:24px}img{max-width:100%;height:auto}</style></head><body>'+editor.innerHTML+'</body></html>';
-const blob=new Blob([html],{type:"text/html;charset=utf-8"});
-const url=URL.createObjectURL(blob);
-const link=document.createElement("a");
-link.href=url;
-link.download=(fileName.value.trim()||"document")+".html";
-link.click();
-setTimeout(()=>URL.revokeObjectURL(url),1000);
-status("HTML फ़ाइल डाउनलोड शुरू हुई।");
-});
-
-document.getElementById("toggleQR").addEventListener("click",()=>{
-const panel=document.getElementById("qrPanel");
-const show=panel.hidden;
-panel.hidden=!show;
-const button=document.getElementById("toggleQR");
-button.textContent=show?"✖ QR कोड छिपाएँ":"💙 सहयोग करें — QR कोड देखें";
-button.setAttribute("aria-expanded",String(show));
-});
-
-try{
-const saved=localStorage.getItem("skBoyPdfMakerDocument");
-if(saved){
-const data=JSON.parse(saved);
-editor.innerHTML=data.content||"";
-fileName.value=data.name||"My Document";
-if(data.language){
-editor.lang=data.language;
-const languageSelect=document.getElementById("language");
-if([...languageSelect.options].some(option=>option.value===data.language)){
-languageSelect.value=data.language;
-}
-}
-editor.dir=data.direction||"ltr";
-status("पहले सेव किया गया डॉक्यूमेंट लोड हो गया।");
-}
-}catch(error){status("पुराना डॉक्यूमेंट लोड नहीं हो सका।")}
-
-if("serviceWorker" in navigator&&location.protocol==="https:"){
-window.addEventListener("load",()=>{
-navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
-});
+function printText(){
+  const text=document.getElementById('pdfText').value.trim();
+  if(!text){alert('पहले अपना टेक्स्ट लिखें।');return;}
+  const w=window.open('','_blank');
+  if(!w){
+    alert('पॉप-अप ब्लॉक हुआ है। ब्राउज़र में पॉप-अप की अनुमति दें।');
+    return;
+  }
+  const safe=text.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+  w.document.write('<!doctype html><html lang="hi"><meta charset="UTF-8"><title>PDF</title><style>body{font-family:Arial,sans-serif;padding:28px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}</style><body>'+safe+'</body></html>');
+  w.document.close();
+  w.onload=()=>{w.focus();w.print();};
 }
 </script>
 </body>
