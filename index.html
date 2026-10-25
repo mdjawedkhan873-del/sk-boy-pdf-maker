@@ -3,7 +3,7 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0755e9">
 <meta name="description" content="SK Boy Studio PDF - PDF बनाने और एडिट करने के टूल्स">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -16,62 +16,105 @@
 body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;color:var(--text);background:#edf3ff}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
-.header{background:linear-gradient(135deg,#0645d9,#1684ff);color:white;padding:18px 16px 22px;border-radius:0 0 26px 26px;box-shadow:0 8px 24px #0755e926}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:58px;height:58px;flex-shrink:0;border-radius:15px;background:white;object-fit:contain;padding:2px}
-.brand h1{font-size:20px;margin:0 0 4px}
-.brand p{margin:0;color:#dceaff;font-size:13px}
-.menu{margin-left:auto;border:1px solid #ffffff80;background:#ffffff16;color:white;border-radius:12px;padding:10px;font-size:20px}
-.search{margin-top:18px;background:white;border-radius:14px;padding:12px 14px;color:#65738f;display:flex;gap:10px;align-items:center}
+.header{background:linear-gradient(135deg,#0645d9,#1684ff);color:white;padding:15px 14px 18px;border-radius:0 0 23px 23px;box-shadow:0 8px 24px #0755e926}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:54px;height:54px;flex-shrink:0;border-radius:14px;background:white;object-fit:contain;padding:2px}
+.brand h1{font-size:19px;margin:0 0 4px}
+.brand p{margin:0;color:#dceaff;font-size:12px}
+.menu{margin-left:auto;border:1px solid #ffffff80;background:#ffffff16;color:white;border-radius:11px;padding:9px;font-size:19px}
+.search{margin-top:15px;background:white;border-radius:13px;padding:11px 13px;color:#65738f;display:flex;gap:9px;align-items:center}
 .search input{border:0;outline:0;width:100%;color:var(--text)}
-main{max-width:850px;margin:auto;padding:15px 13px 100px}
+main{max-width:900px;margin:auto;padding:14px 12px 100px}
 .page{display:none}.page.active{display:block}
-.welcome{padding:20px;border-radius:22px;background:linear-gradient(120deg,#fff,#e0edff);border:1px solid #d8e6ff}
-.welcome h2{font-size:25px;margin:0 0 9px}.welcome p{line-height:1.65;margin:0 0 14px}
-.tags{display:flex;gap:8px;flex-wrap:wrap}.tag{padding:8px 10px;background:white;border-radius:30px;font-size:12px;border:1px solid #e3eaff}
-.section-title{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 13px}
-.section-title h2{margin:0;font-size:21px}.section-title span{font-size:13px;color:var(--blue)}
-.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.tool{border:0;border-radius:19px;padding:18px 8px;min-height:145px;color:white;text-align:center;box-shadow:0 7px 15px #182e5112}
-.tool .ico{font-size:32px;display:block;margin-bottom:10px}
-.tool strong{display:block;font-size:15px;margin-bottom:7px}.tool small{font-size:12px}
+.welcome{padding:19px;border-radius:20px;background:linear-gradient(120deg,#fff,#e0edff);border:1px solid #d8e6ff}
+.welcome h2{font-size:24px;margin:0 0 8px}
+.welcome p{line-height:1.6;margin:0 0 13px}
+.tags{display:flex;gap:7px;flex-wrap:wrap}
+.tag{padding:7px 9px;background:white;border-radius:30px;font-size:11px;border:1px solid #e3eaff}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px}
+.section-title h2{margin:0;font-size:20px}
+.section-title span{font-size:12px;color:var(--blue)}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tool{border:0;border-radius:17px;padding:16px 8px;min-height:130px;color:white;text-align:center;box-shadow:0 7px 15px #182e5112}
+.tool .ico{font-size:30px;display:block;margin-bottom:8px}
+.tool strong{display:block;font-size:14px;margin-bottom:6px}
+.tool small{font-size:11px}
 .blue{background:linear-gradient(145deg,#2688ff,#0755e9)}
 .purple{background:linear-gradient(145deg,#c04cff,#7b22e8)}
 .teal{background:linear-gradient(145deg,#10b8bd,#07858e)}
 .orange{background:linear-gradient(145deg,#ffae35,#f46b0c)}
 .indigo{background:linear-gradient(145deg,#7773ff,#4540e7)}
 .slate{background:linear-gradient(145deg,#779bbd,#41668e)}
-.support,.features,.panel{margin-top:17px;padding:18px;border-radius:20px;background:white;border:1px solid #e0e9fa}
+.support,.features,.panel{margin-top:15px;padding:16px;border-radius:18px;background:white;border:1px solid #e0e9fa}
 .support{background:linear-gradient(135deg,#fff4ff,#f1eaff);border-color:#edcaff}
-.support h2{font-size:18px}.support p,.features p{font-size:14px;line-height:1.6}
-.support-btn,.primary{background:linear-gradient(100deg,#0755e9,#087cff);color:white;border:0;border-radius:12px;padding:13px 16px;font-weight:bold}
-.support-btn{width:100%;border-radius:28px;margin-top:12px}
+.support h2{font-size:18px}
+.support p,.features p{font-size:13px;line-height:1.6}
+.support-btn,.primary{background:linear-gradient(100deg,#0755e9,#087cff);color:white;border:0;border-radius:12px;padding:12px 15px;font-weight:bold}
+.support-btn{width:100%;border-radius:28px;margin-top:10px}
 .note{text-align:center;font-size:11px;color:#64748b;margin:10px 0}
-.back{border:0;background:#e4edff;color:#0755e9;padding:10px 14px;border-radius:12px;margin-bottom:10px}
-.panel h2{margin-top:0;font-size:20px}.field{display:block;width:100%;border:1px solid #d6e1f4;border-radius:11px;padding:12px;margin:10px 0;background:white;color:#14264b}
+.back{border:0;background:#e4edff;color:#0755e9;padding:10px 13px;border-radius:11px;margin-bottom:10px}
+.panel h2{margin-top:0;font-size:20px}
+.field{display:block;width:100%;border:1px solid #d6e1f4;border-radius:10px;padding:11px;margin:9px 0;background:white;color:#14264b}
 .full{width:100%}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid #dce6f6;display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom))}
-.bottom button{border:0;background:transparent;color:#60799d;font-size:12px;min-width:55px}
-.bottom button span{display:block;font-size:21px;margin-bottom:3px}.bottom button.active{color:var(--blue);font-weight:bold}
-.qr-image{display:block;width:min(100%,300px);margin:16px auto;border-radius:12px;padding:8px;background:white}
-.status{font-size:13px;line-height:1.6;margin:10px 0;overflow-wrap:anywhere}
-.editor-toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}
-.editor-toolbar button{border:1px solid #d5e1f6;border-radius:10px;background:#f5f8ff;padding:10px 4px;font-size:13px}
-.editor-toolbar button.selected{background:#0755e9;color:white;border-color:#0755e9}
-.editor-page{position:relative;margin:12px auto;background:white;max-width:100%;box-shadow:0 2px 12px #0002;overflow:hidden;touch-action:pan-y}
-.editor-page canvas{display:block;width:100%;height:auto}
-.editor-page .overlay{position:absolute;left:0;top:0;width:100%;height:100%;touch-action:none}
 .small{font-size:12px;color:#526581;line-height:1.6}
-@media(min-width:600px){.tools{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.status{font-size:13px;line-height:1.6;margin:10px 0;overflow-wrap:anywhere}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid #dce6f6;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
+.bottom button{border:0;background:transparent;color:#60799d;font-size:12px;min-width:55px}
+.bottom button span{display:block;font-size:21px;margin-bottom:3px}
+.bottom button.active{color:var(--blue);font-weight:bold}
+.qr-image{display:block;width:min(100%,300px);margin:16px auto;border-radius:12px;padding:8px;background:white}
+
+/* DOCUMENT EDITOR */
+.editor-top{position:sticky;top:0;z-index:20;background:#edf3ff;padding:7px 0 9px}
+.editor-titlebar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.editor-titlebar strong{font-size:15px}
+.icon-button{border:1px solid #d5e1f6;border-radius:9px;background:white;color:#0755e9;padding:8px 10px}
+.toolbar{background:#fff;border:1px solid #dbe5f5;border-radius:13px;padding:7px;box-shadow:0 3px 12px #16386b0c}
+.tool-row{display:flex;align-items:center;gap:5px;overflow-x:auto;padding:2px 0;scrollbar-width:thin}
+.tool-row+.tool-row{border-top:1px solid #edf1f8;margin-top:5px;padding-top:6px}
+.tb{flex:0 0 auto;min-width:35px;min-height:35px;padding:7px 9px;border:1px solid #dce5f4;border-radius:8px;background:#f6f9ff;color:#17345f;font-size:13px}
+.tb:active,.tb.selected{background:#0755e9;color:white;border-color:#0755e9}
+.tb strong{font-size:15px}
+.control{flex:0 0 auto;max-width:125px;min-width:70px;height:35px;padding:5px 6px;border:1px solid #dce5f4;border-radius:8px;background:white;color:#17345f;font-size:12px}
+.control.size{width:62px;min-width:62px}
+.color-control{width:38px;min-width:38px;padding:3px;height:35px}
+.editor-settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px;background:white;border:1px solid #dbe5f5;border-radius:12px;padding:9px}
+.setting label{display:block;font-size:11px;color:#526581;margin-bottom:4px}
+.setting select,.setting input{width:100%;min-width:0;border:1px solid #dce5f4;border-radius:8px;background:#fff;padding:8px;color:#14264b;font-size:12px}
+.page-area{background:#dfe8f7;border-radius:12px;padding:12px 7px 18px;margin-top:10px;overflow:hidden}
+.page-caption{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#526581;margin:0 auto 7px;max-width:700px}
+.doc-sheet{position:relative;width:100%;max-width:700px;margin:0 auto 15px;background:white;color:#111;box-shadow:0 3px 12px #182e5120;overflow:hidden}
+.doc-content{min-height:400px;outline:none;padding:24px 20px;font-family:Arial,"Noto Sans Devanagari",sans-serif;font-size:16px;line-height:1.7;overflow-wrap:anywhere;white-space:normal;direction:ltr}
+.doc-content:empty:before{content:"यहाँ लिखना शुरू करें…";color:#a0a9b8;pointer-events:none}
+.doc-content img{max-width:100%;height:auto}
+.doc-content table{border-collapse:collapse;width:100%;margin:10px 0}
+.doc-content td,.doc-content th{border:1px solid #777;padding:6px;min-width:35px}
+.sheet-footer{position:absolute;bottom:5px;right:12px;font-size:10px;color:#7b8493;pointer-events:none}
+.page-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.page-actions button{flex:1;min-width:90px}
+.editor-hint{font-size:11px;color:#60718c;line-height:1.6;margin:8px 2px}
+@media(min-width:600px){
+ .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .editor-settings{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .doc-content{padding:38px 42px}
+}
+@media print{
+ body{background:white}
+ .header,.bottom,.editor-top,.back,.page-actions,.editor-hint,.page-caption{display:none!important}
+ main{padding:0;margin:0}
+ #create{display:block!important}
+ .page-area{padding:0;margin:0;background:white;overflow:visible}
+ .doc-sheet{box-shadow:none;margin:0 auto;break-after:page;page-break-after:always}
+ .doc-sheet:last-child{break-after:auto;page-break-after:auto}
+}
 </style>
 </head>
 <body>
 
-<header class="header">
+<header class="header" id="mainHeader">
  <div class="brand">
-  <img class="logo" src="./icon-192.png" alt="SK Boy Studio PDF लोगो"
-       onerror="this.src='./icon-512.png'">
-  <div><h1>SK Boy Studio PDF</h1><p>PDF Maker · Editor · आसान इस्तेमाल</p></div>
+  <img class="logo" src="./icon-192.png" alt="SK Boy Studio PDF लोगो" onerror="this.onerror=null;this.src='./icon-512.png'">
+  <div><h1>SK Boy Studio PDF</h1><p>PDF Maker · आसान इस्तेमाल</p></div>
   <button class="menu" onclick="showPage('settings')" aria-label="सेटिंग्स">☰</button>
  </div>
  <label class="search">🔎 <input id="search" type="search" placeholder="अपना टूल खोजें..." oninput="filterTools()"></label>
@@ -81,31 +124,115 @@ main{max-width:850px;margin:auto;padding:15px 13px 100px}
 <section id="home" class="page active">
  <div class="welcome">
   <h2>नमस्ते! 👋</h2>
-  <p>PDF बनाएँ, टेक्स्ट जोड़ें, हाइलाइट करें और अपने दस्तावेज़ एडिट करें।</p>
+  <p>अपना डॉक्यूमेंट लिखें, डिज़ाइन करें और PDF बनाएँ।</p>
   <div class="tags"><span class="tag">✅ आसान इस्तेमाल</span><span class="tag">🌐 कई भाषाएँ</span><span class="tag">📱 मोबाइल के लिए</span></div>
  </div>
  <div class="section-title"><h2>PDF टूल्स</h2><span>आपके लिए ✨</span></div>
  <div class="tools" id="toolGrid">
-  <button class="tool blue" data-search="pdf बनाएँ text create" onclick="showPage('create')"><span class="ico">📄</span><strong>PDF बनाएँ</strong><small>टेक्स्ट से PDF</small></button>
+  <button class="tool blue" data-search="pdf बनाएँ text create document" onclick="showPage('create')"><span class="ico">📄</span><strong>PDF बनाएँ</strong><small>पूरा डॉक्यूमेंट एडिटर</small></button>
   <button class="tool purple" data-search="image photo तस्वीर" onclick="showPage('image')"><span class="ico">🖼️</span><strong>Image to PDF</strong><small>फोटो से PDF</small></button>
   <button class="tool teal" data-search="दस्तावेज़ documents files" onclick="showPage('docs')"><span class="ico">📁</span><strong>मेरे दस्तावेज़</strong><small>डाउनलोड की जानकारी</small></button>
   <button class="tool orange" data-search="भाषा font फ़ॉन्ट hindi urdu english" onclick="showPage('fonts')"><span class="ico">🔤</span><strong>भाषा और फ़ॉन्ट</strong><small>फ़ॉन्ट विकल्प</small></button>
-  <button class="tool indigo" data-search="tools अन्य टूल्स editor highlight crop draw" onclick="showPage('editor')"><span class="ico">✏️</span><strong>PDF एडिटर</strong><small>Text, Highlight, Crop, Draw</small></button>
-  <button class="tool slate" data-search="settings सेटिंग्स" onclick="showPage('settings')"><span class="ico">⚙️</span><strong>सेटिंग्स</strong><small>ऐप की सेटिंग</small></button>
-  <button class="tool blue" data-search="merge split pdf जोड़ना पेज" onclick="showPage('tools')"><span class="ico">🛠️</span><strong>अन्य PDF टूल्स</strong><small>Merge और Split</small></button>
+  <button class="tool indigo" data-search="settings सेटिंग्स" onclick="showPage('settings')"><span class="ico">⚙️</span><strong>सेटिंग्स</strong><small>ऐप की सेटिंग</small></button>
+  <button class="tool slate" data-search="merge split pdf जोड़ना पेज" onclick="showPage('tools')"><span class="ico">🛠️</span><strong>अन्य PDF टूल्स</strong><small>अन्य सुविधाएँ</small></button>
  </div>
  <section class="support"><h2>❤️ अपना प्यार और सहयोग दें</h2><p>आप अपनी इच्छा से सहयोग कर सकते हैं। धन्यवाद! 🙏</p><button class="support-btn" onclick="showPage('qr')">❤️ सहयोग दें</button><p class="note">सहयोग करना पूरी तरह आपकी इच्छा पर निर्भर है।</p></section>
- <section class="features"><h3>✨ ऐप की सुविधाएँ</h3><p>✅ टेक्स्ट से PDF</p><p>✅ फोटो से PDF</p><p>✅ PDF पर टेक्स्ट, हाइलाइट और ड्रॉ</p><p>✅ फ़ॉन्ट और रंग के विकल्प</p></section>
+ <section class="features"><h3>✨ ऐप की सुविधाएँ</h3><p>✅ टेक्स्ट से PDF</p><p>✅ फोटो से PDF</p><p>✅ पेज साइज़, फ़ॉन्ट और रंग</p><p>✅ फोटो, टेबल, हाइलाइट और टेक्स्ट फ़ॉर्मेटिंग</p></section>
 </section>
 
+<!-- एक ही डॉक्यूमेंट एडिटर पेज: ऊपर टूल्स, नीचे पेज -->
 <section id="create" class="page">
  <button class="back" onclick="showPage('home')">← होम</button>
- <div class="panel"><h2>📄 टेक्स्ट से PDF</h2>
- <p class="small">टेक्स्ट लिखें। फिर ब्राउज़र के Print मेनू में “Save as PDF” चुनें।</p>
- <textarea id="pdfText" class="field" rows="8" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
- <label>फ़ॉन्ट</label><select id="textFont" class="field"><option>Arial</option><option>Georgia</option><option>Verdana</option><option>Noto Sans Devanagari</option></select>
- <label>फ़ॉन्ट साइज़</label><input id="textSize" class="field" type="number" value="16" min="8" max="48">
- <button class="primary full" onclick="printText()">PDF बनाएँ / Save as PDF</button></div>
+ <div class="editor-titlebar">
+  <strong>📄 डॉक्यूमेंट एडिटर</strong>
+  <button class="icon-button" onclick="newDocument()">＋ नया</button>
+ </div>
+
+ <div class="editor-top">
+  <div class="toolbar">
+   <div class="tool-row">
+    <button class="tb" onclick="editCommand('undo')" title="Undo">↶</button>
+    <button class="tb" onclick="editCommand('redo')" title="Redo">↷</button>
+    <button class="tb" onclick="editCommand('bold')" title="Bold"><strong>B</strong></button>
+    <button class="tb" onclick="editCommand('italic')" title="Italic"><em>I</em></button>
+    <button class="tb" onclick="editCommand('underline')" title="Underline"><u>U</u></button>
+    <button class="tb" onclick="editCommand('strikeThrough')" title="Strike">S̶</button>
+    <button class="tb" onclick="editCommand('justifyLeft')" title="बाएँ">☰←</button>
+    <button class="tb" onclick="editCommand('justifyCenter')" title="बीच">☷</button>
+    <button class="tb" onclick="editCommand('justifyRight')" title="दाएँ">→☰</button>
+    <button class="tb" onclick="editCommand('insertUnorderedList')" title="सूची">•≡</button>
+    <button class="tb" onclick="editCommand('insertOrderedList')" title="नंबर सूची">1.</button>
+   </div>
+   <div class="tool-row">
+    <button class="tb" onclick="highlightText()" title="Highlight">🖍️</button>
+    <button class="tb" onclick="setTextColor()" title="टेक्स्ट रंग">🎨</button>
+    <button class="tb" onclick="insertTable()" title="टेबल">▦ टेबल</button>
+    <button class="tb" onclick="$('imageInsert').click()" title="फोटो">🖼️ फोटो</button>
+    <button class="tb" onclick="insertPageBreak()" title="पेज ब्रेक">↵ पेज</button>
+    <button class="tb" onclick="addPage()" title="नया पेज">＋ पेज</button>
+    <button class="tb" onclick="deleteLastPage()" title="पेज हटाएँ">− पेज</button>
+    <button class="tb" onclick="insertDate()" title="तारीख">📅</button>
+    <button class="tb" onclick="insertLink()" title="लिंक">🔗</button>
+    <button class="tb" onclick="window.print()" title="प्रिंट / Save PDF">🖨️</button>
+   </div>
+  </div>
+
+  <div class="editor-settings">
+   <div class="setting"><label>फ़ॉन्ट</label>
+    <select id="fontFamily" onchange="applyFont()">
+     <option value="Arial">Arial</option>
+     <option value="Georgia">Georgia</option>
+     <option value="'Times New Roman'">Times New Roman</option>
+     <option value="Verdana">Verdana</option>
+     <option value="'Noto Sans Devanagari'">Noto Sans Devanagari</option>
+     <option value="'Noto Nastaliq Urdu'">Noto Nastaliq Urdu</option>
+     <option value="serif">Serif</option>
+     <option value="sans-serif">Sans Serif</option>
+    </select>
+   </div>
+   <div class="setting"><label>फ़ॉन्ट साइज़</label>
+    <select id="fontSize" onchange="applySize()">
+     <option value="1">10 px</option><option value="2">13 px</option>
+     <option value="3" selected>16 px</option><option value="4">18 px</option>
+     <option value="5">24 px</option><option value="6">32 px</option><option value="7">48 px</option>
+    </select>
+   </div>
+   <div class="setting"><label>टेक्स्ट रंग</label><input id="textColor" type="color" value="#111111" onchange="applyColor()" /></div>
+   <div class="setting"><label>हाइलाइट रंग</label><input id="markColor" type="color" value="#fff176" onchange="highlightText()" /></div>
+   <div class="setting"><label>पेज साइज़</label>
+    <select id="pageSize" onchange="updatePageSize()">
+     <option value="A4">A4</option><option value="A3">A3</option><option value="Letter">Letter</option><option value="Legal">Legal</option>
+    </select>
+   </div>
+   <div class="setting"><label>पेज दिशा</label>
+    <select id="orientation" onchange="updatePageSize()"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select>
+   </div>
+   <div class="setting"><label>पेज डिज़ाइन</label>
+    <select id="pageDesign" onchange="applyPageDesign()">
+     <option value="plain">सादा सफेद</option><option value="blue">नीला बॉर्डर</option><option value="lined">लाइन वाला</option><option value="cream">क्रीम पेपर</option>
+    </select>
+   </div>
+   <div class="setting"><label>मार्जिन</label>
+    <select id="pageMargin" onchange="updateMargins()"><option value="15">छोटा</option><option value="20" selected>सामान्य</option><option value="30">बड़ा</option></select>
+   </div>
+  </div>
+ </div>
+
+ <div class="page-area" id="pageArea">
+  <div class="page-caption"><span id="pageCount">पेज 1</span><span>पेज पर टैप करके लिखें</span></div>
+  <div class="doc-sheet">
+   <div class="doc-content" contenteditable="true" spellcheck="true" lang="hi" aria-label="डॉक्यूमेंट लिखने का पेज"></div>
+   <div class="sheet-footer"></div>
+  </div>
+ </div>
+
+ <input id="imageInsert" type="file" accept="image/*" hidden onchange="insertImage(this)">
+ <div class="page-actions">
+  <button class="primary" onclick="addPage()">＋ नया पेज</button>
+  <button class="primary" onclick="downloadDocumentPDF()">⬇️ PDF बनाएँ</button>
+ </div>
+ <p class="editor-hint">टिप: पेज के अंदर टैप करके लिखें। टेक्स्ट चुनकर ऊपर के टूल इस्तेमाल करें। हिंदी और उर्दू की उपलब्धता मोबाइल के फ़ॉन्ट और कीबोर्ड पर निर्भर करती है। PDF बनाने के लिए इंटरनेट कनेक्शन की ज़रूरत हो सकती है।</p>
+ <p id="createStatus" class="status" aria-live="polite"></p>
 </section>
 
 <section id="image" class="page">
@@ -117,59 +244,32 @@ main{max-width:850px;margin:auto;padding:15px 13px 100px}
  <p id="imageStatus" class="status"></p></div>
 </section>
 
-<section id="editor" class="page">
- <button class="back" onclick="showPage('home')">← होम</button>
- <div class="panel">
-  <h2>✏️ PDF एडिटर</h2>
-  <p class="small">PDF चुनें और टूल चुनकर पेज पर टैप/ड्रैग करें।</p>
-  <input id="pdfUpload" class="field" type="file" accept="application/pdf,.pdf">
-  <div class="editor-toolbar">
-   <button class="selected" data-mode="text" onclick="setMode('text',this)">T Text</button>
-   <button data-mode="highlight" onclick="setMode('highlight',this)">🖍 Highlight</button>
-   <button data-mode="draw" onclick="setMode('draw',this)">✏️ Draw</button>
-   <button data-mode="crop" onclick="setMode('crop',this)">✂️ Crop</button>
-   <button data-mode="underline" onclick="setMode('underline',this)">U Underline</button>
-   <button data-mode="erase" onclick="setMode('erase',this)">⌫ मिटाएँ</button>
-  </div>
-  <label>फ़ॉन्ट</label>
-  <select id="editFont" class="field">
-   <option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Noto Sans Devanagari">Noto Sans Devanagari</option><option value="serif">Serif</option>
-  </select>
-  <label>फ़ॉन्ट साइज़</label><input id="editSize" class="field" type="number" min="8" max="72" value="22">
-  <label>टेक्स्ट / पेन का रंग</label><input id="editColor" class="field" type="color" value="#0755e9">
-  <label>हाइलाइट रंग</label><input id="highlightColor" class="field" type="color" value="#fff176">
-  <p class="small">Text: पेज पर टैप करें और टेक्स्ट लिखें। Highlight/Draw/Crop: उँगली से खींचें। Crop लगाने के बाद उस पेज का चुना हुआ हिस्सा ही एक्सपोर्ट होगा।</p>
-  <div id="pdfPages"></div>
-  <button class="primary full" onclick="downloadEditedPDF()">⬇️ एडिट की हुई PDF डाउनलोड करें</button>
-  <p id="editorStatus" class="status">पहले PDF अपलोड करें।</p>
-  <p class="small">नोट: यह एडिटर पेजों को चित्र के रूप में नई PDF में सेव करता है। इससे टेक्स्ट चुनने योग्य नहीं रहता। मूल PDF की कॉपी अपने पास रखें।</p>
- </div>
-</section>
-
 <section id="docs" class="page">
  <button class="back" onclick="showPage('home')">← होम</button>
- <div class="panel"><h2>📁 मेरे दस्तावेज़</h2><p>डाउनलोड की गई PDF आमतौर पर आपके मोबाइल के Downloads फ़ोल्डर में मिलती है। इस वेबसाइट पर फाइलें अपने-आप सेव नहीं होतीं।</p></div>
+ <div class="panel"><h2>📁 मेरे दस्तावेज़</h2><p>डाउनलोड की गई PDF आमतौर पर आपके मोबाइल के Downloads फ़ोल्डर में मिलती है। यह वेबसाइट आपकी फाइलों को अपने-आप सेव नहीं करती।</p></div>
 </section>
 
 <section id="fonts" class="page">
  <button class="back" onclick="showPage('home')">← होम</button>
  <div class="panel"><h2>🔤 भाषा और फ़ॉन्ट</h2>
- <label>भाषा चुनें</label><select id="fontLanguage" class="field"><option value="hi">हिंदी</option><option value="en">English</option><option value="ur">اردو</option></select>
- <p id="fontMessage" class="status">हिंदी चुनी गई है। PDF में सही अक्षरों के लिए फ़ॉन्ट का समर्थन ज़रूरी है।</p>
- <p class="small">उर्दू की सही लिखावट के लिए डिवाइस में उपयुक्त उर्दू फ़ॉन्ट और RTL सपोर्ट होना चाहिए।</p></div>
+ <label>भाषा चुनें</label><select id="fontLanguage" class="field" onchange="changeLanguage()"><option value="hi">हिंदी</option><option value="en">English</option><option value="ur">اردو</option></select>
+ <p id="fontMessage" class="status">हिंदी चुनी गई है।</p>
+ <button class="primary full" onclick="showPage('create')">एडिटर खोलें</button>
+ <p class="small">उर्दू की सही लिखावट के लिए मोबाइल में उर्दू कीबोर्ड और उपयुक्त फ़ॉन्ट होना चाहिए।</p></div>
 </section>
 
 <section id="tools" class="page">
  <button class="back" onclick="showPage('home')">← होम</button>
  <div class="panel"><h2>🛠️ अन्य PDF टूल्स</h2>
- <p>PDF एडिट करने के लिए PDF एडिटर खोलें।</p>
- <button class="primary full" onclick="showPage('editor')">PDF एडिटर खोलें</button>
- <p class="small">Merge, Split, Compress और Password Protect अभी इस संस्करण में लागू नहीं हैं।</p></div>
+ <p>डॉक्यूमेंट लिखने, फ़ॉन्ट बदलने और पेज डिज़ाइन करने के लिए मुख्य एडिटर इस्तेमाल करें।</p>
+ <button class="primary full" onclick="showPage('create')">PDF एडिटर खोलें</button>
+ <p class="small">Merge, Split, Compress और Password Protect अभी लागू नहीं हैं।</p></div>
 </section>
 
 <section id="settings" class="page">
  <button class="back" onclick="showPage('home')">← होम</button>
- <div class="panel"><h2>⚙️ सेटिंग्स</h2><p><b>ऐप का नाम:</b> SK Boy Studio PDF</p><p><b>लोगो:</b> icon-192.png / icon-512.png</p><p>मोबाइल और GitHub Pages के लिए।</p></div>
+ <div class="panel"><h2>⚙️ सेटिंग्स</h2><p><b>ऐप का नाम:</b> SK Boy Studio PDF</p><p><b>लोगो:</b> icon-192.png / icon-512.png</p><p>मोबाइल और GitHub Pages के लिए।</p>
+ <button class="primary full" onclick="showPage('create')">PDF एडिटर खोलें</button></div>
 </section>
 
 <section id="qr" class="page">
@@ -188,184 +288,314 @@ main{max-width:850px;margin:auto;padding:15px 13px 100px}
  <button data-page="settings" onclick="showPage('settings')"><span>⚙</span>सेटिंग्स</button>
 </nav>
 
-<!-- PDF बनाने और PDF पढ़ने के लिए लाइब्रेरी -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <script>
 const $=id=>document.getElementById(id);
+
 function showPage(id){
  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
  if($(id))$(id).classList.add('active');
  document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ $('mainHeader').style.display=id==='create'?'none':'';
  window.scrollTo({top:0,behavior:'smooth'});
+ if(id==='create')updatePageCount();
 }
+
 function filterTools(){
  const q=$('search').value.trim().toLowerCase();
  document.querySelectorAll('#toolGrid .tool').forEach(c=>{
   c.style.display=(c.innerText+' '+c.dataset.search).toLowerCase().includes(q)?'':'none';
  });
 }
-$('fontLanguage').addEventListener('change',function(){
- $('fontMessage').textContent={
-  hi:'हिंदी चुनी गई है। सही हिंदी आउटपुट के लिए Unicode फ़ॉन्ट सपोर्ट चाहिए।',
-  en:'English चुनी गई है।',
-  ur:'اردو منتخب ہے۔ درست اردو کے لیے اردو فونٹ اور RTL سپورٹ ضروری ہے۔'
- }[this.value];
-});
-function printText(){
- const text=$('pdfText').value.trim();if(!text)return alert('पहले टेक्स्ट लिखें।');
- const w=window.open('','_blank');if(!w)return alert('पॉप-अप की अनुमति दें।');
- const safe=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
- const font=$('textFont').value;
- const size=Math.max(8,Math.min(48,Number($('textSize').value)||16));
- w.document.write('<!doctype html><html lang="hi"><meta charset="UTF-8"><title>SK Boy Studio PDF</title><style>body{font-family:'+font+',sans-serif;font-size:'+size+'px;padding:28px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}</style><body>'+safe+'</body></html>');
- w.document.close();w.onload=()=>{w.focus();w.print();};
+
+function getSheets(){return [...document.querySelectorAll('.doc-sheet')];}
+function getActiveEditor(){
+ const sel=window.getSelection();
+ if(sel&&sel.anchorNode){
+  const el=sel.anchorNode.nodeType===1?sel.anchorNode:sel.anchorNode.parentElement;
+  const ed=el&&el.closest('.doc-content');
+  if(ed)return ed;
+ }
+ return document.querySelector('.doc-content:last-of-type')||document.querySelector('.doc-content');
 }
+
+function editCommand(command,value=null){
+ const ed=getActiveEditor();
+ if(ed)ed.focus();
+ try{document.execCommand(command,false,value);}
+ catch(e){}
+}
+function applyFont(){
+ const ed=getActiveEditor();if(!ed)return;
+ ed.focus();
+ document.execCommand('fontName',false,$('fontFamily').value);
+}
+function applySize(){
+ const ed=getActiveEditor();if(!ed)return;
+ ed.focus();
+ document.execCommand('fontSize',false,$('fontSize').value);
+}
+function applyColor(){
+ const ed=getActiveEditor();if(!ed)return;
+ ed.focus();
+ document.execCommand('foreColor',false,$('textColor').value);
+}
+function setTextColor(){applyColor();}
+function highlightText(){
+ const ed=getActiveEditor();if(!ed)return;
+ ed.focus();
+ const color=$('markColor').value;
+ try{
+  if(!document.execCommand('hiliteColor',false,color))
+   document.execCommand('backColor',false,color);
+ }catch(e){document.execCommand('backColor',false,color);}
+}
+function insertTable(){
+ const rows=Math.max(1,Math.min(10,Number(prompt('कितनी पंक्तियाँ?', '3'))||3));
+ const cols=Math.max(1,Math.min(8,Number(prompt('कितने कॉलम?', '3'))||3));
+ let html='<table><tbody>';
+ for(let r=0;r<rows;r++){
+  html+='<tr>';
+  for(let c=0;c<cols;c++)html+='<td>&nbsp;</td>';
+  html+='</tr>';
+ }
+ html+='</tbody></table><p><br></p>';
+ editCommand('insertHTML',html);
+}
+function insertImage(input){
+ const file=input.files&&input.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){alert('कृपया तस्वीर चुनें।');return;}
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const ed=getActiveEditor();if(!ed)return;
+  ed.focus();
+  document.execCommand('insertHTML',false,'<img src="'+reader.result+'" alt="डॉक्यूमेंट फोटो"><p><br></p>');
+  input.value='';
+ };
+ reader.readAsDataURL(file);
+}
+function insertPageBreak(){
+ addPage();
+}
+function insertDate(){
+ editCommand('insertText',new Date().toLocaleDateString('hi-IN'));
+}
+function insertLink(){
+ const url=prompt('वेबसाइट का लिंक लिखें:');
+ if(!url)return;
+ if(!/^https?:\/\//i.test(url)){alert('लिंक http:// या https:// से शुरू होना चाहिए।');return;}
+ editCommand('createLink',url);
+}
+function newDocument(){
+ if(!confirm('नया डॉक्यूमेंट शुरू करें? मौजूदा लिखावट हट जाएगी।'))return;
+ $('pageArea').innerHTML='';
+ addPage();
+ $('createStatus').textContent='नया डॉक्यूमेंट तैयार है।';
+}
+function addPage(){
+ const area=$('pageArea');
+ const sheet=document.createElement('div');
+ sheet.className='doc-sheet';
+ sheet.innerHTML='<div class="doc-content" contenteditable="true" spellcheck="true" lang="hi" aria-label="डॉक्यूमेंट लिखने का पेज"></div><div class="sheet-footer"></div>';
+ area.appendChild(sheet);
+ updatePageSize();
+ updateMargins();
+ applyPageDesign();
+ updatePageCount();
+ sheet.querySelector('.doc-content').focus();
+ sheet.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function deleteLastPage(){
+ const sheets=getSheets();
+ if(sheets.length<=1){alert('कम-से-कम एक पेज रहना चाहिए।');return;}
+ if(confirm('आखिरी पेज हटाएँ?')){
+  sheets[sheets.length-1].remove();
+  updatePageCount();
+ }
+}
+function updatePageCount(){
+ const sheets=getSheets();
+ $('pageCount').textContent='कुल पेज: '+sheets.length;
+ sheets.forEach((s,i)=>{
+  let f=s.querySelector('.sheet-footer');
+  if(!f){f=document.createElement('div');f.className='sheet-footer';s.appendChild(f);}
+  f.textContent=(i+1);
+ });
+}
+function updatePageSize(){
+ const sizes={
+  A4:[210,297],A3:[297,420],Letter:[215.9,279.4],Legal:[215.9,355.6]
+ };
+ const key=$('pageSize').value;
+ let [w,h]=sizes[key]||sizes.A4;
+ if($('orientation').value==='landscape')[w,h]=[h,w];
+ getSheets().forEach(s=>{
+  s.style.width='100%';
+  s.style.maxWidth=w+'mm';
+  s.style.aspectRatio='auto';
+  s.style.minHeight='0';
+  s.style.height='auto';
+  s.dataset.width=w;
+  s.dataset.height=h;
+  s.style.minHeight='min('+h+'mm, 75vh)';
+  const ed=s.querySelector('.doc-content');
+  ed.style.minHeight='min('+Math.max(350,h-35)+'mm, 70vh)';
+ });
+ updatePageCount();
+}
+function updateMargins(){
+ const m=Number($('pageMargin').value)||20;
+ document.querySelectorAll('.doc-content').forEach(ed=>{
+  ed.style.padding=Math.max(10,m)+'px';
+ });
+}
+function applyPageDesign(){
+ const d=$('pageDesign').value;
+ getSheets().forEach(s=>{
+  s.style.border='0';
+  s.style.background='#fff';
+  s.style.backgroundImage='none';
+  if(d==='blue')s.style.border='2px solid #0755e9';
+  if(d==='cream')s.style.background='#fff9e9';
+  if(d==='lined'){
+   s.style.backgroundImage='repeating-linear-gradient(to bottom,#fff 0px,#fff 27px,#d9e4f6 28px)';
+   s.style.backgroundColor='#fff';
+  }
+ });
+}
+function changeLanguage(){
+ const v=$('fontLanguage').value;
+ const messages={
+  hi:'हिंदी चुनी गई है। मोबाइल कीबोर्ड से हिंदी टाइप करें।',
+  en:'English selected. Use your English keyboard.',
+  ur:'اردو منتخب ہے۔ اردو کی بورڈ سے لکھیں۔'
+ };
+ $('fontMessage').textContent=messages[v];
+ if(v==='ur'){
+  document.querySelectorAll('.doc-content').forEach(ed=>{ed.dir='rtl';ed.lang='ur';});
+  $('fontFamily').value="'Noto Nastaliq Urdu'";
+ }else{
+  document.querySelectorAll('.doc-content').forEach(ed=>{ed.dir='ltr';ed.lang=v;});
+  if(v==='hi')$('fontFamily').value="'Noto Sans Devanagari'";
+  else $('fontFamily').value='Arial';
+ }
+ applyFont();
+}
+
+/* PDF बनाने का विकल्प */
+async function downloadDocumentPDF(){
+ if(!window.html2pdf){
+  alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके पेज फिर खोलें।');
+  return;
+ }
+ const sheets=getSheets();
+ if(!sheets.length)return alert('पहले एक पेज बनाएँ।');
+ $('createStatus').textContent='PDF तैयार हो रही है…';
+ const size=$('pageSize').value;
+ const orientation=$('orientation').value;
+ const opts={
+  margin:0,
+  filename:'SK-Boy-Studio-PDF.pdf',
+  image:{type:'jpeg',quality:0.98},
+  html2canvas:{scale:1.5,useCORS:true,backgroundColor:'#ffffff',scrollY:0},
+  jsPDF:{unit:'mm',format:size.toLowerCase(),orientation:orientation},
+  pagebreak:{mode:['css','legacy']}
+ };
+ const area=$('pageArea');
+ const oldScroll=window.scrollY;
+ try{
+  // एडिटर की वर्तमान सामग्री का अस्थायी क्लोन
+  const clone=area.cloneNode(true);
+  clone.style.width='100%';
+  clone.style.padding='0';
+  clone.style.margin='0';
+  clone.style.background='#fff';
+  clone.querySelectorAll('.doc-sheet').forEach((s,i)=>{
+   s.style.width='100%';
+   s.style.maxWidth='none';
+   s.style.minHeight='0';
+   s.style.height='auto';
+   s.style.aspectRatio='auto';
+   s.style.margin='0';
+   s.style.boxShadow='none';
+   s.style.breakAfter=i===sheets.length-1?'auto':'page';
+   s.style.pageBreakAfter=i===sheets.length-1?'auto':'always';
+   const original=sheets[i];
+   const ed=s.querySelector('.doc-content');
+   ed.innerHTML=original.querySelector('.doc-content').innerHTML;
+   ed.style.minHeight='0';
+   ed.style.padding='12mm';
+   ed.style.overflow='visible';
+   ed.style.background='transparent';
+   ed.style.color='#111';
+   const footer=s.querySelector('.sheet-footer');
+   if(footer)footer.style.display='block';
+  });
+  clone.style.position='fixed';
+  clone.style.left='-10000px';
+  clone.style.top='0';
+  clone.style.zIndex='-1';
+  clone.style.width=(orientation==='landscape'?'297mm':'210mm');
+  document.body.appendChild(clone);
+  await html2pdf().set(opts).from(clone).save();
+  clone.remove();
+  $('createStatus').textContent='PDF डाउनलोड शुरू हो गया।';
+ }catch(e){
+  $('createStatus').textContent='PDF नहीं बन पाई। दोबारा कोशिश करें या प्रिंट विकल्प इस्तेमाल करें।';
+  const leftover=document.querySelector('body > #pageArea');
+  if(leftover)leftover.remove();
+ }finally{
+  window.scrollTo(0,oldScroll);
+ }
+}
+
+/* Image to PDF */
 async function imagesToPDF(){
  const files=[...($('imageFiles').files||[])];
  if(!files.length)return alert('पहले तस्वीरें चुनें।');
  if(!window.jspdf)return alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके फिर कोशिश करें।');
- const {jsPDF}=window.jspdf;let doc=null;
+ const {jsPDF}=window.jspdf;
+ let doc=null;
  try{
   for(let i=0;i<files.length;i++){
+   if(!files[i].type.startsWith('image/'))continue;
    const data=await readImage(files[i]);
-   const im=new Image();im.src=data;await im.decode();
+   const im=new Image();
+   im.src=data;
+   await im.decode();
    const orient=im.width>im.height?'landscape':'portrait';
    if(!doc)doc=new jsPDF({orientation:orient,unit:'pt',format:'a4'});
    else doc.addPage('a4',orient);
-   const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+   const pw=doc.internal.pageSize.getWidth();
+   const ph=doc.internal.pageSize.getHeight();
    const scale=Math.min(pw/im.width,ph/im.height);
    const w=im.width*scale,h=im.height*scale;
-   doc.addImage(data,'JPEG',(pw-w)/2,(ph-h)/2,w,h,undefined,'FAST');
+   const type=files[i].type==='image/png'?'PNG':'JPEG';
+   doc.addImage(data,type,(pw-w)/2,(ph-h)/2,w,h,undefined,'FAST');
   }
-  doc.save('SK-Boy-Studio-PDF.pdf');$('imageStatus').textContent='PDF डाउनलोड शुरू हो गया।';
- }catch(e){$('imageStatus').textContent='PDF नहीं बन पाई। दूसरी JPG या PNG तस्वीर चुनें।';}
+  if(!doc)throw new Error('No valid images');
+  doc.save('SK-Boy-Studio-PDF.pdf');
+  $('imageStatus').textContent='PDF डाउनलोड शुरू हो गया।';
+ }catch(e){
+  $('imageStatus').textContent='PDF नहीं बन पाई। दूसरी JPG या PNG तस्वीर चुनें।';
+ }
 }
 function readImage(file){
  return new Promise((resolve,reject)=>{
-  const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
- }
-);
+  const r=new FileReader();
+  r.onload=()=>resolve(r.result);
+  r.onerror=reject;
+  r.readAsDataURL(file);
+ });
 }
 
-let pdfDoc=null,pdfPages=[],mode='text',drawing=null;
-if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-function setMode(m,btn){
- mode=m;document.querySelectorAll('.editor-toolbar button').forEach(b=>b.classList.remove('selected'));
- btn.classList.add('selected');
- $('editorStatus').textContent='चुना गया टूल: '+m+'. अब PDF पेज पर काम करें।';
-}
-$('pdfUpload').addEventListener('change',async function(){
- const file=this.files[0];if(!file)return;
- if(!window.pdfjsLib){$('editorStatus').textContent='PDF reader लोड नहीं हुआ। इंटरनेट चालू करके दोबारा खोलें।';return;}
- $('pdfPages').innerHTML='';pdfPages=[];pdfDoc=null;
- $('editorStatus').textContent='PDF खुल रही है...';
- try{
-  pdfDoc=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-  for(let n=1;n<=pdfDoc.numPages;n++){
-   const page=await pdfDoc.getPage(n);
-   const viewport=page.getViewport({scale:1.25});
-   const wrap=document.createElement('div');wrap.className='editor-page';
-   const base=document.createElement('canvas');base.className='base';
-   base.width=viewport.width;base.height=viewport.height;
-   const overlay=document.createElement('canvas');overlay.className='overlay';
-   overlay.width=viewport.width;overlay.height=viewport.height;
-   wrap.append(base,overlay);$('pdfPages').appendChild(wrap);
-   await page.render({canvasContext:base.getContext('2d'),viewport}).promise;
-   const item={wrap,base,overlay,ctx:overlay.getContext('2d'),crop:null};
-   pdfPages.push(item);attachEditor(item);
-  }
-  $('editorStatus').textContent='PDF खुल गई: '+pdfDoc.numPages+' पेज। टूल चुनें और एडिट करें।';
- }catch(e){$('editorStatus').textContent='PDF नहीं खुली। कृपया सही और बिना पासवर्ड वाली PDF चुनें।';}
-});
-function attachEditor(item){
- const c=item.overlay;
- c.addEventListener('pointerdown',e=>{
-  if(!pdfDoc)return;
-  const r=c.getBoundingClientRect();
-  const x=(e.clientX-r.left)*c.width/r.width;
-  const y=(e.clientY-r.top)*c.height/r.height;
-  if(mode==='text'){
-   const txt=prompt('PDF पर क्या टेक्स्ट लिखना है?');if(!txt)return;
-   const size=Math.max(8,Math.min(72,Number($('editSize').value)||22));
-   item.ctx.font=size+'px "'+$('editFont').value+'"';
-   item.ctx.fillStyle=$('editColor').value;
-   item.ctx.fillText(txt,x,y);return;
-  }
-  if(mode==='erase'){
-   item.ctx.clearRect(x-22,y-22,44,44);return;
-  }
-  drawing={item,x,y,lastX:x,lastY:y};
-  c.setPointerCapture(e.pointerId);
-  if(mode==='crop'){
-   item.crop={x,y,w:0,h:0};drawCropPreview(item);
-  }
-  if(mode==='highlight'||mode==='underline'||mode==='draw'){
-   item.ctx.beginPath();item.ctx.moveTo(x,y);
-  }
- });
- c.addEventListener('pointermove',e=>{
-  if(!drawing||drawing.item!==item)return;
-  const r=c.getBoundingClientRect();
-  const x=(e.clientX-r.left)*c.width/r.width;
-  const y=(e.clientY-r.top)*c.height/r.height;
-  const ctx=item.ctx;
-  if(mode==='crop'){
-   item.crop={x:drawing.x,y:drawing.y,w:x-drawing.x,h:y-drawing.y};
-   drawCropPreview(item);return;
-  }
-  if(mode==='draw'){
-   ctx.strokeStyle=$('editColor').value;ctx.lineWidth=3;ctx.lineCap='round';
-   ctx.lineTo(x,y);ctx.stroke();
-  }else if(mode==='highlight'){
-   ctx.strokeStyle=$('highlightColor').value;ctx.globalAlpha=.38;ctx.lineWidth=18;
-   ctx.lineCap='round';ctx.lineTo(x,y);ctx.stroke();ctx.globalAlpha=1;
-  }else if(mode==='underline'){
-   ctx.strokeStyle=$('editColor').value;ctx.lineWidth=2;
-   ctx.lineTo(x,y);ctx.stroke();
-  }
-  drawing.lastX=x;drawing.lastY=y;
- });
- c.addEventListener('pointerup',()=>{if(drawing&&drawing.item===item)drawing=null;});
-}
-function drawCropPreview(item){
- const ctx=item.ctx,c=item.crop;
- ctx.clearRect(0,0,item.overlay.width,item.overlay.height);
- if(!c)return;
- ctx.save();ctx.strokeStyle='#0755e9';ctx.lineWidth=3;ctx.setLineDash([8,5]);
- ctx.strokeRect(c.x,c.y,c.w,c.h);ctx.restore();
-}
-async function downloadEditedPDF(){
- if(!pdfPages.length)return alert('पहले PDF अपलोड करें।');
- if(!window.jspdf)return alert('PDF लाइब्रेरी लोड नहीं हुई।');
- const {jsPDF}=window.jspdf;let doc=null;
- try{
-  for(let i=0;i<pdfPages.length;i++){
-   const p=pdfPages[i],base=p.base,overlay=p.overlay;
-   const merged=document.createElement('canvas');
-   let sx=0,sy=0,sw=base.width,sh=base.height;
-   if(p.crop&&Math.abs(p.crop.w)>10&&Math.abs(p.crop.h)>10){
-    sx=Math.max(0,Math.min(p.crop.x,p.crop.x+p.crop.w));
-    sy=Math.max(0,Math.min(p.crop.y,p.crop.y+p.crop.h));
-    sw=Math.min(base.width-sx,Math.abs(p.crop.w));
-    sh=Math.min(base.height-sy,Math.abs(p.crop.h));
-   }
-   merged.width=Math.max(1,Math.round(sw));merged.height=Math.max(1,Math.round(sh));
-   const ctx=merged.getContext('2d');
-   ctx.drawImage(base,sx,sy,sw,sh,0,0,merged.width,merged.height);
-   ctx.drawImage(overlay,sx,sy,sw,sh,0,0,merged.width,merged.height);
-   const landscape=merged.width>merged.height;
-   if(!doc)doc=new jsPDF({orientation:landscape?'landscape':'portrait',unit:'pt',format:'a4'});
-   else doc.addPage('a4',landscape?'landscape':'portrait');
-   const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
-   const scale=Math.min(pw/merged.width,ph/merged.height);
-   const w=merged.width*scale,h=merged.height*scale;
-   doc.addImage(merged.toDataURL('image/jpeg',.92),'JPEG',(pw-w)/2,(ph-h)/2,w,h,undefined,'FAST');
-  }
-  doc.save('SK-Boy-Studio-Edited.pdf');
-  $('editorStatus').textContent='एडिट की हुई PDF डाउनलोड हो रही है।';
- }catch(e){$('editorStatus').textContent='PDF सेव नहीं हो सकी। कृपया कम पेज वाली PDF से कोशिश करें।';}
-}
+/* शुरुआती सेटअप */
+updatePageSize();
+updateMargins();
+applyPageDesign();
+updatePageCount();
 </script>
 </body>
 </html>
