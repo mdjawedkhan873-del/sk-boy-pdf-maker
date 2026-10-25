@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -60,6 +61,9 @@ input[type=color]{height:38px;width:100%;border:0;background:white}
 hr{border:0;border-top:1px solid var(--border);margin:15px 0}
 footer{text-align:center;color:#718096;padding:25px 10px;font-size:12px}
 #qrPreview{max-width:100%;width:220px;display:block;margin:12px auto}
+#supportQR{display:block;width:100%;max-width:300px;height:auto;margin:18px auto;border:1px solid var(--border);border-radius:14px;padding:10px;background:white}
+.support-card{border-color:#ffc7d1;background:linear-gradient(135deg,#fff,#fff5f7)}
+.full{width:100%}
 @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.editor-layout{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}}
 </style>
 </head>
@@ -83,6 +87,13 @@ footer{text-align:center;color:#718096;padding:25px 10px;font-size:12px}
 <button class="card" onclick="showPage('tools')"><span class="emoji">🧰</span><strong>अन्य PDF टूल्स</strong><small>टेक्स्ट और पेज की उपयोगी सुविधाएँ</small></button>
 <button class="card" onclick="showPage('settings')"><span class="emoji">⚙️</span><strong>सेटिंग्स</strong><small>ऐप की जानकारी और सेटिंग्स</small></button>
 <button class="card" onclick="showPage('qr')"><span class="emoji">▦</span><strong>QR कोड</strong><small>वेबसाइट या टेक्स्ट का QR बनाएँ</small></button>
+
+<!-- नया सपोर्ट / पेमेंट बटन -->
+<button class="card support-card" onclick="showPage('support')">
+<span class="emoji">❤️</span>
+<strong>सपोर्ट करें</strong>
+<small>धन्यवाद देने के लिए क्लिक करें</small>
+</button>
 </div>
 </section>
 
@@ -126,7 +137,6 @@ footer{text-align:center;color:#718096;padding:25px 10px;font-size:12px}
 <section id="image" class="page">
 <button class="back" onclick="showPage('home')">← होम</button>
 <div class="hero"><h1>🖼️ Image to PDF Editor</h1><p>फोटो चुनें, अपनी पसंद से एडिट करें और PDF डाउनलोड करें।</p></div>
-
 <div class="panel">
 <h2>1. फोटो चुनें</h2>
 <input id="imageFiles" class="field" type="file" accept="image/*" multiple>
@@ -258,8 +268,38 @@ footer{text-align:center;color:#718096;padding:25px 10px;font-size:12px}
 <p class="small">QR बनाने के लिए इंटरनेट कनेक्शन आवश्यक हो सकता है।</p>
 </div>
 </section>
-</main>
 
+<!-- नया UPI सपोर्ट पेज -->
+<section id="support" class="page">
+<button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+
+<div class="hero">
+<h1>❤️ SK Boy Studio को सपोर्ट करें</h1>
+<p>आपके सपोर्ट और प्यार के लिए धन्यवाद।</p>
+</div>
+
+<div class="panel" style="text-align:center">
+<h2>🙏 धन्यवाद देने के लिए क्लिक करें</h2>
+<p>अपने UPI ऐप जैसे PhonePe, Google Pay, Paytm या BHIM को खोलें और नीचे दिए गए QR कोड को स्कैन करें।</p>
+
+<img
+id="supportQR"
+src="./qr.png"
+alt="SK Boy Studio UPI Payment QR"
+onerror="this.style.display='none';document.getElementById('supportQRError').style.display='block'"
+>
+
+<p id="supportQRError" class="small" style="display:none;color:#c83232">
+आपका QR कोड नहीं दिख रहा है। GitHub में जाँचें कि UPI QR इमेज का नाम ठीक <b>qr.png</b> है और वह index.html के साथ उसी फ़ोल्डर में अपलोड है।
+</p>
+
+<p class="small">भुगतान करने से पहले अपने UPI ऐप में प्राप्तकर्ता का नाम और रकम जाँच लें। भुगतान करना आपकी इच्छा पर निर्भर है।</p>
+
+<button class="primary full" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+</div>
+</section>
+
+</main>
 <footer>© SK Boy Studio • PDF Maker</footer>
 
 <script>
@@ -268,12 +308,20 @@ function showPage(id){
  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
  const target=$(id);if(target)target.classList.add('active');
  if(id==='documents')refreshDocuments();
+ if(id==='image')drawCurrentImage();
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function formatDoc(cmd,value=null){
  $('docText').focus();
  document.execCommand(cmd,false,value);
 }
+$('docFontSize').addEventListener('change',function(){
+ $('docText').focus();
+ document.execCommand('fontSize',false,'7');
+ $('docText').querySelectorAll('font[size="7"]').forEach(el=>{
+  el.removeAttribute('size');el.style.fontSize=this.value+'px';
+ });
+});
 function setDocFont(font){
  $('docText').focus();
  document.execCommand('fontName',false,font);
@@ -355,7 +403,6 @@ function openPdfFile(e){
 /* IMAGE TO PDF EDITOR */
 let imageItems=[];
 let selectedImage=0;
-let pointerCrop=null;
 const cropKeys=['cropTop','cropBottom','cropLeft','cropRight'];
 const controlIds=['imgScale','imgBright','imgContrast','imgSat','imgBlur','imgFilter'];
 function currentItem(){return imageItems[selectedImage]||null;}
@@ -368,6 +415,7 @@ $('imageFiles').addEventListener('change',async e=>{
  const valid=files.filter(f=>f.type.startsWith('image/'));
  if(!valid.length){updateStatus('कृपया JPG, PNG या दूसरी इमेज फ़ाइल चुनें।');return;}
  updateStatus('तस्वीरें लोड हो रही हैं…');
+ const oldLength=imageItems.length;
  for(const file of valid){
   try{
    const data=await fileToDataURL(file);
@@ -375,8 +423,8 @@ $('imageFiles').addEventListener('change',async e=>{
    imageItems.push({name:file.name,src:data,img,settings:defaultSettings()});
   }catch(err){console.error(err);}
  }
- selectedImage=Math.max(0,imageItems.length-valid.length);
- drawCurrentImage();renderThumbs();
+ selectedImage=oldLength;
+ loadControls();drawCurrentImage();renderThumbs();
  updateStatus(imageItems.length+' फोटो तैयार हैं। अब फोटो चुनकर एडिट करें।');
  e.target.value='';
 });
