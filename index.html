@@ -3,589 +3,358 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#155eef">
-<meta name="description" content="SK Boy PDF Studio - Create, merge, split and edit PDF files.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0755e9">
+<meta name="description" content="SK Boy PDF Studio - PDF बनाने और दस्तावेज़ों के लिए टूल्स">
 <title>SK Boy PDF Studio</title>
 
 <style>
-:root {
-  --blue:#155eef;
-  --dark:#102a56;
-  --light:#edf4ff;
-  --bg:#f5f8ff;
-  --white:#fff;
-  --text:#182230;
-  --muted:#667085;
-  --border:#e1e8f3;
-  --green:#087443;
-  --red:#b42318;
+*{box-sizing:border-box}
+:root{--blue:#0755e9;--light:#eef4ff;--text:#14264b}
+body{
+  margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  color:var(--text);background:#edf3ff;
 }
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.header{
+  background:linear-gradient(135deg,#0645d9,#1684ff);
+  color:white;padding:20px 16px 24px;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 8px 24px #0755e926;
 }
-button,input,textarea,select { font:inherit; }
-button { cursor:pointer; }
-header {
-  background:linear-gradient(135deg,#1249c7,#2878ff);
-  color:white;
-  padding:20px 16px 25px;
-  border-radius:0 0 25px 25px;
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:54px;height:54px;border-radius:16px;
+  background:white;color:#0755e9;display:grid;
+  place-items:center;font-size:25px;font-weight:bold;
+  box-shadow:0 4px 12px #001d6325;
 }
-.topbar {
-  max-width:1000px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:12px;
+.brand h1{font-size:22px;margin:0 0 4px}
+.brand p{margin:0;color:#dceaff;font-size:14px}
+.menu{
+  margin-left:auto;border:1px solid #ffffff80;
+  background:#ffffff16;color:white;border-radius:12px;
+  padding:10px 13px;font-size:21px;
 }
-.logo {
-  width:49px;height:49px;
-  background:white;color:var(--blue);
-  border-radius:15px;
-  display:grid;place-items:center;
-  font-weight:900;font-size:18px;
-  flex-shrink:0;
+.search{
+  margin-top:20px;background:white;border-radius:15px;
+  padding:13px 15px;color:#65738f;
+  display:flex;gap:10px;align-items:center;
 }
-.brand { font-size:20px;font-weight:800; }
-.tagline { font-size:12px;opacity:.9;margin-top:3px; }
-.hero {
-  max-width:1000px;
-  margin:24px auto 0;
+.search input{border:0;outline:0;width:100%;color:#14264b}
+main{max-width:760px;margin:auto;padding:16px 14px 100px}
+.welcome{
+  margin-top:4px;padding:20px;border-radius:22px;
+  background:linear-gradient(120deg,#fff,#e0edff);
+  border:1px solid #d8e6ff;
 }
-.hero h1 { font-size:26px;margin:0 0 8px; }
-.hero p { margin:0;color:#e4edff;font-size:14px;line-height:1.6; }
-main { max-width:1000px;margin:auto;padding:18px 14px 100px; }
-.section-title { font-size:19px;font-weight:800;margin:8px 0 13px; }
-.tools {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
+.welcome h2{font-size:25px;margin:0 0 10px}
+.welcome p{line-height:1.65;margin:0 0 15px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{
+  padding:8px 10px;background:white;border-radius:30px;
+  font-size:12px;border:1px solid #e3eaff;
 }
-.tool {
-  background:white;
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:17px 13px;
-  text-align:left;
-  color:var(--text);
-  min-height:145px;
-  box-shadow:0 3px 12px #172b4d08;
+.section-title{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:25px 2px 14px;
 }
-.tool:active { transform:scale(.98); }
-.tool-icon {
-  display:grid;place-items:center;
-  width:46px;height:46px;
-  background:var(--light);
-  border-radius:14px;
-  font-size:24px;
-  margin-bottom:12px;
+.section-title h2{margin:0;font-size:21px}
+.section-title span{font-size:13px;color:var(--blue)}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tool{
+  border:0;border-radius:20px;padding:20px 10px;
+  min-height:150px;color:white;text-align:center;
+  box-shadow:0 7px 15px #182e5112;
+  transition:transform .15s;
 }
-.tool strong { display:block;font-size:15px;margin-bottom:5px; }
-.tool small { color:var(--muted);font-size:12px;line-height:1.5;display:block; }
-.panel {
-  display:none;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:17px;
-  margin-top:18px;
-  box-shadow:0 4px 15px #172b4d08;
+.tool:active,.support-btn:active{transform:scale(.98)}
+.tool .ico{font-size:34px;display:block;margin-bottom:12px}
+.tool strong{display:block;font-size:16px;margin-bottom:7px}
+.tool small{font-size:12px;opacity:.95}
+.blue{background:linear-gradient(145deg,#2688ff,#0755e9)}
+.purple{background:linear-gradient(145deg,#c04cff,#7b22e8)}
+.teal{background:linear-gradient(145deg,#10b8bd,#07858e)}
+.orange{background:linear-gradient(145deg,#ffae35,#f46b0c)}
+.indigo{background:linear-gradient(145deg,#7773ff,#4540e7)}
+.slate{background:linear-gradient(145deg,#779bbd,#41668e)}
+.support{
+  margin-top:24px;padding:19px;border-radius:23px;
+  border:1px solid #edcaff;
+  background:linear-gradient(135deg,#fff4ff,#f1eaff);
 }
-.panel.active { display:block; }
-.panel h2 { font-size:20px;margin:0 0 7px; }
-.desc { color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 17px; }
-.field { margin:14px 0; }
-label { display:block;font-size:13px;font-weight:700;margin-bottom:7px; }
-input[type="text"],input[type="number"],textarea,select {
-  width:100%;padding:12px;
-  border:1px solid #ccd5e2;
-  border-radius:11px;background:white;
-  outline:none;color:var(--text);
+.support-top{display:flex;gap:13px;align-items:flex-start}
+.support-icon{
+  flex-shrink:0;width:55px;height:55px;background:white;
+  color:#0755e9;border-radius:17px;display:grid;
+  place-items:center;font-size:29px;
 }
-textarea { min-height:140px;resize:vertical;line-height:1.6; }
-input:focus,textarea:focus,select:focus { border-color:var(--blue); }
-input[type="file"] {
-  width:100%;padding:12px;
-  background:#f8faff;border:1px dashed #9ab6ef;
-  border-radius:11px;font-size:13px;
+.support h2{font-size:18px;margin:3px 0 10px}
+.support p{font-size:14px;line-height:1.7;margin:0}
+.support-btn{
+  width:100%;border:0;border-radius:30px;
+  padding:15px;margin-top:18px;
+  color:white;font-weight:bold;font-size:16px;
+  background:linear-gradient(100deg,#0755e9,#087cff);
+  box-shadow:0 7px 16px #0755e925;
 }
-.btn {
-  border:0;border-radius:11px;
-  padding:12px 15px;font-weight:750;
-  background:var(--blue);color:white;
-  width:100%;margin-top:8px;
+.note{text-align:center;font-size:11px;color:#64748b;margin:10px 0 0}
+.features{
+  margin-top:20px;background:white;border-radius:20px;
+  padding:17px;border:1px solid #e3eaff;
 }
-.btn.secondary { background:var(--light);color:var(--blue); }
-.btn:disabled { opacity:.55;cursor:not-allowed; }
-.btn-row { display:grid;grid-template-columns:1fr 1fr;gap:9px; }
-.notice {
-  background:#f0f6ff;border:1px solid #d8e7ff;
-  border-radius:11px;padding:11px;
-  font-size:12px;line-height:1.6;color:#29466f;
-  margin-top:12px;
-}
-.status { font-size:13px;line-height:1.6;margin-top:12px;overflow-wrap:anywhere; }
-.status.ok { color:var(--green); }
-.status.error { color:var(--red); }
-.preview {
-  width:100%;min-height:90px;
-  border:1px solid var(--border);
-  border-radius:12px;padding:10px;
-  margin-top:12px;
-  font-size:13px;color:var(--muted);
-  overflow-wrap:anywhere;
-}
-.hidden { display:none!important; }
-.back { margin-bottom:15px; }
-footer {
-  text-align:center;padding:22px 12px;
-  color:var(--muted);font-size:12px;line-height:1.8;
-}
-.bottom {
-  position:fixed;bottom:0;left:0;right:0;
-  display:flex;justify-content:center;
+.features h3{margin:0 0 12px}
+.features p{font-size:14px;margin:10px 0}
+.bottom{
+  position:fixed;bottom:0;left:0;right:0;z-index:5;
   background:#ffffffed;backdrop-filter:blur(12px);
-  border-top:1px solid var(--border);
-  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
-  z-index:5;
+  border-top:1px solid #dce6f6;
+  display:flex;justify-content:space-around;
+  padding:10px 4px calc(10px + env(safe-area-inset-bottom));
 }
-.bottom button {
-  flex:1;max-width:180px;
-  background:none;border:0;color:var(--muted);
-  font-size:11px;padding:5px 1px;
+.bottom button{
+  border:0;background:transparent;color:#60799d;
+  font-size:12px;min-width:55px;
 }
-.bottom button span { display:block;font-size:21px;margin-bottom:2px; }
-.bottom button.selected { color:var(--blue);font-weight:800; }
-@media(min-width:650px) {
-  .tools { grid-template-columns:repeat(3,minmax(0,1fr)); }
-  main { padding-top:25px; }
-  .hero h1 { font-size:32px; }
+.bottom button span{display:block;font-size:22px;margin-bottom:4px}
+.bottom button.active{color:var(--blue);font-weight:bold}
+.page{display:none}
+.page.active{display:block}
+.back{
+  border:0;background:#e4edff;color:#0755e9;
+  padding:10px 14px;border-radius:12px;margin-bottom:16px;
+}
+.panel{
+  background:white;border:1px solid #e0e9fa;
+  border-radius:20px;padding:18px;margin-top:14px;
+}
+.panel h2{margin-top:0}
+.field{
+  display:block;width:100%;border:1px solid #d6e1f4;
+  border-radius:12px;padding:12px;margin:10px 0;
+  background:white;color:#14264b;
+}
+.primary{
+  background:var(--blue);color:white;border:0;
+  border-radius:12px;padding:13px 16px;font-weight:bold;
+}
+.full{width:100%}
+.qr-image{
+  display:block;width:min(100%,300px);height:auto;
+  margin:18px auto;border-radius:12px;
+  border:1px solid #e1e7f0;padding:8px;background:white;
+}
+.qr-fallback{display:none;text-align:center;color:#b42318}
+.status{font-size:13px;line-height:1.6;margin-top:12px}
+@media(min-width:600px){
+  .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .welcome h2{font-size:29px}
 }
 </style>
 </head>
 
 <body>
-<header>
-  <div class="topbar">
-    <div class="logo">PDF</div>
+<header class="header">
+  <div class="brand">
+    <div class="logo">▤</div>
     <div>
-      <div class="brand">SK Boy PDF Studio</div>
-      <div class="tagline">Your documents, made simple.</div>
+      <h1>SK Boy PDF Studio</h1>
+      <p>PDF Maker · आसान PDF बनाएँ</p>
     </div>
+    <button class="menu" onclick="showPage('settings')" aria-label="सेटिंग्स">☰</button>
   </div>
-  <div class="hero">
-    <h1>आपकी PDF, आपके तरीके से</h1>
-    <p>PDF बनाएँ, फाइलें जोड़ें, पेज अलग करें और अपनी PDF पर टेक्स्ट जोड़ें।</p>
-  </div>
+  <label class="search">
+    🔎 <input id="search" type="search" placeholder="अपना टूल खोजें..." oninput="filterTools()">
+  </label>
 </header>
 
 <main>
-  <section id="home">
-    <div class="section-title">PDF Tools</div>
-    <div class="tools">
-      <button class="tool" onclick="showPanel('textPanel')">
-        <span class="tool-icon">📝</span>
-        <strong>Text to PDF</strong>
-        <small>लिखे हुए टेक्स्ट से PDF बनाएँ।</small>
+  <section id="home" class="page active">
+    <div class="welcome">
+      <h2>नमस्ते! 👋</h2>
+      <p>SK Boy PDF Studio से अपने PDF दस्तावेज़ों का काम आसान बनाएँ।</p>
+      <div class="tags">
+        <span class="tag">✅ आसान इस्तेमाल</span>
+        <span class="tag">🌐 कई भाषाएँ</span>
+        <span class="tag">⚡ मोबाइल के लिए</span>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <h2>PDF टूल्स</h2>
+      <span>आपके लिए ✨</span>
+    </div>
+
+    <div class="tools" id="toolGrid">
+      <button class="tool blue" data-search="pdf बनाएँ text create" onclick="showPage('create')">
+        <span class="ico">📄</span>
+        <strong>PDF बनाएँ</strong><small>टेक्स्ट से PDF</small>
       </button>
-      <button class="tool" onclick="showPanel('imagePanel')">
-        <span class="tool-icon">🖼️</span>
-        <strong>Image to PDF</strong>
-        <small>एक या कई फोटो से PDF बनाएँ।</small>
+      <button class="tool purple" data-search="image photo तस्वीर" onclick="showPage('image')">
+        <span class="ico">🖼️</span>
+        <strong>Image to PDF</strong><small>फोटो से PDF</small>
       </button>
-      <button class="tool" onclick="showPanel('mergePanel')">
-        <span class="tool-icon">📚</span>
-        <strong>Merge PDF</strong>
-        <small>कई PDF को एक फाइल में जोड़ें।</small>
+      <button class="tool teal" data-search="दस्तावेज़ documents files" onclick="showPage('docs')">
+        <span class="ico">📁</span>
+        <strong>मेरे दस्तावेज़</strong><small>सेव की हुई फाइलें</small>
       </button>
-      <button class="tool" onclick="showPanel('splitPanel')">
-        <span class="tool-icon">✂️</span>
-        <strong>Split PDF</strong>
-        <small>चुने हुए पेज अलग PDF में निकालें।</small>
+      <button class="tool orange" data-search="भाषा font फ़ॉन्ट hindi urdu english" onclick="showPage('fonts')">
+        <span class="ico">🔤</span>
+        <strong>भाषा और फ़ॉन्ट</strong><small>हिंदी, उर्दू, English</small>
       </button>
-      <button class="tool" onclick="showPanel('editPanel')">
-        <span class="tool-icon">✍️</span>
-        <strong>PDF पर Text जोड़ें</strong>
-        <small>मौजूदा PDF पर अतिरिक्त टेक्स्ट लिखें।</small>
+      <button class="tool indigo" data-search="tools अन्य टूल्स merge split" onclick="showPage('tools')">
+        <span class="ico">🛠️</span>
+        <strong>अन्य टूल्स</strong><small>PDF के विकल्प</small>
       </button>
-      <button class="tool" onclick="showPanel('infoPanel')">
-        <span class="tool-icon">ℹ️</span>
-        <strong>Help & Info</strong>
-        <small>ऐप इस्तेमाल करने की जानकारी।</small>
+      <button class="tool slate" data-search="settings सेटिंग्स" onclick="showPage('settings')">
+        <span class="ico">⚙️</span>
+        <strong>सेटिंग्स</strong><small>ऐप की सेटिंग</small>
       </button>
     </div>
+
+    <section class="support">
+      <div class="support-top">
+        <div class="support-icon">🤝</div>
+        <div>
+          <h2>❤️ अपना प्यार और सहयोग दें</h2>
+          <p>अगर आपको SK Boy PDF Studio पसंद आया हो, तो अपने छोटे-से सहयोग से हमें प्रोत्साहित करें। धन्यवाद! 🙏</p>
+        </div>
+      </div>
+      <button class="support-btn" onclick="showPage('qr')">❤️ अपना सहयोग दें</button>
+      <p class="note">आपका सहयोग पूरी तरह आपकी इच्छा पर निर्भर है।</p>
+    </section>
+
+    <section class="features">
+      <h3>✨ ऐप की सुविधाएँ</h3>
+      <p>✅ टेक्स्ट से PDF बनाने का विकल्प</p>
+      <p>✅ फोटो से PDF बनाने का विकल्प</p>
+      <p>✅ अलग-अलग भाषाओं के विकल्प</p>
+      <p>✅ दस्तावेज़ और PDF टूल्स का सेक्शन</p>
+    </section>
   </section>
 
-  <section id="textPanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>📝 Text to PDF</h2>
-    <p class="desc">अपना टेक्स्ट लिखें और उसे PDF फाइल में सेव करें।</p>
-    <div class="field">
-      <label for="docTitle">PDF का नाम</label>
-      <input id="docTitle" type="text" value="My Document" placeholder="PDF का नाम">
+  <section id="qr" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel" style="text-align:center">
+      <div style="font-size:42px">❤️</div>
+      <h2>अपना प्यार और सहयोग दें</h2>
+      <p>QR कोड को UPI ऐप से स्कैन करके अपनी इच्छा से सहयोग कर सकते हैं। धन्यवाद! 🙏</p>
+      <img class="qr-image" src="./qr.png" alt="UPI भुगतान QR कोड"
+           onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
+      <p id="qrError" class="qr-fallback">QR कोड नहीं मिला। जाँचें कि qr.png फ़ाइल index.html के साथ उसी फ़ोल्डर में है।</p>
+      <p class="note">भुगतान करने से पहले UPI ऐप में प्राप्तकर्ता का नाम जाँच लें।</p>
     </div>
-    <div class="field">
-      <label for="docText">अपना टेक्स्ट लिखें</label>
-      <textarea id="docText" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
-    </div>
-    <button class="btn" onclick="makeTextPDF()">PDF बनाएँ और डाउनलोड करें</button>
-    <div id="textStatus" class="status"></div>
-    <div class="notice">नोट: इस साधारण वर्जन में PDF के अंदर टेक्स्ट के लिए मानक फ़ॉन्ट इस्तेमाल होता है। हिन्दी अक्षरों की सही PDF छपाई के लिए अलग हिन्दी फ़ॉन्ट जोड़ना आवश्यक हो सकता है।</div>
   </section>
 
-  <section id="imagePanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>🖼️ Image to PDF</h2>
-    <p class="desc">एक या अधिक JPG, PNG या WebP फोटो चुनें। हर फोटो अलग PDF पेज पर आएगी।</p>
-    <div class="field">
-      <label for="imageFiles">फोटो चुनें</label>
-      <input id="imageFiles" type="file" accept="image/*" multiple>
+  <section id="create" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>📄 PDF बनाने के लिए टेक्स्ट</h2>
+      <p>अपना टेक्स्ट लिखें और उसे PDF के रूप में सेव करें।</p>
+      <textarea id="pdfText" class="field" rows="8" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea>
+      <button class="primary full" onclick="printText()">PDF बनाएँ / प्रिंट करें</button>
     </div>
-    <button class="btn" onclick="makeImagePDF()">फोटो से PDF बनाएँ</button>
-    <div id="imageStatus" class="status"></div>
   </section>
 
-  <section id="mergePanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>📚 Merge PDF</h2>
-    <p class="desc">कम-से-कम दो PDF चुनें। फाइलों का क्रम चुनने के क्रम के अनुसार आपके डिवाइस/ब्राउज़र पर निर्भर कर सकता है।</p>
-    <div class="field">
-      <label for="mergeFiles">PDF फाइलें चुनें</label>
-      <input id="mergeFiles" type="file" accept="application/pdf,.pdf" multiple>
+  <section id="image" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🖼️ Image to PDF</h2>
+      <p>फोटो चुनने का विकल्प यहाँ है। फोटो को PDF में बदलने की कार्यक्षमता अभी जोड़नी बाकी है।</p>
+      <input id="imageFiles" class="field" type="file" accept="image/*" multiple>
     </div>
-    <button class="btn" onclick="mergePDFs()">PDF जोड़ें और डाउनलोड करें</button>
-    <div id="mergeStatus" class="status"></div>
   </section>
 
-  <section id="splitPanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>✂️ Split PDF</h2>
-    <p class="desc">PDF चुनें और जिन पेजों की नई PDF चाहिए, उनकी संख्या डालें। पेज नंबर 1 से शुरू होते हैं।</p>
-    <div class="field">
-      <label for="splitFile">PDF फाइल</label>
-      <input id="splitFile" type="file" accept="application/pdf,.pdf">
+  <section id="docs" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>📁 मेरे दस्तावेज़</h2>
+      <p>यहाँ भविष्य में सेव की हुई PDF की सूची जोड़ी जा सकती है। इस वर्जन में फाइलें अपने-आप सेव नहीं होतीं।</p>
     </div>
-    <div class="field">
-      <label for="splitRange">पेज नंबर या रेंज</label>
-      <input id="splitRange" type="text" placeholder="जैसे: 1-3,5,8-10">
-    </div>
-    <button class="btn" onclick="splitPDF()">चुने हुए पेज डाउनलोड करें</button>
-    <div id="splitStatus" class="status"></div>
-    <div class="notice">उदाहरण: 1-3,5 का मतलब पेज 1, 2, 3 और 5।</div>
   </section>
 
-  <section id="editPanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>✍️ PDF पर Text जोड़ें</h2>
-    <p class="desc">मौजूदा PDF के चुने हुए पेज पर अतिरिक्त टेक्स्ट जोड़कर नई PDF डाउनलोड करें। इससे मूल टेक्स्ट सीधे नहीं बदलेगा।</p>
-    <div class="field">
-      <label for="editFile">PDF फाइल चुनें</label>
-      <input id="editFile" type="file" accept="application/pdf,.pdf">
+  <section id="fonts" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🔤 भाषा और फ़ॉन्ट</h2>
+      <label for="fontLanguage">भाषा चुनें</label>
+      <select id="fontLanguage" class="field">
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+        <option value="ur">اردو</option>
+      </select>
+      <p id="fontMessage">भाषा चुनने से इस मेनू का चयन बदलेगा। सभी भाषाओं को PDF में सही दिखाने के लिए अतिरिक्त फ़ॉन्ट समर्थन चाहिए।</p>
     </div>
-    <div class="field">
-      <label for="editPage">किस पेज पर टेक्स्ट जोड़ना है?</label>
-      <input id="editPage" type="number" min="1" value="1">
-    </div>
-    <div class="field">
-      <label for="editText">जो टेक्स्ट जोड़ना है</label>
-      <textarea id="editText" placeholder="यहाँ टेक्स्ट लिखें..."></textarea>
-    </div>
-    <div class="field">
-      <label for="editX">बाएँ से दूरी (PDF पॉइंट)</label>
-      <input id="editX" type="number" min="0" value="50">
-    </div>
-    <div class="field">
-      <label for="editY">नीचे से दूरी (PDF पॉइंट)</label>
-      <input id="editY" type="number" min="0" value="100">
-    </div>
-    <button class="btn" onclick="addTextToPDF()">टेक्स्ट जोड़ें और PDF डाउनलोड करें</button>
-    <div id="editStatus" class="status"></div>
-    <div class="notice">स्थिति: X और Y की दूरी PDF पॉइंट में है। सामान्य अक्षर/अंग्रेज़ी टेक्स्ट सबसे भरोसेमंद रहेगा। बहुत बड़े टेक्स्ट या विशेष फ़ॉन्ट की स्थिति जाँचें।</div>
   </section>
 
-  <section id="infoPanel" class="panel">
-    <button class="btn secondary back" onclick="goHome()">← होम पर जाएँ</button>
-    <h2>ℹ️ Help & Info</h2>
-    <p class="desc">
-      <b>SK Boy PDF Studio</b> एक ब्राउज़र-आधारित PDF टूल है।<br><br>
-      • अपनी फाइलें केवल भरोसेमंद डिवाइस पर खोलें।<br>
-      • बड़े दस्तावेज़ों के लिए पर्याप्त खाली मेमोरी रखें।<br>
-      • इस वर्जन में फाइल प्रोसेसिंग आपके ब्राउज़र में होती है।<br>
-      • लाइब्रेरी लोड करने के लिए इंटरनेट आवश्यक है।<br>
-      • यह ऐप भुगतान की पुष्टि या ऑनलाइन अकाउंट लॉगिन नहीं करता।
-    </p>
+  <section id="tools" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>🛠️ अन्य PDF टूल्स</h2>
+      <p>PDF Merge, Split, Compress और Protect जैसे टूल्स भविष्य के अपडेट में जोड़े जा सकते हैं। इस वर्जन में ये सुविधाएँ अभी सक्रिय नहीं हैं।</p>
+    </div>
   </section>
 
-  <footer>
-    <b>SK Boy PDF Studio</b><br>
-    Simple tools for your PDF documents.<br>
-    आपकी फाइलों का नियंत्रण आपके पास।
-  </footer>
+  <section id="settings" class="page">
+    <button class="back" onclick="showPage('home')">← होम पर वापस जाएँ</button>
+    <div class="panel">
+      <h2>⚙️ सेटिंग्स</h2>
+      <p><b>ऐप का नाम:</b> SK Boy PDF Studio</p>
+      <p><b>वर्जन:</b> PDF Studio</p>
+      <p>मोबाइल और GitHub Pages के लिए बनाया गया PDF ऐप इंटरफ़ेस।</p>
+    </div>
+  </section>
 </main>
 
 <nav class="bottom">
-  <button class="selected" id="navHome" onclick="goHome()"><span>⌂</span>Home</button>
-  <button onclick="showPanel('textPanel')"><span>📝</span>Create</button>
-  <button onclick="showPanel('mergePanel')"><span>📚</span>Merge</button>
-  <button onclick="showPanel('splitPanel')"><span>✂️</span>Split</button>
+  <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>होम</button>
+  <button data-page="docs" onclick="showPage('docs')"><span>▣</span>दस्तावेज़</button>
+  <button data-page="qr" onclick="showPage('qr')"><span>♡</span>सहयोग</button>
+  <button data-page="settings" onclick="showPage('settings')"><span>⚙</span>सेटिंग्स</button>
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
-const { PDFDocument, StandardFonts, rgb } = PDFLib;
-
-function setStatus(id, message, type="") {
-  const el = document.getElementById(id);
-  el.className = "status " + type;
-  el.textContent = message;
-}
-function showPanel(id) {
-  document.getElementById("home").classList.add("hidden");
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.getElementById("navHome").classList.remove("selected");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function goHome() {
-  document.getElementById("home").classList.remove("hidden");
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.getElementById("navHome").classList.add("selected");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function safeName(name) {
-  return (name || "document").trim()
-    .replace(/[\\/:*?"<>|]/g,"_")
-    .replace(/\s+/g,"_")
-    .slice(0,70) || "document";
-}
-function downloadBytes(bytes, filename, type="application/pdf") {
-  const blob = new Blob([bytes], {type});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
-}
-async function readFile(file) {
-  if (!file) throw new Error("पहले फाइल चुनें।");
-  return new Uint8Array(await file.arrayBuffer());
-}
-function requirePDFLib() {
-  if (!window.PDFLib) throw new Error("PDF टूल लोड नहीं हुआ। इंटरनेट चालू करके पेज दोबारा खोलें।");
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById(id);
+  if(page) page.classList.add('active');
+  document.querySelectorAll('.bottom button').forEach(b=>{
+    b.classList.toggle('active',b.dataset.page===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-async function makeTextPDF() {
-  try {
-    requirePDFLib();
-    const text = document.getElementById("docText").value.trim();
-    if (!text) throw new Error("पहले टेक्स्ट लिखें।");
-    setStatus("textStatus","PDF बनाई जा रही है...");
-    const pdf = await PDFDocument.create();
-    const font = await pdf.embedFont(StandardFonts.Helvetica);
-    const pageSize = [595.28, 841.89];
-    const margin = 48;
-    const fontSize = 12;
-    const lineHeight = 18;
-    const maxWidth = pageSize[0] - margin * 2;
-    const lines = [];
-    for (const paragraph of text.split(/\r?\n/)) {
-      if (!paragraph) { lines.push(""); continue; }
-      let line = "";
-      for (const word of paragraph.split(/\s+/)) {
-        const test = line ? line + " " + word : word;
-        if (font.widthOfTextAtSize(test, fontSize) > maxWidth && line) {
-          lines.push(line); line = word;
-        } else line = test;
-      }
-      lines.push(line);
-    }
-    let page = pdf.addPage(pageSize);
-    let y = pageSize[1] - margin;
-    for (const line of lines) {
-      if (y < margin) {
-        page = pdf.addPage(pageSize);
-        y = pageSize[1] - margin;
-      }
-      if (line) page.drawText(line, {
-        x:margin,y:y-fontSize,size:fontSize,font,
-        color:rgb(0.10,0.14,0.22),
-        maxWidth
-      });
-      y -= lineHeight;
-    }
-    const bytes = await pdf.save();
-    downloadBytes(bytes,safeName(document.getElementById("docTitle").value)+".pdf");
-    setStatus("textStatus","PDF तैयार है। डाउनलोड शुरू हो गया है।","ok");
-  } catch(e) {
-    setStatus("textStatus",e.message || "PDF नहीं बन पाई।","error");
-  }
+function filterTools(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('#toolGrid .tool').forEach(card=>{
+    const words=(card.innerText+' '+card.dataset.search).toLowerCase();
+    card.style.display=words.includes(q)?'':'none';
+  });
 }
 
-async function makeImagePDF() {
-  try {
-    requirePDFLib();
-    const files = Array.from(document.getElementById("imageFiles").files || []);
-    if (!files.length) throw new Error("कम-से-कम एक फोटो चुनें।");
-    setStatus("imageStatus","फोटो को PDF में बदला जा रहा है...");
-    const pdf = await PDFDocument.create();
-    for (const file of files) {
-      const bytes = await readFile(file);
-      let image;
-      const type = file.type.toLowerCase();
-      if (type.includes("png") || /\.png$/i.test(file.name)) {
-        image = await pdf.embedPng(bytes);
-      } else if (type.includes("jpeg") || type.includes("jpg") || /\.(jpe?g)$/i.test(file.name)) {
-        image = await pdf.embedJpg(bytes);
-      } else {
-        image = await convertImageToJpeg(file, pdf);
-      }
-      const maxW = 595.28, maxH = 841.89;
-      const scale = Math.min(maxW/image.width,maxH/image.height);
-      const w = image.width * scale, h = image.height * scale;
-      const page = pdf.addPage([maxW,maxH]);
-      page.drawImage(image,{x:(maxW-w)/2,y:(maxH-h)/2,width:w,height:h});
-    }
-    const bytes = await pdf.save();
-    downloadBytes(bytes,"SK-Boy-Images.pdf");
-    setStatus("imageStatus","PDF तैयार है। डाउनलोड शुरू हो गया है।","ok");
-  } catch(e) {
-    setStatus("imageStatus",e.message || "फोटो से PDF नहीं बन पाई।","error");
-  }
-}
-async function convertImageToJpeg(file,pdf) {
-  const url = URL.createObjectURL(file);
-  try {
-    const img = new Image();
-    img.src = url;
-    await new Promise((resolve,reject) => {
-      img.onload = resolve;
-      img.onerror = () => reject(new Error("यह फोटो फाइल पढ़ी नहीं जा सकी।"));
-    });
-    const canvas = document.createElement("canvas");
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.drawImage(img,0,0);
-    const blob = await new Promise(resolve => canvas.toBlob(resolve,"image/jpeg",0.92));
-    if (!blob) throw new Error("फोटो कन्वर्ट नहीं हो सकी।");
-    return await pdf.embedJpg(new Uint8Array(await blob.arrayBuffer()));
-  } finally { URL.revokeObjectURL(url); }
-}
+document.getElementById('fontLanguage').addEventListener('change',function(){
+  const messages={
+    hi:'हिंदी चुनी गई है। हिन्दी PDF के लिए उपयुक्त Unicode फ़ॉन्ट जोड़ना होगा।',
+    en:'English चुनी गई है।',
+    ur:'اردو चुनी गई है। उर्दू PDF के लिए उपयुक्त Unicode फ़ॉन्ट और RTL समर्थन जोड़ना होगा।'
+  };
+  document.getElementById('fontMessage').textContent=messages[this.value];
+});
 
-async function mergePDFs() {
-  try {
-    requirePDFLib();
-    const files = Array.from(document.getElementById("mergeFiles").files || []);
-    if (files.length < 2) throw new Error("जोड़ने के लिए कम-से-कम दो PDF चुनें।");
-    setStatus("mergeStatus","PDF फाइलें जोड़ी जा रही हैं...");
-    const merged = await PDFDocument.create();
-    for (const file of files) {
-      const source = await PDFDocument.load(await readFile(file));
-      const pages = await merged.copyPages(source,source.getPageIndices());
-      pages.forEach(page => merged.addPage(page));
-    }
-    const bytes = await merged.save();
-    downloadBytes(bytes,"SK-Boy-Merged.pdf");
-    setStatus("mergeStatus","PDF सफलतापूर्वक जुड़ गई। डाउनलोड शुरू हो गया है।","ok");
-  } catch(e) {
-    setStatus("mergeStatus",e.message || "PDF जोड़ने में समस्या हुई।","error");
+function printText(){
+  const text=document.getElementById('pdfText').value.trim();
+  if(!text){alert('पहले अपना टेक्स्ट लिखें।');return;}
+  const w=window.open('','_blank');
+  if(!w){
+    alert('पॉप-अप ब्लॉक हुआ है। ब्राउज़र में पॉप-अप की अनुमति दें।');
+    return;
   }
-}
-
-function parsePageRanges(input, total) {
-  const selected = new Set();
-  const parts = input.split(",").map(s=>s.trim()).filter(Boolean);
-  if (!parts.length) throw new Error("पेज नंबर या रेंज लिखें।");
-  for (const part of parts) {
-    if (/^\d+$/.test(part)) {
-      const n = Number(part);
-      if (n < 1 || n > total) throw new Error("पेज नंबर 1 से " + total + " के बीच होना चाहिए।");
-      selected.add(n-1);
-    } else {
-      const match = part.match(/^(\d+)\s*-\s*(\d+)$/);
-      if (!match) throw new Error("रेंज सही लिखें। उदाहरण: 1-3,5");
-      const start = Number(match[1]), end = Number(match[2]);
-      if (start < 1 || end > total || start > end) {
-        throw new Error("पेज रेंज सही नहीं है। कुल पेज: " + total);
-      }
-      for (let n=start; n<=end; n++) selected.add(n-1);
-    }
-  }
-  return Array.from(selected).sort((a,b)=>a-b);
-}
-async function splitPDF() {
-  try {
-    requirePDFLib();
-    const file = document.getElementById("splitFile").files[0];
-    if (!file) throw new Error("पहले PDF चुनें।");
-    setStatus("splitStatus","PDF के पेज निकाले जा रहे हैं...");
-    const source = await PDFDocument.load(await readFile(file));
-    const indices = parsePageRanges(
-      document.getElementById("splitRange").value,
-      source.getPageCount()
-    );
-    const output = await PDFDocument.create();
-    const pages = await output.copyPages(source,indices);
-    pages.forEach(page=>output.addPage(page));
-    const bytes = await output.save();
-    downloadBytes(bytes,"SK-Boy-Split.pdf");
-    setStatus("splitStatus",indices.length+" पेज की PDF तैयार है।","ok");
-  } catch(e) {
-    setStatus("splitStatus",e.message || "पेज अलग नहीं हो पाए।","error");
-  }
-}
-
-async function addTextToPDF() {
-  try {
-    requirePDFLib();
-    const file = document.getElementById("editFile").files[0];
-    if (!file) throw new Error("पहले PDF चुनें।");
-    const text = document.getElementById("editText").value.trim();
-    if (!text) throw new Error("जोड़ने के लिए टेक्स्ट लिखें।");
-    setStatus("editStatus","PDF पर टेक्स्ट जोड़ा जा रहा है...");
-    const pdf = await PDFDocument.load(await readFile(file));
-    const pageNo = Number(document.getElementById("editPage").value);
-    if (!Number.isInteger(pageNo) || pageNo < 1 || pageNo > pdf.getPageCount()) {
-      throw new Error("पेज नंबर 1 से "+pdf.getPageCount()+" के बीच डालें।");
-    }
-    const page = pdf.getPage(pageNo-1);
-    const font = await pdf.embedFont(StandardFonts.Helvetica);
-    const x = Math.max(0,Number(document.getElementById("editX").value)||0);
-    const y = Math.max(0,Number(document.getElementById("editY").value)||0);
-    const cleanText = text.replace(/[^\x20-\x7E]/g,"?");
-    const size = 12;
-    const maxWidth = Math.max(20,page.getWidth()-x-20);
-    const words = cleanText.split(/\s+/);
-    let lines=[], line="";
-    for (const word of words) {
-      const test = line ? line+" "+word : word;
-      if (font.widthOfTextAtSize(test,size)>maxWidth && line) {
-        lines.push(line);line=word;
-      } else line=test;
-    }
-    if (line) lines.push(line);
-    lines.forEach((line,i) => {
-      const yy = y - i*16;
-      if (yy >= 0 && yy <= page.getHeight()-10) {
-        page.drawText(line,{x,y:yy,size,font,color:rgb(0.05,0.25,0.75)});
-      }
-    });
-    const bytes = await pdf.save();
-    downloadBytes(bytes,"SK-Boy-Edited.pdf");
-    setStatus("editStatus","नई PDF तैयार है। ध्यान दें: विशेष/हिन्दी अक्षर इस संस्करण में '?' बन सकते हैं।","ok");
-  } catch(e) {
-    setStatus("editStatus",e.message || "PDF एडिट नहीं हो पाई।","error");
-  }
+  const safe=text.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+  w.document.write('<!doctype html><html lang="hi"><meta charset="UTF-8"><title>SK Boy PDF Studio</title><style>body{font-family:Arial,sans-serif;padding:28px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}</style><body>'+safe+'</body></html>');
+  w.document.close();
+  w.onload=()=>{w.focus();w.print();};
 }
 </script>
 </body>
