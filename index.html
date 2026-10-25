@@ -1,277 +1,543 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0755e9">
+<meta name="description" content="SK Boy Studio PDF Maker - PDF बनाएं, फोटो एडिट करें और दस्तावेज़ तैयार करें">
+<title>SK Boy Studio PDF</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--blue:#0755e9;--dark:#073aab;--light:#edf4ff;--ink:#152747;--white:#fff;--border:#dbe5f5;--green:#087e54;--red:#c83232}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f4f7fc;color:var(--ink)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:700}
+button:disabled{opacity:.5}
+.topbar{position:sticky;top:0;z-index:20;background:var(--blue);color:white;padding:12px 15px;display:flex;align-items:center;gap:11px;box-shadow:0 3px 12px #12366a22}
+.logo{width:44px;height:44px;border-radius:12px;object-fit:cover;background:white}
+.brand{font-size:19px;font-weight:800}
+.brand small{display:block;font-size:11px;font-weight:400;opacity:.9;margin-top:3px}
+main{max-width:1000px;margin:auto;padding:15px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#0755e9,#3689ff);color:white;border-radius:20px;padding:23px 19px;margin-bottom:17px}
+.hero h1{font-size:25px;margin:0 0 9px}.hero p{margin:0;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border:1px solid var(--border);border-radius:16px;padding:18px 12px;text-align:left;box-shadow:0 4px 15px #1b41730a;min-width:0}
+.card .emoji{font-size:27px;display:block;margin-bottom:10px}
+.card strong{display:block;font-size:15px;margin-bottom:6px}
+.card small{font-size:12px;color:#64748b;line-height:1.4}
+.panel{background:white;border:1px solid var(--border);border-radius:16px;padding:15px;margin:12px 0}
+h2{font-size:21px;margin:5px 0 15px}h3{font-size:16px;margin:8px 0}
+.primary{background:var(--blue);color:white}.secondary{background:#eaf1ff;color:var(--blue)}
+.danger{background:#ffeded;color:var(--red)}.success{background:#e5f8ef;color:var(--green)}
+.back{background:#eaf1ff;color:var(--blue);margin-bottom:10px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row>*{flex:1 1 auto}
+.field{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:white;color:var(--ink);margin:5px 0}
+label{font-size:13px;font-weight:700;display:block;margin-top:9px}
+.small{font-size:12px;color:#687993;line-height:1.5}
+.status{font-size:13px;color:var(--green);white-space:pre-wrap}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.toolbar button{background:#eaf1ff;color:var(--blue);padding:9px 11px}
+#docText{min-height:55vh;background:white;border:1px solid #cbd5e1;padding:20px;outline:none;line-height:1.65;overflow-wrap:anywhere}
+#docText:focus{border-color:var(--blue)}
+.editor-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.preview-wrap{background:#e9eef7;border-radius:14px;padding:10px;overflow:hidden}
+#imageCanvas{display:block;max-width:100%;width:auto;height:auto;max-height:45vh;margin:auto;background:white;touch-action:none}
+#thumbs{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
+.thumb{flex:0 0 83px;border:2px solid transparent;border-radius:10px;background:#fff;padding:5px;position:relative}
+.thumb.selected{border-color:var(--blue);background:#eaf1ff}
+.thumb img{width:100%;height:66px;object-fit:contain}
+.thumb span{font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thumb button{padding:3px 5px;margin-top:4px;font-size:11px}
+.control{margin:12px 0}
+.control label{display:flex;justify-content:space-between;gap:8px}
+input[type=range]{width:100%;accent-color:var(--blue);margin:9px 0}
+input[type=color]{height:38px;width:100%;border:0;background:white}
+hr{border:0;border-top:1px solid var(--border);margin:15px 0}
+footer{text-align:center;color:#718096;padding:25px 10px;font-size:12px}
+#qrPreview{max-width:100%;width:220px;display:block;margin:12px auto}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.editor-layout{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<img class="logo" src="icon-192.png" alt="SK Boy Studio" onerror="this.style.display='none'">
+<div class="brand">SK BOY STUDIO<small>PDF Maker • Document Tools</small></div>
+</header>
+
+<main>
+<section id="home" class="page active">
+<div class="hero">
+<h1>SK Boy Studio PDF</h1>
+<p>PDF बनाएं, फोटो एडिट करें और अपने दस्तावेज़ मोबाइल से तैयार करें।</p>
+</div>
+<div class="grid">
+<button class="card" onclick="showPage('document')"><span class="emoji">📝</span><strong>PDF बनाएँ</strong><small>टेक्स्ट लिखें, फॉन्ट और पेज सेट करें</small></button>
+<button class="card" onclick="showPage('image')"><span class="emoji">🖼️</span><strong>Image to PDF</strong><small>फोटो क्रॉप करें, फ़िल्टर लगाएँ और PDF बनाएँ</small></button>
+<button class="card" onclick="showPage('documents')"><span class="emoji">📂</span><strong>मेरे दस्तावेज़</strong><small>सेव किए हुए दस्तावेज़ खोलें</small></button>
+<button class="card" onclick="showPage('fonts')"><span class="emoji">🔤</span><strong>भाषा और फ़ॉन्ट</strong><small>हिंदी, उर्दू और इंग्लिश</small></button>
+<button class="card" onclick="showPage('tools')"><span class="emoji">🧰</span><strong>अन्य PDF टूल्स</strong><small>टेक्स्ट और पेज की उपयोगी सुविधाएँ</small></button>
+<button class="card" onclick="showPage('settings')"><span class="emoji">⚙️</span><strong>सेटिंग्स</strong><small>ऐप की जानकारी और सेटिंग्स</small></button>
+<button class="card" onclick="showPage('qr')"><span class="emoji">▦</span><strong>QR कोड</strong><small>वेबसाइट या टेक्स्ट का QR बनाएँ</small></button>
+</div>
+</section>
+
+<section id="document" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>📝 PDF Document Editor</h2>
+<div class="panel">
+<div class="row">
+<div><label>पेज साइज़</label><select id="docSize" class="field"><option value="a4">A4</option><option value="a3">A3</option><option value="letter">Letter</option><option value="legal">Legal</option></select></div>
+<div><label>पेज दिशा</label><select id="docOrientation" class="field"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+<div><label>फ़ॉन्ट साइज़</label><select id="docFontSize" class="field"><option>12</option><option>14</option><option>16</option><option>18</option><option>20</option><option>24</option><option>28</option><option>32</option></select></div>
+</div>
+<div class="toolbar">
+<button onclick="formatDoc('bold')"><b>B</b></button>
+<button onclick="formatDoc('italic')"><i>I</i></button>
+<button onclick="formatDoc('underline')"><u>U</u></button>
+<button onclick="formatDoc('justifyLeft')">बाएँ</button>
+<button onclick="formatDoc('justifyCenter')">बीच</button>
+<button onclick="formatDoc('justifyRight')">दाएँ</button>
+<button onclick="formatDoc('insertUnorderedList')">• सूची</button>
+<button onclick="formatDoc('undo')">↶ Undo</button>
+<button onclick="formatDoc('redo')">↷ Redo</button>
+</div>
+<div class="row">
+<div><label>टेक्स्ट रंग</label><input class="field" id="docColor" type="color" value="#152747" onchange="formatDoc('foreColor',this.value)"></div>
+<div><label>पेज बैकग्राउंड</label><input class="field" id="docBg" type="color" value="#ffffff" onchange="document.getElementById('docText').style.background=this.value"></div>
+</div>
+<label>दस्तावेज़ का नाम</label><input class="field" id="docName" placeholder="जैसे मेरा दस्तावेज़">
+<div class="toolbar">
+<button onclick="saveDocument()">💾 सेव करें</button>
+<button onclick="document.getElementById('docImage').click()">🖼️ फोटो जोड़ें</button>
+<button onclick="insertDocTable()">▦ टेबल</button>
+<button class="primary" onclick="downloadDocumentPDF()">⬇ PDF डाउनलोड</button>
+</div>
+<input type="file" id="docImage" accept="image/*" hidden onchange="insertDocImage(event)">
+</div>
+<div id="docText" contenteditable="true" spellcheck="true"><h2>मेरा दस्तावेज़</h2><p>यहाँ अपना टेक्स्ट लिखना शुरू करें...</p></div>
+<p class="small">PDF बनाने के लिए इंटरनेट कनेक्शन और PDF लाइब्रेरी का लोड होना जरूरी है।</p>
+</section>
+
+<section id="image" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<div class="hero"><h1>🖼️ Image to PDF Editor</h1><p>फोटो चुनें, अपनी पसंद से एडिट करें और PDF डाउनलोड करें।</p></div>
+
+<div class="panel">
+<h2>1. फोटो चुनें</h2>
+<input id="imageFiles" class="field" type="file" accept="image/*" multiple>
+<div class="row">
+<button class="secondary" onclick="document.getElementById('imageFiles').click()">＋ फोटो जोड़ें</button>
+<button class="secondary" onclick="resetImageEdits()">↺ फोटो रीसेट</button>
+<button class="danger" onclick="removeCurrentImage()">🗑️ चुनी फोटो हटाएँ</button>
+</div>
+<div id="thumbs"></div>
+<p id="imageStatus" class="status">पहले एक या अधिक तस्वीरें चुनें। आपकी तस्वीरें इसी डिवाइस पर प्रोसेस होंगी।</p>
+</div>
+
+<div class="editor-layout">
+<div class="panel">
+<h2>2. लाइव प्रीव्यू</h2>
+<div class="preview-wrap"><canvas id="imageCanvas" width="800" height="1000"></canvas></div>
+<p class="small">फोटो का प्रीव्यू नीचे के कंट्रोल बदलते ही अपडेट होगा।</p>
+<div class="row">
+<button class="secondary" onclick="rotateImage(-90)">↶ बाएँ घुमाएँ</button>
+<button class="secondary" onclick="rotateImage(90)">↻ दाएँ घुमाएँ</button>
+</div>
+<div class="row">
+<button class="secondary" onclick="flipImage('x')">↔ क्षैतिज Flip</button>
+<button class="secondary" onclick="flipImage('y')">↕ ऊर्ध्वाधर Flip</button>
+</div>
+<div class="row">
+<button class="secondary" onclick="moveImage(-1)">← क्रम पीछे</button>
+<button class="secondary" onclick="moveImage(1)">क्रम आगे →</button>
+</div>
+</div>
+
+<div class="panel">
+<h2>3. क्रॉप और आकार</h2>
+<p class="small">क्रॉप प्रतिशत बढ़ाने से किनारों से फोटो कटेगी।</p>
+<div class="control"><label>क्रॉप ऊपर <span id="cropTopVal">0%</span></label><input id="cropTop" type="range" min="0" max="40" value="0"></div>
+<div class="control"><label>क्रॉप नीचे <span id="cropBottomVal">0%</span></label><input id="cropBottom" type="range" min="0" max="40" value="0"></div>
+<div class="control"><label>क्रॉप बाएँ <span id="cropLeftVal">0%</span></label><input id="cropLeft" type="range" min="0" max="40" value="0"></div>
+<div class="control"><label>क्रॉप दाएँ <span id="cropRightVal">0%</span></label><input id="cropRight" type="range" min="0" max="40" value="0"></div>
+<hr>
+<div class="control"><label>फोटो का आकार <span id="scaleVal">100%</span></label><input id="imgScale" type="range" min="20" max="200" value="100"></div>
+<div class="control"><label>Brightness <span id="brightVal">100%</span></label><input id="imgBright" type="range" min="20" max="200" value="100"></div>
+<div class="control"><label>Contrast <span id="contrastVal">100%</span></label><input id="imgContrast" type="range" min="20" max="200" value="100"></div>
+<div class="control"><label>Saturation <span id="satVal">100%</span></label><input id="imgSat" type="range" min="0" max="200" value="100"></div>
+<div class="control"><label>Blur <span id="blurVal">0px</span></label><input id="imgBlur" type="range" min="0" max="8" value="0"></div>
+<label>फ़िल्टर</label>
+<select id="imgFilter" class="field">
+<option value="none">Original / सामान्य</option>
+<option value="grayscale(100%)">Grayscale</option>
+<option value="grayscale(100%) contrast(130%)">Black & White</option>
+<option value="sepia(100%)">Sepia</option>
+<option value="contrast(125%) saturate(125%)">Vivid</option>
+<option value="brightness(110%) saturate(80%)">Soft</option>
+<option value="invert(100%)">Invert</option>
+</select>
+<button class="secondary full" onclick="resetImageEdits()">↺ सभी एडिट रीसेट</button>
+</div>
+</div>
+
+<div class="panel">
+<h2>4. PDF सेटिंग्स</h2>
+<div class="row">
+<div><label>पेज साइज़</label><select id="pdfPageSize" class="field"><option value="a4">A4</option><option value="a3">A3</option><option value="letter">Letter</option><option value="legal">Legal</option></select></div>
+<div><label>पेज दिशा</label><select id="pdfOrientation" class="field"><option value="auto">फोटो के अनुसार</option><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+<div><label>फोटो फिट</label><select id="pdfFit" class="field"><option value="contain">पूरी फोटो दिखाएँ</option><option value="cover">पेज भरें</option></select></div>
+</div>
+<div class="row">
+<div><label>मार्जिन (mm)</label><select id="pdfMargin" class="field"><option value="0">0 mm</option><option value="5">5 mm</option><option value="10" selected>10 mm</option><option value="15">15 mm</option><option value="20">20 mm</option></select></div>
+<div><label>PDF क्वालिटी</label><select id="pdfQuality" class="field"><option value="0.6">छोटी फ़ाइल</option><option value="0.8" selected>सामान्य</option><option value="0.95">उच्च क्वालिटी</option></select></div>
+</div>
+<button class="primary full" onclick="imagesToPDF()">📄 एडिट की हुई तस्वीरों से PDF बनाएँ</button>
+<p class="small">हर फोटो अलग PDF पेज पर आएगी। PDF बनने से पहले सभी एडिट लागू होंगे।</p>
+</div>
+</section>
+
+<section id="documents" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>📂 मेरे दस्तावेज़</h2>
+<div class="panel">
+<p class="small">इस ब्राउज़र में सेव किए गए दस्तावेज़ यहाँ मिलेंगे।</p>
+<div id="savedDocs"></div>
+<button class="secondary" onclick="refreshDocuments()">↻ सूची अपडेट करें</button>
+</div>
+</section>
+
+<section id="fonts" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>🔤 भाषा और फ़ॉन्ट</h2>
+<div class="panel">
+<p>दस्तावेज़ एडिटर में टेक्स्ट चुनकर नीचे के फ़ॉन्ट इस्तेमाल कर सकते हैं। उपलब्ध फ़ॉन्ट आपके मोबाइल पर निर्भर करते हैं।</p>
+<div class="row">
+<button class="secondary" onclick="setDocFont('Arial')">English / Arial</button>
+<button class="secondary" onclick="setDocFont('Noto Sans Devanagari')">हिंदी</button>
+<button class="secondary" onclick="setDocFont('Noto Nastaliq Urdu')">اردو</button>
+</div>
+<p class="small">कुछ उर्दू फ़ॉन्ट मोबाइल में पहले से उपलब्ध न होने पर अलग दिख सकते हैं।</p>
+</div>
+</section>
+
+<section id="tools" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>🧰 अन्य PDF टूल्स</h2>
+<div class="grid">
+<button class="card" onclick="showPage('document')"><span class="emoji">📝</span><strong>टेक्स्ट से PDF</strong><small>अपना दस्तावेज़ लिखें</small></button>
+<button class="card" onclick="showPage('image')"><span class="emoji">🖼️</span><strong>Image to PDF</strong><small>फोटो से PDF बनाएँ</small></button>
+<button class="card" onclick="document.getElementById('toolPdf').click()"><span class="emoji">📄</span><strong>PDF खोलें / प्रिंट</strong><small>PDF चुनकर प्रिंट या सेव करें</small></button>
+</div>
+<input type="file" id="toolPdf" accept="application/pdf" hidden onchange="openPdfFile(event)">
+</section>
+
+<section id="settings" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>⚙️ सेटिंग्स</h2>
+<div class="panel">
+<p><b>SK Boy Studio PDF</b></p>
+<p class="small">यह वेबसाइट आपके ब्राउज़र में चलती है। फोटो एडिटिंग इसी डिवाइस पर होती है। PDF लाइब्रेरी लोड करने के लिए इंटरनेट की जरूरत हो सकती है।</p>
+<button class="secondary" onclick="showPage('home')">होम पर वापस जाएँ</button>
+</div>
+</section>
+
+<section id="qr" class="page">
+<button class="back" onclick="showPage('home')">← होम</button>
+<h2>▦ QR कोड बनाएं</h2>
+<div class="panel">
+<label>वेबसाइट लिंक या टेक्स्ट</label>
+<input id="qrText" class="field" placeholder="https://example.com">
+<button class="primary full" onclick="makeQR()">QR बनाएँ</button>
+<img id="qrPreview" alt="QR Preview" hidden>
+<a id="qrDownload" hidden download="SK-Boy-QR.png">QR डाउनलोड करें</a>
+<p class="small">QR बनाने के लिए इंटरनेट कनेक्शन आवश्यक हो सकता है।</p>
+</div>
+</section>
+</main>
+
+<footer>© SK Boy Studio • PDF Maker</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ const target=$(id);if(target)target.classList.add('active');
+ if(id==='documents')refreshDocuments();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function formatDoc(cmd,value=null){
+ $('docText').focus();
+ document.execCommand(cmd,false,value);
+}
+function setDocFont(font){
+ $('docText').focus();
+ document.execCommand('fontName',false,font);
+ showPage('document');
+}
+function insertDocImage(e){
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/'))return alert('कृपया फोटो चुनें।');
+ const reader=new FileReader();
+ reader.onload=()=>{
+  $('docText').focus();
+  document.execCommand('insertImage',false,reader.result);
+ };
+ reader.readAsDataURL(file);e.target.value='';
+}
+function insertDocTable(){
+ const rows=prompt('कितनी पंक्तियाँ?','3');
+ const cols=prompt('कितने कॉलम?','3');
+ const r=Math.min(20,Math.max(1,parseInt(rows)||3));
+ const c=Math.min(10,Math.max(1,parseInt(cols)||3));
+ let html='<table style="border-collapse:collapse;width:100%" border="1">';
+ for(let i=0;i<r;i++){html+='<tr>';for(let j=0;j<c;j++)html+='<td style="padding:8px">&nbsp;</td>';html+='</tr>';}
+ html+='</table><p></p>';
+ $('docText').focus();document.execCommand('insertHTML',false,html);
+}
+function saveDocument(){
+ const name=$('docName').value.trim()||'मेरा दस्तावेज़';
+ let docs={};
+ try{docs=JSON.parse(localStorage.getItem('skboy_docs')||'{}')}catch(e){}
+ docs[name]={html:$('docText').innerHTML,date:new Date().toLocaleString('hi-IN')};
+ try{localStorage.setItem('skboy_docs',JSON.stringify(docs));alert('दस्तावेज़ सेव हो गया।');}
+ catch(e){alert('स्टोरेज भर गया है। PDF डाउनलोड करके सुरक्षित रखें।')}
+}
+function refreshDocuments(){
+ let docs={};
+ try{docs=JSON.parse(localStorage.getItem('skboy_docs')||'{}')}catch(e){}
+ const box=$('savedDocs');box.innerHTML='';
+ const names=Object.keys(docs);
+ if(!names.length){box.textContent='अभी कोई दस्तावेज़ सेव नहीं है।';return;}
+ names.forEach(name=>{
+  const row=document.createElement('div');row.className='panel';
+  const title=document.createElement('b');title.textContent=name;row.appendChild(title);
+  const date=document.createElement('p');date.className='small';date.textContent=docs[name].date||'';row.appendChild(date);
+  const open=document.createElement('button');open.className='secondary';open.textContent='खोलें';
+  open.onclick=()=>{ $('docName').value=name;$('docText').innerHTML=docs[name].html;showPage('document');};
+  const del=document.createElement('button');del.className='danger';del.textContent='हटाएँ';
+  del.onclick=()=>{if(confirm('दस्तावेज़ हटाएँ?')){delete docs[name];localStorage.setItem('skboy_docs',JSON.stringify(docs));refreshDocuments();}};
+  row.append(open,del);box.appendChild(row);
+ });
+}
+function downloadDocumentPDF(){
+ if(!window.html2pdf){
+  loadHtml2Pdf().then(downloadDocumentPDF).catch(()=>alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके फिर प्रयास करें।'));
+  return;
+ }
+ const name=$('docName').value.trim()||'SK-Boy-Document';
+ const options={margin:10,filename:name+'.pdf',image:{type:'jpeg',quality:.95},
+ html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff'},
+ jsPDF:{unit:'mm',format:$('docSize').value,orientation:$('docOrientation').value}};
+ const clone=$('docText').cloneNode(true);
+ clone.style.color='#111';clone.style.background='#fff';
+ html2pdf().set(options).from(clone).save();
+}
+function loadHtml2Pdf(){
+ return new Promise((resolve,reject)=>{
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+  s.onload=resolve;s.onerror=reject;document.head.appendChild(s);
+ });
+}
+function openPdfFile(e){
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ const url=URL.createObjectURL(f);
+ const w=window.open(url,'_blank');
+ if(!w)alert('ब्राउज़र ने नया टैब रोका है। डाउनलोड की गई PDF फ़ाइल खोलें।');
+ e.target.value='';
+}
 
 /* IMAGE TO PDF EDITOR */
-let imageEditItems = [];
-let activeImageIndex = 0;
-
-function defaultImageSettings(){
- return {
-  cropTop:0,
-  cropBottom:0,
-  cropLeft:0,
-  cropRight:0,
-  filter:'original',
-  brightness:100,
-  contrast:100,
-  rotation:0,
-  flipH:false
- };
+let imageItems=[];
+let selectedImage=0;
+let pointerCrop=null;
+const cropKeys=['cropTop','cropBottom','cropLeft','cropRight'];
+const controlIds=['imgScale','imgBright','imgContrast','imgSat','imgBlur','imgFilter'];
+function currentItem(){return imageItems[selectedImage]||null;}
+function defaultSettings(){
+ return {top:0,bottom:0,left:0,right:0,scale:100,bright:100,contrast:100,sat:100,blur:0,filter:'none',rotation:0,flipX:false,flipY:false};
 }
-
-function loadImagesForEditing(input){
- const files = [...(input.files || [])].filter(f=>f.type.startsWith('image/'));
- imageEditItems = [];
- activeImageIndex = 0;
- $('imageStatus').textContent = '';
-
- if(!files.length){
-  $('imageEditorArea').hidden = true;
-  $('imageEmpty').hidden = false;
-  $('imageEmpty').textContent = 'कृपया JPG, PNG या दूसरी तस्वीर चुनें।';
-  return;
+function updateStatus(text){$('imageStatus').textContent=text;}
+$('imageFiles').addEventListener('change',async e=>{
+ const files=Array.from(e.target.files||[]);
+ const valid=files.filter(f=>f.type.startsWith('image/'));
+ if(!valid.length){updateStatus('कृपया JPG, PNG या दूसरी इमेज फ़ाइल चुनें।');return;}
+ updateStatus('तस्वीरें लोड हो रही हैं…');
+ for(const file of valid){
+  try{
+   const data=await fileToDataURL(file);
+   const img=await loadImage(data);
+   imageItems.push({name:file.name,src:data,img,settings:defaultSettings()});
+  }catch(err){console.error(err);}
  }
-
- $('imageEmpty').hidden = true;
- $('imageEditorArea').hidden = false;
- $('imageStatus').textContent = 'फोटो लोड हो रही हैं…';
-
- Promise.all(files.map(file=>readImage(file).then(src=>new Promise((resolve,reject)=>{
-  const img = new Image();
-  img.onload = ()=>resolve({
-   name:file.name,
-   src,
-   img,
-   settings:defaultImageSettings()
-  });
-  img.onerror = ()=>reject(new Error('फोटो लोड नहीं हुई'));
-  img.src = src;
- })))).then(items=>{
-  imageEditItems = items;
-  activeImageIndex = 0;
-  renderPhotoList();
-  selectEditedPhoto(0);
-  $('imageStatus').textContent = items.length+' फोटो तैयार हैं।';
- }).catch(()=>{
-  $('imageStatus').textContent = 'कुछ फोटो नहीं खुल सकीं। JPG या PNG में फिर कोशिश करें।';
- });
-}
-
-function renderPhotoList(){
- const list = $('photoList');
- list.innerHTML = '';
-
- imageEditItems.forEach((item,index)=>{
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'photo-thumb'+(index===activeImageIndex?' active':'');
-  button.onclick = ()=>selectEditedPhoto(index);
-
-  const img = document.createElement('img');
-  img.src = item.src;
-  img.alt = 'फोटो '+(index+1);
-
-  const label = document.createElement('span');
-  label.textContent = 'फोटो '+(index+1);
-
-  button.append(img,label);
-  list.appendChild(button);
- });
-}
-
-function selectEditedPhoto(index){
- if(!imageEditItems[index])return;
- activeImageIndex = index;
- renderPhotoList();
-
- const s = imageEditItems[index].settings;
- ['cropTop','cropBottom','cropLeft','cropRight','imageBrightness','imageContrast'].forEach(id=>{
-  const key = id==='imageBrightness'?'brightness':
-              id==='imageContrast'?'contrast':id;
-  $(id).value = s[key];
- });
-
- $('imageFilter').value = s.filter;
- $('activePhotoLabel').textContent =
-  'एडिट हो रही है: '+imageEditItems[index].name;
-
- updateImageLabels();
- drawImagePreview();
-}
-
-function updateImageLabels(){
- const s = imageEditItems[activeImageIndex]?.settings;
- if(!s)return;
-
- ['cropTop','cropBottom','cropLeft','cropRight'].forEach(key=>{
-  $(key+'Value').textContent = s[key]+'%';
- });
- $('imageBrightnessValue').textContent = s.brightness+'%';
- $('imageContrastValue').textContent = s.contrast+'%';
-}
-
-function updateImageSetting(key,value){
- const item = imageEditItems[activeImageIndex];
- if(!item)return;
-
- const s = item.settings;
- if(key==='cropTop'||key==='cropBottom'||key==='cropLeft'||key==='cropRight'){
-  s[key] = Number(value);
-  if(s.cropTop+s.cropBottom>85){
-   s[key] = Math.max(0,85-(s[key==='cropTop'?'cropBottom':'cropTop']));
-   $(key).value = s[key];
-  }
-  if(s.cropLeft+s.cropRight>85){
-   s[key] = Math.max(0,85-(s[key==='cropLeft'?'cropRight':'cropLeft']));
-   $(key).value = s[key];
-  }
- }else if(key==='brightness'||key==='contrast'){
-  s[key] = Number(value);
- }else{
-  s[key] = value;
- }
-
- updateImageLabels();
- drawImagePreview();
-}
-
-function getImageFilter(s){
- const filters = {
-  original:'',
-  bw:'grayscale(1) contrast(1.25)',
-  gray:'grayscale(1)',
-  sepia:'sepia(1)',
-  brightpop:'saturate(1.6) brightness(1.12) contrast(1.08)',
-  bright:'brightness(1.2)',
-  contrast:'contrast(1.5)',
-  vivid:'saturate(1.8) contrast(1.12)'
- };
- return (filters[s.filter]||'')+
-  ' brightness('+(s.brightness/100)+')'+
-  ' contrast('+(s.contrast/100)+')';
-}
-
-function makeEditedCanvas(item){
- const img = item.img;
- const s = item.settings;
-
- const sx = Math.round(img.width*s.cropLeft/100);
- const sy = Math.round(img.height*s.cropTop/100);
- const sw = Math.max(1,Math.round(img.width*(1-(s.cropLeft+s.cropRight)/100)));
- const sh = Math.max(1,Math.round(img.height*(1-(s.cropTop+s.cropBottom)/100)));
-
- const cropped = document.createElement('canvas');
- cropped.width = sw;
- cropped.height = sh;
- const cx = cropped.getContext('2d');
- cx.filter = getImageFilter(s);
- cx.drawImage(img,sx,sy,sw,sh,0,0,sw,sh);
- cx.filter = 'none';
-
- const rotated = ((s.rotation%360)+360)%360;
- const sideways = rotated===90||rotated===270;
- const out = document.createElement('canvas');
- out.width = sideways?sh:sw;
- out.height = sideways?sw:sh;
-
- const ctx = out.getContext('2d');
- ctx.fillStyle = '#ffffff';
- ctx.fillRect(0,0,out.width,out.height);
- ctx.translate(out.width/2,out.height/2);
- ctx.rotate(rotated*Math.PI/180);
- ctx.scale(s.flipH?-1:1,1);
- ctx.drawImage(cropped,-sw/2,-sh/2);
-
- return out;
-}
-
-function drawImagePreview(){
- const item = imageEditItems[activeImageIndex];
- const canvas = $('imagePreview');
- if(!item)return;
-
- try{
-  const edited = makeEditedCanvas(item);
-  canvas.width = edited.width;
-  canvas.height = edited.height;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.drawImage(edited,0,0);
- }catch(e){
-  $('imageStatus').textContent = 'फोटो प्रीव्यू नहीं बन पाया।';
- }
-}
-
-function rotateEditedImage(degrees){
- const item = imageEditItems[activeImageIndex];
- if(!item)return;
- item.settings.rotation = (item.settings.rotation+degrees+360)%360;
- drawImagePreview();
-}
-
-function flipEditedImage(direction){
- const item = imageEditItems[activeImageIndex];
- if(!item)return;
- if(direction==='horizontal')item.settings.flipH=!item.settings.flipH;
- drawImagePreview();
-}
-
-function resetEditedImage(){
- const item = imageEditItems[activeImageIndex];
- if(!item)return;
- item.settings = defaultImageSettings();
- selectEditedPhoto(activeImageIndex);
- $('imageStatus').textContent = 'इस फोटो की एडिटिंग रीसेट हो गई।';
-}
-
-async function imagesToPDF(){
- if(!imageEditItems.length){
-  alert('पहले फोटो चुनें।');
-  return;
- }
- if(!window.jspdf){
-  alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके फिर कोशिश करें।');
-  return;
- }
-
- const {jsPDF} = window.jspdf;
- const format = $('imagePdfPage').value || 'a4';
- let doc = null;
-
- $('imageStatus').textContent = 'एडिट की हुई फोटो से PDF बन रही है…';
-
- try{
-  for(let i=0;i<imageEditItems.length;i++){
-   const canvas = makeEditedCanvas(imageEditItems[i]);
-   const orientation = canvas.width>canvas.height?'landscape':'portrait';
-
-   if(!doc){
-    doc = new jsPDF({orientation,unit:'pt',format});
-   }else{
-    doc.addPage(format,orientation);
-   }
-
-   const pw = doc.internal.pageSize.getWidth();
-   const ph = doc.internal.pageSize.getHeight();
-   const margin = 18;
-   const scale = Math.min((pw-margin*2)/canvas.width,(ph-margin*2)/canvas.height);
-   const w = canvas.width*scale;
-   const h = canvas.height*scale;
-   const data = canvas.toDataURL('image/jpeg',0.94);
-
-   doc.addImage(data,'JPEG',(pw-w)/2,(ph-h)/2,w,h,undefined,'FAST');
-  }
-
-  doc.save('SK-Boy-Studio-Edited-Photos.pdf');
-  $('imageStatus').textContent = 'PDF डाउनलोड शुरू हो गया। कुल फोटो: '+imageEditItems.length;
- }catch(e){
-  $('imageStatus').textContent = 'PDF नहीं बन पाई। फोटो छोटी करके या दूसरी फोटो चुनकर कोशिश करें।';
- }
-}
-
-function readImage(file){
- return new Promise((resolve,reject)=>{
-  const r = new FileReader();
-  r.onload = ()=>resolve(r.result);
-  r.onerror = reject;
-  r.readAsDataURL(file);
+ selectedImage=Math.max(0,imageItems.length-valid.length);
+ drawCurrentImage();renderThumbs();
+ updateStatus(imageItems.length+' फोटो तैयार हैं। अब फोटो चुनकर एडिट करें।');
+ e.target.value='';
 });
+function fileToDataURL(file){
+ return new Promise((resolve,reject)=>{
+  const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
+ });
 }
+function loadImage(src){
+ return new Promise((resolve,reject)=>{
+  const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;
+ });
+}
+function renderThumbs(){
+ const box=$('thumbs');box.innerHTML='';
+ imageItems.forEach((item,i)=>{
+  const b=document.createElement('div');b.className='thumb'+(i===selectedImage?' selected':'');
+  const im=document.createElement('img');im.src=item.src;im.alt=item.name;
+  const label=document.createElement('span');label.textContent=(i+1)+'. '+item.name;
+  const choose=document.createElement('button');choose.className='secondary';choose.textContent='एडिट';
+  choose.onclick=()=>{selectedImage=i;loadControls();drawCurrentImage();renderThumbs();};
+  b.append(im,label,choose);box.appendChild(b);
+ });
+}
+function loadControls(){
+ const s=currentItem()?.settings;if(!s)return;
+ $('cropTop').value=s.top;$('cropBottom').value=s.bottom;
+ $('cropLeft').value=s.left;$('cropRight').value=s.right;
+ $('imgScale').value=s.scale;$('imgBright').value=s.bright;
+ $('imgContrast').value=s.contrast;$('imgSat').value=s.sat;
+ $('imgBlur').value=s.blur;$('imgFilter').value=s.filter;
+ updateControlLabels();
+}
+function updateControlLabels(){
+ const s=currentItem()?.settings;if(!s)return;
+ $('cropTopVal').textContent=s.top+'%';$('cropBottomVal').textContent=s.bottom+'%';
+ $('cropLeftVal').textContent=s.left+'%';$('cropRightVal').textContent=s.right+'%';
+ $('scaleVal').textContent=s.scale+'%';$('brightVal').textContent=s.bright+'%';
+ $('contrastVal').textContent=s.contrast+'%';$('satVal').textContent=s.sat+'%';
+ $('blurVal').textContent=s.blur+'px';
+}
+cropKeys.forEach(id=>$(id).addEventListener('input',()=>{
+ const s=currentItem()?.settings;if(!s)return;
+ s[id.replace('crop','').toLowerCase()] = Number($(id).value);
+ updateControlLabels();drawCurrentImage();
+}));
+controlIds.forEach(id=>$(id).addEventListener('input',()=>{
+ const s=currentItem()?.settings;if(!s)return;
+ const map={imgScale:'scale',imgBright:'bright',imgContrast:'contrast',imgSat:'sat',imgBlur:'blur',imgFilter:'filter'};
+ const key=map[id];s[key]=id==='imgFilter'?$(id).value:Number($(id).value);
+ updateControlLabels();drawCurrentImage();
+}));
+function drawCurrentImage(){
+ const canvas=$('imageCanvas'),ctx=canvas.getContext('2d'),item=currentItem();
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+ if(!item){ctx.fillStyle='#75839a';ctx.font='22px Arial';ctx.textAlign='center';ctx.fillText('पहले फोटो चुनें',canvas.width/2,canvas.height/2);return;}
+ const img=item.img,s=item.settings;
+ const left=Math.min(45,s.left),right=Math.min(45,s.right),top=Math.min(45,s.top),bottom=Math.min(45,s.bottom);
+ const sx=img.naturalWidth*left/100,sy=img.naturalHeight*top/100;
+ const sw=Math.max(1,img.naturalWidth*(100-left-right)/100);
+ const sh=Math.max(1,img.naturalHeight*(100-top-bottom)/100);
+ const rad=s.rotation*Math.PI/180;
+ const rotated=Math.abs(s.rotation%180)===90;
+ const baseW=rotated?sh:sw,baseH=rotated?sw:sh;
+ const scale=s.scale/100;
+ const w=baseW*scale,h=baseH*scale;
+ const fit=Math.min(canvas.width*.88/w,canvas.height*.88/h);
+ const dw=w*fit,dh=h*fit;
+ ctx.save();ctx.translate(canvas.width/2,canvas.height/2);
+ ctx.rotate(rad);ctx.scale(s.flipX?-1:1,s.flipY?-1:1);
+ ctx.filter='brightness('+s.bright+'%) contrast('+s.contrast+'%) saturate('+s.sat+'%) blur('+s.blur+'px) '+(s.filter==='none'?'':s.filter);
+ ctx.drawImage(img,sx,sy,sw,sh,-dw/2,-dh/2,dw,dh);
+ ctx.restore();
+}
+function resetImageEdits(){
+ const item=currentItem();if(!item)return;
+ item.settings=defaultSettings();loadControls();drawCurrentImage();
+ updateStatus('चुनी हुई फोटो के एडिट रीसेट हो गए।');
+}
+function rotateImage(deg){
+ const item=currentItem();if(!item)return;
+ item.settings.rotation=(item.settings.rotation+deg+360)%360;drawCurrentImage();
+}
+function flipImage(axis){
+ const item=currentItem();if(!item)return;
+ if(axis==='x')item.settings.flipX=!item.settings.flipX;
+ else item.settings.flipY=!item.settings.flipY;
+ drawCurrentImage();
+}
+function removeCurrentImage(){
+ if(!imageItems.length)return alert('पहले कोई फोटो चुनें।');
+ imageItems.splice(selectedImage,1);selectedImage=Math.max(0,selectedImage-1);
+ renderThumbs();loadControls();drawCurrentImage();updateStatus('फोटो हटा दी गई।');
+}
+function moveImage(dir){
+ const n=selectedImage+dir;if(n<0||n>=imageItems.length)return;
+ [imageItems[selectedImage],imageItems[n]]=[imageItems[n],imageItems[selectedImage]];
+ selectedImage=n;renderThumbs();drawCurrentImage();
+}
+function renderItemToCanvas(item){
+ const img=item.img,s=item.settings;
+ const left=Math.min(45,s.left),right=Math.min(45,s.right),top=Math.min(45,s.top),bottom=Math.min(45,s.bottom);
+ const sx=img.naturalWidth*left/100,sy=img.naturalHeight*top/100;
+ const sw=Math.max(1,img.naturalWidth*(100-left-right)/100);
+ const sh=Math.max(1,img.naturalHeight*(100-top-bottom)/100);
+ const rad=s.rotation*Math.PI/180,rotated=Math.abs(s.rotation%180)===90;
+ const baseW=rotated?sh:sw,baseH=rotated?sw:sh;
+ const scale=s.scale/100;
+ const cw=Math.max(1,Math.round(baseW*scale)),ch=Math.max(1,Math.round(baseH*scale));
+ const c=document.createElement('canvas');c.width=cw;c.height=ch;
+ const ctx=c.getContext('2d');
+ ctx.translate(cw/2,ch/2);ctx.rotate(rad);ctx.scale(s.flipX?-1:1,s.flipY?-1:1);
+ ctx.filter='brightness('+s.bright+'%) contrast('+s.contrast+'%) saturate('+s.sat+'%) blur('+s.blur+'px) '+(s.filter==='none'?'':s.filter);
+ ctx.drawImage(img,sx,sy,sw,sh,-cw/2,-ch/2,cw,ch);
+ return c;
+}
+async function imagesToPDF(){
+ if(!imageItems.length)return alert('पहले एक या अधिक तस्वीरें चुनें।');
+ if(!window.jspdf||!window.jspdf.jsPDF)return alert('PDF लाइब्रेरी लोड नहीं हुई। इंटरनेट चालू करके पेज रिफ्रेश करें।');
+ const btn=document.querySelector('#image .primary.full');
+ btn.disabled=true;updateStatus('PDF तैयार हो रही है…');
+ try{
+  const {jsPDF}=window.jspdf;
+  const size=$('pdfPageSize').value,orientation=$('pdfOrientation').value;
+  const margin=Number($('pdfMargin').value),quality=Number($('pdfQuality').value);
+  const fit=$('pdfFit').value;
+  let pdf=null;
+  for(let i=0;i<imageItems.length;i++){
+   const item=imageItems[i],canvas=renderItemToCanvas(item);
+   const imgLandscape=canvas.width>canvas.height;
+   const orient=orientation==='auto'?(imgLandscape?'landscape':'portrait'):orientation;
+   if(!pdf)pdf=new jsPDF({orientation:orient,unit:'mm',format:size,compress:true});
+   else pdf.addPage(size,orient);
+   const pageW=pdf.internal.pageSize.getWidth(),pageH=pdf.internal.pageSize.getHeight();
+   const availW=Math.max(1,pageW-margin*2),availH=Math.max(1,pageH-margin*2);
+   const ratio=canvas.width/canvas.height;
+   let w=availW,h=w/ratio;
+   if(fit==='cover'){
+    if(h<availH){h=availH;w=h*ratio;}
+   }else if(h>availH){h=availH;w=h*ratio;}
+   const x=(pageW-w)/2,y=(pageH-h)/2;
+   const data=canvas.toDataURL('image/jpeg',quality);
+   pdf.addImage(data,'JPEG',x,y,w,h,undefined,'FAST');
+   updateStatus('PDF में फोटो जोड़ी जा रही है: '+(i+1)+' / '+imageItems.length);
+   await new Promise(r=>setTimeout(r,20));
+  }
+  pdf.save('SK-Boy-Studio-Images.pdf');
+  updateStatus('PDF डाउनलोड हो गई। कुल फोटो: '+imageItems.length);
+ }catch(err){console.error(err);alert('PDF बनाते समय समस्या आई: '+err.message);updateStatus('PDF नहीं बन सकी। फिर प्रयास करें।');}
+ finally{btn.disabled=false;}
+}
+function makeQR(){
+ const value=$('qrText').value.trim();if(!value)return alert('पहले लिंक या टेक्स्ट लिखें।');
+ const img=$('qrPreview'),a=$('qrDownload');
+ img.src='https://api.qrserver.com/v1/create-qr-code/?size=400x400&data='+encodeURIComponent(value);
+ img.hidden=false;a.href=img.src;a.hidden=false;a.textContent='QR डाउनलोड करें';
+}
+$('imageCanvas').addEventListener('dblclick',()=>resetImageEdits());
+drawCurrentImage();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>
